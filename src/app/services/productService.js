@@ -1,6 +1,6 @@
 //const { options, report } = require('.');
 const {models} = require('../../config/sequelize')
-const cloudImage = require('../../app/middlewares/uploadIMG/cloudinary');
+const cloudImage = require('../middlewares/uploadIMG/cloudinary');
 
 
 

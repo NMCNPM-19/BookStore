@@ -10,11 +10,11 @@ const methodOverride = require('method-override');
 const router = require('./routes');
 
 const usersRouter = require('./src/routes/users');
-const productsRouter = require('./components/products');
-const accountsRouter = require('./components/accounts');
+const productsRouter = require('./routes/Products');
+const accountsRouter = require('./routes/Accounts');
 
 const session = require('express-session');
-const passport = require('./auth/passport');
+const passport = require('./config/auth/passport');
 const app = express();
 
 // view engine setup

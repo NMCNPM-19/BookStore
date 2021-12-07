@@ -1,6 +1,6 @@
 const http = require('http');
 
-require('dotenv').config();
+require('dotenv').config({path: 'src/.env'});
 const {sequelize} = require('../config/sequelize')
 
 

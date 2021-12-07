@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const passport = require('./passport');
+const passport = require('../config/auth/passport');
 const {models} = require('../config/sequelize');
 
 
@@ -26,7 +26,7 @@ router.get('/logout', (req, res) => {
 router.get('/profile', async(req, res) => {
     if(req.user){
         const account = await models.account.findOne({ where: {ID: req.user.accountID}, raw: true });
-        res.render('updateProfile', {account});
+        res.render('users/updateProfile', {account});
     } else{
         res.redirect('/');
     }
@@ -39,9 +39,9 @@ router.put('/profile/saveUpdate/:id', async(req, res) => {
             { where: { ID: req.params.id } }
         );
         req.user.owner = req.body.owner;
-        res.render('updateProfile', {message: 'Success'});
+        res.render('users/updateProfile', {message: 'Success'});
     } catch(err){
-        res.render('updateProfile', {message: 'Something went wrong !!! Try again!'});
+        res.render('users/updateProfile', {message: 'Something went wrong !!! Try again!'});
     }
 });
 

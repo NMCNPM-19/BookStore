@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const ProductController = require('./productController');
-const upload = require('../../app/middlewares/uploadIMG/multer');
+const ProductController = require('../app/controllers/productController');
+const upload = require('../app/middlewares/uploadIMG/multer');
 
 /* GET home page. */
 
