@@ -2,7 +2,7 @@ const accountService = require('../services/accountService');
 const pagination = require('../../public/js/pages/pagination');
 
 class AccountController{
-
+    //[GET]:accounts/
      async list(req, res, next){
         if(req.user){
             const itemPerPage = 10;
@@ -33,7 +33,7 @@ class AccountController{
     }
 
 
-
+    //[POST]:accounts/add
      async add(req, res){
         const {email, password} = req.body;
         try {

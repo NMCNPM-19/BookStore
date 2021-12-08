@@ -5,7 +5,6 @@ const upload = require('../app/middlewares/uploadIMG/multer');
 
 /* GET home page. */
 
-
 // add product
 router.post('/store', upload.single('image'), ProductController.store);
 // update product

@@ -4,21 +4,25 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const methodOverride = require('method-override');
-
+const exphbs = require('express-handlebars')
 
 //Router for app
 const router = require('./routes');
 
-const usersRouter = require('./src/routes/users');
-const productsRouter = require('./routes/Products');
-const accountsRouter = require('./routes/Accounts');
+
 
 const session = require('express-session');
 const passport = require('./config/auth/passport');
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname,'resources' ,'views'));
+app.engine(
+    '.hbs',
+    exphbs.engine({
+        extname :'hbs',
+    })
+);
+app.set('views', path.join(__dirname ,'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
@@ -36,9 +40,6 @@ app.use((req, res, next) => {
   next();
 })
 
-app.use('/editAccount', accountsRouter);
-app.use('/editProduct', productsRouter);
-app.use('/users', usersRouter);
 
 router(app)
 

@@ -20,7 +20,7 @@ class productController{
 
     };
 
-// delete
+    // delete
     async hiden(req, res, next){
         await productService.hiden(req);
         res.redirect('back');
@@ -30,7 +30,7 @@ class productController{
         res.redirect('back');
     };
 
-//update
+    //update
     async saveUpdate(req, res, next){
         await productService.saveUpdate(req);
         res.redirect('/editProduct');
@@ -45,7 +45,7 @@ class productController{
         }
     }
 
-//list
+    //list
     async list(req, res, next){
         if(req.user){
             const itemPerPage = 10;
