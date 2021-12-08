@@ -2,6 +2,9 @@
 const {models} = require('../../config/sequelize')
 const cloudImage = require('../middlewares/uploadIMG/cloudinary');
 
+exports.getTL = () =>{
+        return models.theloai.findAll({})
+}
 
 
 exports.list = (page, itemPerPage) => {

@@ -1,7 +1,7 @@
 //const { render } = require('../../app');
 const pagination = require('../../public/js/pages/pagination');
 const productService = require('../services/productService');
-
+const {multipleSequelizeToObject} = require('../../util/sequelize')
 class productController{
     //store
     async store(req, res, next){
@@ -47,27 +47,21 @@ class productController{
 
     //list
     async list(req, res, next){
-        if(req.user){
+        if(!req.user){
             const itemPerPage = 10;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const products = await productService.list(page,itemPerPage);
+            const Theloai = await productService.getTL();
             const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
 
             if(!products){
                 res.status(401).json("Something went wrong!");
             }
-
-            for(let items of products.rows){
-                if(items.STATUS == 'Hiden'){
-                    items.COLORSTATUS = 'danger'
-                }
-                else{
-                    items.COLORSTATUS = 'success'
-                }
-            };
-            res.render('editProduct', {
+            
+            res.render('products/editProduct', {
                 Items: pagItems,
+                Theloai :  multipleSequelizeToObject(Theloai),
                 products: products.rows
             });
         } else{
