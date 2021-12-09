@@ -41,7 +41,7 @@
                                 <label>Ngày xuất bản</label>
                                 <select class="form-control" id="NXB" name="manxb">
                                     {{#each NXB}}
-                                    <option value="{{this.manxb}}">{{this.Ten}}</option>
+                                    {{{option this.manxb this.Ten ../manxb }}}
                                     {{/each}}
                                 </select>
                             </div>

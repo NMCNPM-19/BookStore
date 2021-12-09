@@ -1,7 +1,8 @@
 //const { render } = require('../../app');
 const pagination = require('../../public/js/pages/pagination');
 const productService = require('../services/productService');
-const {multipleSequelizeToObject,SequelizeToObject} = require('../../util/sequelize')
+const {multipleSequelizeToObject,SequelizeToObject} = require('../../util/sequelize');
+const e = require('express');
 class productController{
     //store
     async store(req, res, next){
@@ -22,15 +23,7 @@ class productController{
     };
 
     // delete
-    async hiden(req, res, next){
-        await productService.hiden(req);
-        res.redirect('back');
-    };
-    async active(req, res, next){
-        await productService.active(req);
-        res.redirect('back');
-    };
-
+   
     //update
     async saveUpdate(req, res, next){
         try {
@@ -45,16 +38,19 @@ class productController{
     async update(req, res, next){
         if(!req.user){
             const product = await productService.update(req);
-            res.render('products/formUpdatePro', { product : SequelizeToObject(product) });
+            const NXB = await productService.getNXB()
+            res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) });
         } else{
             res.redirect('/');
         }
     }
     async delete(req, res, next){
         try {
-            if(req.user){
-                await productService.deleteSave(req)
+            if(!req.user){
+                await productService.saveDelete(req)
                 res.redirect('back')
+            }else{
+                res.redirect('/');
             }
         } catch (error) {
             next(error)

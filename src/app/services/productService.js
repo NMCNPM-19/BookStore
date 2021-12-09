@@ -79,11 +79,15 @@ exports.saveUpdate = async(req) => {
         book.set(req.body)
         await book.save()
     }
-exports.deleteSave = async () =>{
+}
+exports.saveDelete = async (req) => {
     const book = await models.sach.findOne({where: {masach: req.params.id}});
-    await cloudImage.deleteIMG(book.IMAGE_PUBLICID);
+    var link = book.IMAGE_PUBLICID
+    if(link){
+        await cloudImage.deleteIMG(link);
+    }
     await book.destroy()
 }
 
 
-}
+

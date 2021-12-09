@@ -20,6 +20,7 @@ app.engine(
     '.hbs',
     exphbs.engine({
         extname :'hbs',
+        helpers: require('./helper/handlebars')
     })
 );
 app.set('views', path.join(__dirname ,'views'));
