@@ -11,6 +11,10 @@ exports.list = (page, itemPerPage) => {
     return models.sach.findAndCountAll({ offset: page*itemPerPage, limit: itemPerPage, raw: true });
 };  
 
+exports.getNXB = () =>{
+    return models.nxb.findAll({})
+}
+
 exports.hiden = (req) => {
     return models.sach.update(
         {
@@ -28,51 +32,65 @@ exports.active = (req) => {
         { where: { MASACH: req.params.id } }
     );
 }
+exports.genKeybook = async () => {
+    var books = await models.sach.findAll({});
+    var i = 1;
+    var check = true;
+    var str;
+    while (true) {
+      check = true;
+      str = '' + i;
+      while (str.length < 6) {
+        str = 0 + str;
+      }
+      s_key = str;
+      for (let index = 0; index < books.length; index++) {
+        if (books[index]['masach'] === s_key) {
+          check = false;
+          break;
+        }
+      }
+      if (check) {
+        return s_key;
+      }
+      i++;
+    }
+  };
 
 exports.store = async(req) => {
     const result = await cloudImage.uploadIMG(req.file.path);
+    
     return models.sach.findOrCreate({
         where: {
-            TENSACH: req.body.name,
-            LOAISACH: req.body.type,
-            GIA: req.body.price,
+            masach: req.body.masach,
+            tensach : req.body.tensach,
+            tacgia : req.body.tacgia,
+            ngayXB : req.body.ngayXB,
+            manxb : req.body.manxb,
+            MOTA : req.body.MOTA,
+            gia : req.body.gia,
+            SL: 0,
             IMAGE: result.secure_url,
             IMAGE_PUBLICID: result.public_id
         }
     });
 }
-
 exports.update = (req) => {
     return models.sach.findOne({
         where: {
-            MASACH: req.params.id
+            masach: req.params.id
         },
     });
 }
-
 exports.saveUpdate = async(req) => {
     if(req.file){
-        const book = await models.sach.findOne({where: {MASACH: req.params.id}});
+        const book = await models.sach.findOne({where: {masach: req.params.id}});
         const result = await cloudImage.updateIMG(req.file.path, book.IMAGE_PUBLICID);
-        return models.sach.update(
-            {
-                MASACH: req.body.id,
-                TENSACH: req.body.name,
-                LOAISACH: req.body.type,
-                GIA: req.body.price,
-                IMAGE: result.secure_url,
-                IMAGE_PUBLICID: result.public_id
-            },
-            { where: { MASACH: req.params.id } }
-        ); 
+        console.log(result.secure_url);
+        req.body.atUpdated = Date.now(),
+        req.body.IMAGE = result.secure_url,
+        req.body.IMAGE_PUBLICID = result.public_id
+        book.set(req.body)
+        await book.save()
     }
-    return models.sach.update(
-        {
-            MASACH: req.body.id,
-            TENSACH: req.body.name,
-            LOAISACH: req.body.type,
-            GIA: req.body.price,
-        },
-        { where: { MASACH: req.params.id } }
-    );
 }

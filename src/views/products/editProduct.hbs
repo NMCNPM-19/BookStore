@@ -51,7 +51,7 @@
                                     <th>Author</th>
                                     <th>Name</th>
                                     <th>Price</th>
-                                    <th>Image</th>
+                                    <th>atCreated</th>
                                     <th rowspan="2">Edit</th>
                                 </tr>
                             </thead>
@@ -62,13 +62,18 @@
                                     <td>{{this.tacgia}}</td>
                                     <td>{{this.tensach}}</td>
                                     <td>{{this.gia}}</td>
-                                    <td>{{this.MOTA}}</td>
+                                    <td>{{this.atCreated}}</td>
                                     <td>
-                                        <a href="/editProduct/update/{{this.masach}}" class="edit">
+                                        <a href="products/update/{{this.masach}}" class="edit btn btn-link">
                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                            <i class="material-icons ml-2" data-toggle="tooltip"
-                                                title="delete">&#xe872;</i>
                                         </a>
+
+                                        <a href="#delete-book-modals" class="delete-btns btn btn-link" data-toggle="modal"
+                                            data-bookId="{{this.masach}}" data-target="#delete-book-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="delete">&#xe872;</i>
+                                        </a>
+
+
                                     </td>
                                 </tr>
                                 {{/each}}
@@ -103,7 +108,7 @@
     <div id="addProductModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="POST" action="/editProduct/store" enctype="multipart/form-data">
+                <form method="POST" action="products/store" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h4 class="modal-title">Add Product</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -115,7 +120,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tác giả</label>
-                            <input type="text" class="form-control" name="masach" required>
+                            <input type="text" class="form-control" name="tacgia" required>
                         </div>
                         <div class="form-group">
                             <label>Ngày xuất bản</label>
@@ -134,7 +139,6 @@
                             <textarea class="form-control" cols="86" rows="10" placeholder="Mô tả truyện" name="MOTA"
                                 id="des"></textarea>
                         </div>
-                        
 
                         <div class="form-group mt-3">
                             <label for="des">Thể Loại</label>
@@ -164,27 +168,54 @@
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-success" value="Add">
                         </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- End Form add product -->
 
-    <form name="deleteProduct" method="POST"></form>
+    {{!-- model delete --}}
+    <div class="modal fade" id="delete-book-modals">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Bạn có thật sự muốn xóa ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-delete-book" class="btn-delete-book btn btn-primary btn-danger">Xóa bỏ</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{!-- end model delete --}}
+
+
+
+
+
+
+    <form name="form-delete-books" method="POST"></form>
 
     <script>
-        const formDelete = document.forms['deleteProduct'];
-
-        function statusFunc(event) {
-            
-            const btn = event.target;
-            if (btn.value == "Hiden") {
-                formDelete.action = '/editProduct/active/' + btn.id;
-                formDelete.submit();
+        var deleteForm = document.forms['form-delete-books']
+        var deleteBtns = Array.from(document.getElementsByClassName('delete-btns')); // lấy tất cả các button delete dưới dạng mảng
+        var deleteConfirm = document.querySelector('.btn-delete-book')
+        for (const deleteBtn of deleteBtns) {
+            deleteBtn.onclick = function (e) {
+                var book = this.getAttribute('data-bookid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
+                deleteConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
+                    deleteForm.action = `/products/${book}?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                    deleteForm.submit(); // và submit form .
+                }
             }
-            else {
-                formDelete.action = '/editProduct/hiden/' + btn.id;
-                formDelete.submit();
-            }
+    
         }
     </script>

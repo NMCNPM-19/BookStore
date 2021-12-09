@@ -15,11 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     MOTA: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    HINHANH: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING(1000),
       allowNull: true
     },
     manxb: {
@@ -40,6 +36,26 @@ module.exports = function(sequelize, DataTypes) {
     },
     SL: {
       type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    atDeleted: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    atUpdated: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    atCreated: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    IMAGE: {
+      type: DataTypes.STRING(500),
+      allowNull: true
+    },
+    IMAGE_PUBLICID: {
+      type: DataTypes.STRING(500),
       allowNull: true
     }
   }, {

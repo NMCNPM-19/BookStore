@@ -1,11 +1,12 @@
 //const { render } = require('../../app');
 const pagination = require('../../public/js/pages/pagination');
 const productService = require('../services/productService');
-const {multipleSequelizeToObject} = require('../../util/sequelize')
+const {multipleSequelizeToObject,SequelizeToObject} = require('../../util/sequelize')
 class productController{
     //store
     async store(req, res, next){
         try {
+            req.body.masach = await productService.genKeybook();
             const [book, created] = await productService.store(req);
             if(created){
                 return res.redirect('back');
@@ -15,7 +16,7 @@ class productController{
             }
         }
         catch(err){
-            res.status(401).json("Something went wrong!");
+          next(err)
         }
 
     };
@@ -37,9 +38,9 @@ class productController{
     };
 
     async update(req, res, next){
-        if(req.user){
+        if(!req.user){
             const product = await productService.update(req);
-            res.render('formUpdatePro', { product });
+            res.render('products/formUpdatePro', { product : SequelizeToObject(product) });
         } else{
             res.redirect('/');
         }
@@ -54,7 +55,7 @@ class productController{
             const Theloai = await productService.getTL();
             const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
-
+            const NXB = await productService.getNXB()
             if(!products){
                 res.status(401).json("Something went wrong!");
             }
@@ -62,7 +63,8 @@ class productController{
             res.render('products/editProduct', {
                 Items: pagItems,
                 Theloai :  multipleSequelizeToObject(Theloai),
-                products: products.rows
+                products: products.rows,
+                NXB : multipleSequelizeToObject(NXB)
             });
         } else{
             res.redirect('/');
