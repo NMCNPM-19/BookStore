@@ -4,7 +4,7 @@ const pagination = require('../../public/js/pages/pagination');
 class AccountController{
     //[GET]:accounts/
      async list(req, res, next){
-        if(req.user){
+        // if(req.user){
             const itemPerPage = 10;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const accounts = await accountService.list(page,itemPerPage);
@@ -12,41 +12,41 @@ class AccountController{
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
 
             if(!accounts){
-                res.render('editAccount',{message: 'Something went wrong !!! Try again!'});
+                res.render('accounts/editAccount',{message: 'Something went wrong !!! Try again!'});
             }
 
-            for(let items of accounts.rows){
-                if(items.STATUS == 'Block'){
-                    items.COLORSTATUS = 'danger'
-                }
-                else{
-                    items.COLORSTATUS = 'success'
-                }
-            };
-            res.render('editAccount', {
+            // for(let items of accounts.rows){
+            //     if(items.STATUS == 'Block'){
+            //         items.COLORSTATUS = 'danger'
+            //     }
+            //     else{
+            //         items.COLORSTATUS = 'success'
+            //     }
+            // };
+            res.render('accounts/editAccount', {
                 Items: pagItems,
                 accounts: accounts.rows
             });
-        } else{
-            res.redirect('/');
-        }
+        // } else{
+        //     res.redirect('/');
+        // }
     }
 
 
     //[POST]:accounts/add
      async add(req, res){
-        const {email, password} = req.body;
+        const {username, password, role} = req.body;
         try {
-            const account = await accountService.add(email, password);
+            const account = await accountService.add(username, password, role);
             if(account){
-                return res.render('editAccount',{message: 'Success'});
+                return res.render('accounts/editAccount',{message: 'Success'});
             }
             else {
-                return res.render('editAccount',{message: 'Account is existed !!! Try again!'});
+                return res.render('accounts/editAccount',{message: 'Account is existed !!! Try again!'});
             }
         }
         catch(err){
-            return res.render('editAccount',{message: 'Something went wrong !!! Try again!'});
+            return res.render('accounts/editAccount',{message: 'Something went wrong !!! Try again!'});
         }
     }
     

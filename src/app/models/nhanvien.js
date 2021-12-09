@@ -7,12 +7,12 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     USER: {
-      type: DataTypes.STRING(15),
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: "USER"
     },
     PASS: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     HOTEN: {
