@@ -4,7 +4,7 @@ const productService = require('../services/productService');
 const {multipleSequelizeToObject,SequelizeToObject} = require('../../util/sequelize');
 const e = require('express');
 class productController{
-    //store
+    //[POST] : product/store
     async store(req, res, next){
         try {
             req.body.masach = await productService.genKeybook();
@@ -21,10 +21,7 @@ class productController{
         }
 
     };
-
-    // delete
-   
-    //update
+    //[PUT]: products/saveUpdate/:id
     async saveUpdate(req, res, next){
         try {
             await productService.saveUpdate(req);
@@ -34,7 +31,7 @@ class productController{
         }
         
     };
-
+    //[GET]: products/update/:id
     async update(req, res, next){
         if(!req.user){
             const product = await productService.update(req);
@@ -44,6 +41,7 @@ class productController{
             res.redirect('/');
         }
     }
+    //[DELETE]: products/:id/del
     async delete(req, res, next){
         try {
             if(!req.user){
@@ -56,9 +54,7 @@ class productController{
             next(error)
         }
     }
-
-
-    //list
+    //[GET]: /products/
     async list(req, res, next){
         if(!req.user){
             const itemPerPage = 10;

@@ -18,8 +18,7 @@
         <div id="editProductModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    {{#with product}}
-                    <form method="POST" action="/products/saveUpdate/{{masach}}?_method=PUT"
+                    <form method="POST" action="/products/saveUpdate/{{product.masach}}?_method=PUT"
                         enctype="multipart/form-data">
                         <div class="modal-header">
                             <h4 class="modal-title">Update Product</h4>
@@ -31,37 +30,37 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Tên Sách</label>
-                                <input type="text" class="form-control" value="{{tensach}}" name="tensach" required>
+                                <input type="text" class="form-control" value="{{product.tensach}}" name="tensach" required>
                             </div>
                             <div class="form-group">
                                 <label>Tác giả</label>
-                                <input type="text" class="form-control" value="{{tacgia}}" name="tacgia" required>
+                                <input type="text" class="form-control" value="{{product.tacgia}}" name="tacgia" required>
                             </div>
                             <div class="form-group">
                                 <label>Ngày xuất bản</label>
                                 <select class="form-control" id="NXB" name="manxb">
                                     {{#each NXB}}
-                                    {{{option this.manxb this.Ten ../manxb }}}
+                                    {{{option this.manxb this.Ten ../product.manxb }}}
                                     {{/each}}
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label>Ngày xuất bản</label>
-                                <input type="date" class="form-control" value="{{ngayXB}}" name="ngayXB" required>
+                                <input type="date" class="form-control" value="{{product.ngayXB}}" name="ngayXB" required>
                             </div>
                             <div class="form-group">
                                 <label>Mô tả</label>
                                 <textarea class="form-control" cols="86" rows="10" placeholder="Mô tả truyện"
-                                    name="MOTA" id="des">{{MOTA}}</textarea>
+                                    name="MOTA" id="des">{{product.MOTA}}</textarea>
                             </div>
                             <div class="form-group-3">
                                 <label>Giá</label>
-                                <input type="number" class="form-control" value="{{gia}}" name="gia" required>
+                                <input type="number" class="form-control" value="{{product.gia}}" name="gia" required>
                             </div>
                             <div class="form-group">
                                 <label>Ảnh</label><br>
-                                <img src="{{IMAGE}}" alt="{{IMAGE}}" width="500" height="600"><br>
-                                <input type="url" class="form-control" value="{{IMAGE}}" readonly>
+                                <img src="{{product.IMAGE}}" alt="{{product.IMAGE}}" width="500" height="600"><br>
+                                <input type="url" class="form-control" value="{{product.IMAGE}}" readonly>
                                 <p style="margin-top: 10px;">Thay đổi: </p>
                                 <input type="file" name="image">
                             </div>
@@ -70,7 +69,6 @@
                             <input type="submit" class="btn btn-info" value="Save">
                         </div>
                     </form>
-                    {{/with}}
                 </div>
             </div>
         </div>
