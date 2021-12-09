@@ -65,20 +65,21 @@ exports.update = (req) => {
     });
 }
 exports.saveUpdate = async(req) => {
+    const book = await models.sach.findOne({where: {masach: req.params.id}});
     if(req.file){
-        const book = await models.sach.findOne({where: {masach: req.params.id}});
         var result
         if(book.IMAGE_PUBLICID){
             result = await cloudImage.updateIMG(req.file.path, book.IMAGE_PUBLICID);
         }else{
             result = await cloudImage.uploadIMG(req.file.path);
         }
-        req.body.atUpdated = Date.now(),
-        req.body.IMAGE = result.secure_url,
+        req.body.IMAGE = result.secure_url
         req.body.IMAGE_PUBLICID = result.public_id
-        book.set(req.body)
-        await book.save()
     }
+    req.body.atUpdated = Date.now()
+    book.set(req.body)
+    console.log(book)
+    await book.save()
 }
 exports.saveDelete = async (req) => {
     const book = await models.sach.findOne({where: {masach: req.params.id}});

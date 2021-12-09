@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "nodemon --inspect src/bin/www",
     "start": "node src/bin/www",
-    "models": "sequelize-auto -o './src/models' -d Mbookstore_db -h 34.124.201.188 -u root -p 3306 -x 12345678 -e mysql"
+    "models": "sequelize-auto -o 'src/app/models' -d Mbookstore_db -h 34.124.201.188 -u root -p 3306 -x 12345678 -e mysql"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
