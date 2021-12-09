@@ -14,24 +14,6 @@ exports.list = (page, itemPerPage) => {
 exports.getNXB = () =>{
     return models.nxb.findAll({})
 }
-
-exports.hiden = (req) => {
-    return models.sach.update(
-        {
-            STATUS: 'Hiden'
-        },
-        { where: { MASACH: req.params.id } }
-    );
-}
-
-exports.active = (req) => {
-    return models.sach.update(
-        {
-            STATUS: 'Active'
-        },
-        { where: { MASACH: req.params.id } }
-    );
-}
 exports.genKeybook = async () => {
     var books = await models.sach.findAll({});
     var i = 1;
@@ -85,12 +67,23 @@ exports.update = (req) => {
 exports.saveUpdate = async(req) => {
     if(req.file){
         const book = await models.sach.findOne({where: {masach: req.params.id}});
-        const result = await cloudImage.updateIMG(req.file.path, book.IMAGE_PUBLICID);
-        console.log(result.secure_url);
+        var result
+        if(book.IMAGE_PUBLICID){
+            result = await cloudImage.updateIMG(req.file.path, book.IMAGE_PUBLICID);
+        }else{
+            result = await cloudImage.uploadIMG(req.file.path);
+        }
         req.body.atUpdated = Date.now(),
         req.body.IMAGE = result.secure_url,
         req.body.IMAGE_PUBLICID = result.public_id
         book.set(req.body)
         await book.save()
     }
+exports.deleteSave = async () =>{
+    const book = await models.sach.findOne({where: {masach: req.params.id}});
+    await cloudImage.deleteIMG(book.IMAGE_PUBLICID);
+    await book.destroy()
+}
+
+
 }

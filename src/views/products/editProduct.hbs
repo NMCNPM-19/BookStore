@@ -212,7 +212,7 @@
             deleteBtn.onclick = function (e) {
                 var book = this.getAttribute('data-bookid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
                 deleteConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
-                    deleteForm.action = `/products/${book}?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                    deleteForm.action = `/products/${book}/del?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
                     deleteForm.submit(); // và submit form .
                 }
             }

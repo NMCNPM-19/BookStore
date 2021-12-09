@@ -8,6 +8,7 @@ const upload = require('../app/middlewares/uploadIMG/multer');
 // add product
 router.post('/store', upload.single('image'), ProductController.store);
 // update product
+router.delete('/:id/del',ProductController.delete)
 router.get('/update/:id', ProductController.update);
 router.put('/saveUpdate/:id', upload.single('image'),ProductController.saveUpdate);
 //list product

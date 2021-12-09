@@ -13,4 +13,7 @@ exports.updateIMG = async(file, IMG_ID) => {
     await cloudinary.v2.uploader.destroy(IMG_ID);
     return cloudinary.v2.uploader.upload(file);
 }
+exports.deleteIMG =  async(IMG_ID) => {
+    await cloudinary.v2.uploader.destroy(IMG_ID);
+}
 

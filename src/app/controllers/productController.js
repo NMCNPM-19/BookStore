@@ -33,8 +33,13 @@ class productController{
 
     //update
     async saveUpdate(req, res, next){
-        await productService.saveUpdate(req);
-        res.redirect('/editProduct');
+        try {
+            await productService.saveUpdate(req);
+            res.redirect('back');
+        } catch (error) {
+            next(error);
+        }
+        
     };
 
     async update(req, res, next){
@@ -45,6 +50,17 @@ class productController{
             res.redirect('/');
         }
     }
+    async delete(req, res, next){
+        try {
+            if(req.user){
+                await productService.deleteSave(req)
+                res.redirect('back')
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+
 
     //list
     async list(req, res, next){
