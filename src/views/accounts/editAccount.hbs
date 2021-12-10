@@ -51,7 +51,7 @@
                                     <th>Full name</th>
                                     <th>Email</th>
                                     {{!-- <th>Role</th> --}}
-                                    <th>Edit</th>                                  
+                                    <th>Account status</th>                              
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,11 +60,15 @@
                                     <td>{{this.MANV}}</td>
                                     <td>{{this.USER}}</td>
                                     {{!-- <td>{{this.PASS}}</td> --}}
-                                    <td>{{this.HOTEN}}</td>
-                                    <td>{{this.EMAIL}}</td>
+                                    {{#if HOTEN}}
+                                    <td>{{HOTEN}}</td>
+                                    {{else}}<td>Not fill yet</td>{{/if}}
+                                    {{#if EMAIL}}
+                                    <td>{{EMAIL}}</td>
+                                    {{else}}<td>Not fill yet</td>{{/if}}
                                     {{!-- <td>{{#if LOAINV}}</td> --}}
-                                    <td>
-                                        <a href="products/update/{{this.MANV}}" class="edit btn btn-link">
+                                    {{!-- <td>
+                                        <a href="accounts/update/{{this.MANV}}" class="edit btn btn-link">
                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                         </a>
 
@@ -72,8 +76,13 @@
                                             data-accountId="{{this.MANV}}" data-target="#delete-account-modals">
                                             <i class="material-icons " data-toggle="tooltip" title="delete">&#xe872;</i>
                                         </a>
-
-                                    </td>                          
+                                    </td>   --}}
+                                    <td>
+                                        <input type="button" id ="{{MANV}}" class="btn btn-{{COLORSTATUS}}" 
+                                        data-toggle="tooltip" data-placement="right" title="Change Status"
+                                        onclick="statusFunc(event)" value="{{STATUS}}">
+                                        </input>
+                                    </td>                              
                                 </tr>
                                 {{/each}}
                             </tbody>          
@@ -129,7 +138,7 @@
         deleteBtn.onclick = function (e) {
             var account = this.getAttribute('data-accountid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
             deleteConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
-                deleteForm.action = `/products/${account}/del?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                deleteForm.action = `/accounts/${account}/del?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
                 deleteForm.submit(); // và submit form .
             }
         }
@@ -176,6 +185,9 @@
     </div>
 </div>
 <!-- End Form add admin account -->
+
+<form name="deleteAccount" method="POST"></form>
+
 <script>
     function visibility(){
         let x = document.getElementById("password");
@@ -183,6 +195,20 @@
             x.type = "text";
         } else {
             x.type = "password";
+        }
+    }
+    function statusFunc(event){
+        const formDelete = document.forms['deleteAccount'];
+        const btn = event.target;
+        if(btn.value == "Hiden")
+        {
+            formDelete.action = '/accounts/active/' + btn.id;
+            formDelete.submit();
+        }
+        else
+        {
+            formDelete.action = '/accounts/hiden/' + btn.id;
+            formDelete.submit();
         }
     }
 </script>

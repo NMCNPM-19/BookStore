@@ -50,6 +50,11 @@ module.exports = function(sequelize, DataTypes) {
     LOAINV: {
       type: DataTypes.STRING(3),
       allowNull: true
+    },
+    STATUS: {
+      type: DataTypes.STRING(15),
+      allowNull: true,
+      defaultValue: "Active"
     }
   }, {
     sequelize,

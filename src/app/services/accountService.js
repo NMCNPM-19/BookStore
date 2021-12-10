@@ -22,6 +22,24 @@ exports.add = async(user, password, role) => {
     });
 }
 
+exports.hiden = (req) => {
+  return models.nhanvien.update(
+      {
+          STATUS: 'Hiden'
+      },
+      { where: { MANV: req.params.id } }
+  );
+}
+
+exports.active = (req) => {
+  return models.nhanvien.update(
+      {
+          STATUS: 'Active'
+      },
+      { where: { MANV: req.params.id } }
+  );
+}
+
 genKeyAccount = async (role) => {
     var accounts = await models.nhanvien.findAll({});
     var i = 1;

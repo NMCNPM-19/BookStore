@@ -15,14 +15,14 @@ class AccountController{
                 res.render('accounts/editAccount',{message: 'Something went wrong !!! Try again!'});
             }
 
-            // for(let items of accounts.rows){
-            //     if(items.STATUS == 'Block'){
-            //         items.COLORSTATUS = 'danger'
-            //     }
-            //     else{
-            //         items.COLORSTATUS = 'success'
-            //     }
-            // };
+            for(let items of accounts.rows){
+                if(items.STATUS == 'Hiden'){
+                    items.COLORSTATUS = 'danger'
+                }
+                else{
+                    items.COLORSTATUS = 'success'
+                }
+            };
             res.render('accounts/editAccount', {
                 Items: pagItems,
                 accounts: accounts.rows
@@ -50,6 +50,16 @@ class AccountController{
         }
     }
     
+    //[DELETE]:accounts/:id/del
+    // delete
+    async hiden(req, res) {
+        await accountService.hiden(req);
+        res.redirect('back');
+    };
+    async active(req, res) {
+        await accountService.active(req);
+        res.redirect('back');
+    };
 }
 
 
