@@ -1,14 +1,27 @@
 //const { options, report } = require('.');
 const {models} = require('../../config/sequelize')
 const cloudImage = require('../middlewares/uploadIMG/cloudinary');
-
+const { Op } = require('sequelize');
 exports.getTL = () =>{
         return models.theloai.findAll({})
 }
 
 
-exports.list = (page, itemPerPage) => {
-    return models.sach.findAndCountAll({ offset: page*itemPerPage, limit: itemPerPage, raw: true });
+exports.list = (title , page, itemPerPage) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return models.sach.findAndCountAll({ 
+        offset: page*itemPerPage, 
+        limit: itemPerPage, 
+        raw: true ,
+        where: {
+            tensach :{
+                [Op.like]: '%' + condition + '%',
+            }
+        }
+});
 };  
 
 exports.getNXB = () =>{
@@ -90,5 +103,17 @@ exports.saveDelete = async (req) => {
     await book.destroy()
 }
 
-
+exports.getBooks = (title) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return models.sach.findAll({
+      where: {
+        tensach: {
+          [Op.like]: '%' + condition + '%',
+        },
+      },
+    });
+  };
 

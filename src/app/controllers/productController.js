@@ -59,7 +59,8 @@ class productController{
         if(!req.user){
             const itemPerPage = 10;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-            const products = await productService.list(page,itemPerPage);
+            const title = req.query.title
+            const products = await productService.list(title,page,itemPerPage);
             const Theloai = await productService.getTL();
             const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
