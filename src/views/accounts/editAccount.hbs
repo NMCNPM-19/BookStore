@@ -28,7 +28,7 @@
                                         <a href="#addAdminModal" data-toggle="modal">
                                             <button class="btn btn-primary">
                                                 <i class="mdi mdi-plus-circle mr-2"></i>
-                                                <span>Add Admin Account</span>
+                                                <span>Add Account</span>
                                             </button>
                                         </a>                                             
                                     </div>
@@ -46,27 +46,43 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>User</th>
+                                    {{!-- <th>Password</th> --}}
+                                    <th>Full name</th>
                                     <th>Email</th>
-                                    <th>Password</th>
-                                    <th>Owner</th>
-                                    <th>Role</th>
-                                    <th>Status</th>                                  
+                                    {{!-- <th>Role</th> --}}
+                                    <th>Account status</th>                              
                                 </tr>
                             </thead>
                             <tbody>
                                 {{#each accounts}}
                                 <tr>
-                                    <td>{{ID}}</td>
+                                    <td>{{this.MANV}}</td>
+                                    <td>{{this.USER}}</td>
+                                    {{!-- <td>{{this.PASS}}</td> --}}
+                                    {{#if HOTEN}}
+                                    <td>{{HOTEN}}</td>
+                                    {{else}}<td>Not fill yet</td>{{/if}}
+                                    {{#if EMAIL}}
                                     <td>{{EMAIL}}</td>
-                                    <td>{{PASSWORD}}</td>
-                                    <td>{{OWNER}}</td>
-                                    <td>{{ROLE}}</td>
+                                    {{else}}<td>Not fill yet</td>{{/if}}
+                                    {{!-- <td>{{#if LOAINV}}</td> --}}
+                                    {{!-- <td>
+                                        <a href="accounts/update/{{this.MANV}}" class="edit btn btn-link">
+                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                        </a>
+
+                                        <a href="#delete-account-modals" class="delete-btns btn btn-link" data-toggle="modal"
+                                            data-accountId="{{this.MANV}}" data-target="#delete-account-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="delete">&#xe872;</i>
+                                        </a>
+                                    </td>   --}}
                                     <td>
-                                        <input type="button" id ="{{MASACH}}" class="btn btn-{{COLORSTATUS}}" 
+                                        <input type="button" id ="{{MANV}}" class="btn btn-{{COLORSTATUS}}" 
                                         data-toggle="tooltip" data-placement="right" title="Change Status"
                                         onclick="statusFunc(event)" value="{{STATUS}}">
                                         </input>
-                                    </td>                          
+                                    </td>                              
                                 </tr>
                                 {{/each}}
                             </tbody>          
@@ -93,21 +109,65 @@
 <!-- ============================================================== -->
 <!-- End Page content -->
 <!-- ============================================================== -->
+{{!-- model delete --}}
+<div class="modal fade" id="delete-account-modals">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xác nhận</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                Bạn có thật sự muốn xóa ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-delete-account" class="btn-delete-account btn btn-primary btn-danger">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="form-delete-accounts" method="POST"></form>
+
+<script>
+    var deleteForm = document.forms['form-delete-accounts']
+    var deleteBtns = Array.from(document.getElementsByClassName('delete-btns')); // lấy tất cả các button delete dưới dạng mảng
+    var deleteConfirm = document.querySelector('.btn-delete-account')
+    for (const deleteBtn of deleteBtns) {
+        deleteBtn.onclick = function (e) {
+            var account = this.getAttribute('data-accountid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
+            deleteConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
+                deleteForm.action = `/accounts/${account}/del?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                deleteForm.submit(); // và submit form .
+            }
+        }
+
+    }
+</script>
+{{!-- end model delete --}}
 
 <!-- Form Add admin account -->
 <div id="addAdminModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="/editAccount/add">
+            <form method="POST" action="/accounts/add">
                 <div class="modal-header">						
-                    <h4 class="modal-title">Add admin account</h4>
+                    <h4 class="modal-title">Add account</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body">				
+                <div class="modal-body">
                     <div class="form-group">
-                        <label for="emailaddress">Email address</label>
-                        <input class="form-control" type="email" name="email" required="" placeholder="Enter your email">
+                        <label for="role">Account Type</label>
+                        <select class="form-select" name="role">
+                            <option selected value="emp">Employee</option>
+                            <option value="adm">Admin</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="username">User name</label>
+                        <input class="form-control" type="user" name="username" required="" placeholder="Enter user name">
+                    </div>				
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input class="form-control" type="password" required="" id="password" name="password" placeholder="Enter your password">
@@ -125,6 +185,9 @@
     </div>
 </div>
 <!-- End Form add admin account -->
+
+<form name="deleteAccount" method="POST"></form>
+
 <script>
     function visibility(){
         let x = document.getElementById("password");
@@ -132,6 +195,20 @@
             x.type = "text";
         } else {
             x.type = "password";
+        }
+    }
+    function statusFunc(event){
+        const formDelete = document.forms['deleteAccount'];
+        const btn = event.target;
+        if(btn.value == "Hiden")
+        {
+            formDelete.action = '/accounts/active/' + btn.id;
+            formDelete.submit();
+        }
+        else
+        {
+            formDelete.action = '/accounts/hiden/' + btn.id;
+            formDelete.submit();
         }
     }
 </script>
