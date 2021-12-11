@@ -73,6 +73,7 @@ class productController{
                 Items: pagItems,
                 Theloai :  multipleSequelizeToObject(Theloai),
                 products: products.rows,
+                title: title,
                 NXB : multipleSequelizeToObject(NXB)
             });
         } else{
