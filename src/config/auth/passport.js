@@ -29,7 +29,7 @@ passport.use(new LocalStrategy({
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, {accountID: user.ID, owner: user.OWNER, role: user.LOAINV});
+    done(null, {accountID: user.MANV, owner: user.HOTEN, role: user.LOAINV});
 });
   
 passport.deserializeUser(function(user, done) {
