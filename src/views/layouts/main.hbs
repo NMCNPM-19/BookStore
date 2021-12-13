@@ -137,27 +137,31 @@
 <!--                            </li>-->
 <!--                        </ul>-->
 <!--                    </li>-->
+                    
                      <li>
                         <a href="/customer" class="waves-effect">
                             <i class="ri-customer-service-fill"></i>
                             <span>  Customer </span>
                         </a>
                     </li>
-
-                    <li>
-                        <a href="/accounts" class="waves-effect">
-                            <i class="ri-user-settings-fill"></i>
-                            <span> Account </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="/products" class="waves-effect">
-                            <i class="remixicon-table-line"></i>
-                            <span> Product </span>
-                        </a>
-                    </li>
-
+                    {{#unless user.emp}} <!-- employee can't access these features -->
+                         {{#unless user.mag}} <!-- only admin can access these features -->
+                            <li>
+                                <a href="/accounts" class="waves-effect">
+                                    <i class="ri-user-settings-fill"></i>
+                                    <span> Account </span>
+                                </a>
+                            </li>
+                        {{/unless}}
+                        
+                        <li>
+                            <a href="/products" class="waves-effect">
+                                <i class="remixicon-table-line"></i>
+                                <span> Product </span>
+                            </a>
+                        </li>
+                        
+                    {{/unless}}
                 </ul>
 
             </div>

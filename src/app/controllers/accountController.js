@@ -4,21 +4,23 @@ const pagination = require('../../public/js/pages/pagination');
 class AccountController{
     //[GET]:accounts/
      async list(req, res, next){
-        if(req.user.role === 'Adm'){
-            const itemPerPage = 10;
-            const title = req.query.title;
-            const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-            const accounts = await accountService.list(title,page,itemPerPage);
-            const TotalPage = Math.ceil(accounts.count/itemPerPage) > page + 1 ? Math.ceil(accounts.count/itemPerPage) : page + 1
-            const pagItems = pagination.paginationFunc(page+1, TotalPage);
-            const counter = await accountService.countBin()
-            res.render('accounts/editAccount', {
-                Items: pagItems,
-                accounts: accounts.rows,
-                message: req.query.message,
-                counter,
-                title: title,
-            });
+        if(req.user){
+            if(!req.user.emp && !req.user.mag) {
+                const itemPerPage = 10;
+                const title = req.query.title;
+                const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+                const accounts = await accountService.list(title,page,itemPerPage);
+                const TotalPage = Math.ceil(accounts.count/itemPerPage) > page + 1 ? Math.ceil(accounts.count/itemPerPage) : page + 1
+                const pagItems = pagination.paginationFunc(page+1, TotalPage);
+                const counter = await accountService.countBin()
+                res.render('accounts/editAccount', {
+                    Items: pagItems,
+                    accounts: accounts.rows,
+                    message: req.query.message,
+                    counter,
+                    title: title,
+                });
+            }
         } else{
             res.redirect('/');
         }

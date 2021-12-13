@@ -56,25 +56,27 @@ class productController{
     }
     //[GET]: /products/
     async list(req, res, next){
-        if(!req.user){
-            const itemPerPage = 10;
-            const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-            const title = req.query.title
-            const products = await productService.list(title,page,itemPerPage);
-            const Theloai = await productService.getTL();
-            const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
-            const pagItems = pagination.paginationFunc(page+1, TotalPage);
-            const NXB = await productService.getNXB()
-            
-            console.log(title)
+        if(req.user){
+            if(!req.user.emp) {
+                const itemPerPage = 10;
+                const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+                const title = req.query.title
+                const products = await productService.list(title,page,itemPerPage);
+                const Theloai = await productService.getTL();
+                const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
+                const pagItems = pagination.paginationFunc(page+1, TotalPage);
+                const NXB = await productService.getNXB()
+                
+                console.log(title)
 
-            res.render('products/editProduct', {
-                Items: pagItems,
-                Theloai :  multipleSequelizeToObject(Theloai),
-                products: products.rows,
-                title: title,
-                NXB : multipleSequelizeToObject(NXB)
-            });
+                res.render('products/editProduct', {
+                    Items: pagItems,
+                    Theloai :  multipleSequelizeToObject(Theloai),
+                    products: products.rows,
+                    title: title,
+                    NXB : multipleSequelizeToObject(NXB)
+                });
+            }
         } else{
             res.redirect('/');
         }
