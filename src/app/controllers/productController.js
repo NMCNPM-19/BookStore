@@ -65,10 +65,9 @@ class productController{
             const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
             const NXB = await productService.getNXB()
-            if(!products){
-                res.status(401).json("Something went wrong!");
-            }
             
+            console.log(title)
+
             res.render('products/editProduct', {
                 Items: pagItems,
                 Theloai :  multipleSequelizeToObject(Theloai),

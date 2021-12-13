@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     HINHANH: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING(500),
       allowNull: true
     },
     CCCD: {
@@ -55,11 +55,16 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(15),
       allowNull: true,
       defaultValue: "Active"
+    },
+    IDHINHANH: {
+      type: DataTypes.STRING(500),
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'nhanvien',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",

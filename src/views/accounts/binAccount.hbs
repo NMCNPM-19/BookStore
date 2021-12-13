@@ -17,39 +17,24 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box">
-                        <h4 class="header-title">Edit Account Admin</h4>
+                        <h4 class="header-title">Recycle Bin Account admin</h4>
                         <p class="sub-header">
                             from your Account Table.
                         </p>
                         <div class="mb-2">
                             <div class="row">
                                 <div class="col-12 text-sm-center form-inline">
-                                    <div class="form-group mr-2">
-                                        <a href="#addAdminModal" data-toggle="modal">
-                                            <button class="btn btn-primary">
-                                                <i class="mdi mdi-plus-circle mr-2"></i>
-                                                <span>Add Account</span>
-                                            </button>
-                                        </a>
-                                    </div>
-                                    <div class="form-group mr-2">
-                                        <a href="/accounts/recyclebin">
-                                            <button class="btn btn-primary">
-                                                <i class="fa fa-recycle mr-2"></i>
-                                                <span> Recycle Bin ({{counter}}) </span>
-                                            </button>
-                                        </a>
-                                    </div>
+                                    
                                     <div class="form-group">
-                                        <form action="" >
+                                        <form>
                                             <input id="demo-input-search2" type="text" placeholder="Search"
-                                                class="form-control" name="title">
+                                            class="form-control" autocomplete="off" name="title">
                                             <button type="submit" class="btn btn-primary">
                                                     <i class="fa fa-search mr-2"></i>
                                                     <span> Tìm kiếm </span>
                                             </button>
                                         </form>
-
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +53,7 @@
                                     <th>Full name</th>
                                     <th>Email</th>
                                     <th>Number phone</th>
-                                    <th rowspan="2">Edit</th>
+                                    <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,13 +65,13 @@
                                     <td>{{this.EMAIL}}</td>
                                     <td>{{this.SDT}}</td>
                                     <td>
-                                        <a href="/accounts/{{this.MANV}}/edit" class="edit btn btn-link">
-                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                        <a href="" class="restore-btns btn btn-link" data-accountId="{{this.MANV}}">
+                                            <i class="fas fa-trash-restore " title="restore" style="color: green;"></i>
                                         </a>
                                         <a href="#delete-account-modals" class="delete-btns btn btn-link"
                                             data-toggle="modal" data-accountId="{{this.MANV}}"
                                             data-target="#delete-account-modals">
-                                            <i class="material-icons " data-toggle="tooltip" title="delete">&#xe872;</i>
+                                            <i class="far fa-trash-alt " data-toggle="tooltip" title="delete" style="color: red;"></i>
                                         </a>
                                     </td>
                                 </tr>
@@ -99,7 +84,7 @@
                             <ul class="pagination justify-content-end">
                                 {{#each Items}}
                                 <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
-                                        href="/accounts?title={{../title}}&&page={{item}}">{{item}}</a></li>
+                                        href="/accounts/recyclebin?title={{title}}&&page={{item}}">{{item}}</a></li>
                                 {{/each}}
                             </ul>
                         </div>
@@ -135,7 +120,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Form Add admin account -->
     <div id="addAdminModal" class="modal fade">
@@ -226,7 +210,7 @@
     <!-- End Form add admin account -->
 
     <form name="form-delete-accounts" method="POST"></form>
-
+    <form name="form-restore-accounts" method="POST"></form>
     <script>
         function visibility() {
             let x = document.getElementsByClassName("password");
@@ -246,11 +230,27 @@
             deleteBtn.onclick = function (e) {
                 var account = this.getAttribute('data-accountid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
                 deleteConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
-                    deleteForm.action = `/accounts/${account}/del?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                    deleteForm.action = `/accounts/${account}/destroy?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
                     deleteForm.submit(); // và submit form .
                 }
             }
 
         }
+
+        var restoreForm = document.forms['form-restore-accounts']
+        var restoreBtns = Array.from(document.getElementsByClassName('restore-btns')); // lấy tất cả các button restore dưới dạng mảng
+        for (const restoreBtn of restoreBtns) {
+            restoreBtn.onclick = function (e) {
+                e.preventDefault();
+                var account = this.getAttribute('data-accountid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó        
+                restoreForm.action = `/accounts/${account}/restore?_method=PATCH`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                restoreForm.submit(); // và submit form .
+                
+            }
+
+        }
+
+
+
     </script>
     {{!-- end model delete --}}
