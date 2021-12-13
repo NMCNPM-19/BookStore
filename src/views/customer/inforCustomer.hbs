@@ -1,0 +1,126 @@
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Customer</h4>
+                        <div class="float-left md-4  mr-4">
+                            <a href="/customers/" class="btn btn-link">
+                                <i class="ri-arrow-left-line"></i>
+                                Quay lại
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- end page title -->
+        </div>
+        <!-- Form Edit Product -->
+        <div class="">
+            <ul class="list-group list-group-flush">
+                <form action="/customers/{{admin.MAKH}}/edit?_method=put" method="post">
+                    <li class="list-group-item">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Họ tên</span>
+                            </div>
+                            <input name="HOTEN" type="text" class="form-control"
+                                aria-describedby="inputGroup-sizing-default" value="{{admin.HOTEN}}" />
+
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Email</span>
+                            </div>
+                            <input name="EMAIL" type="email" class="form-control"
+                                aria-describedby="inputGroup-sizing-default" value="{{admin.EMAIL}}" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Giới
+                                    tính</label>
+                            </div>
+                            <select class="custom-select" name="PHAI" id="inputGroupSelect01"="">
+                                <option value="NAM">Nam</option>
+                                <option value="NU">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Số
+                                    điện thoại</span>
+                            </div>
+                            <input name="SDT" type="text" class="form-control"
+                                aria-describedby="inputGroup-sizing-default" value="{{admin.SDT}}" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Địa
+                                    chỉ</span>
+                            </div>
+                            <input name="DIACHI" type="text" class="form-control"
+                                aria-describedby="inputGroup-sizing-default" value="{{admin.DIACHI}}" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Ngày
+                                    sinh</span>
+                            </div>
+                            <input name="NGAYSINH" type="date" class="form-control"
+                                aria-describedby="inputGroup-sizing-default" value="{{admin.NGAYSINH}}" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-center align-items-end text-center">
+                            <button type="submit" class = "btn-submit" style="
+                                background-color: #44c767;
+                                border-radius: 28px;
+                                border: 1px solid #18ab29;
+                                display: inline-block;
+                                cursor: pointer;
+                                color: #ffffff;
+                                font-family: Arial;
+                                font-size: 17px;
+                                padding-left: 20px;
+                                padding-right: 20px;
+                                padding-top: 10px;
+                                padding-bottom: 10px;
+                                text-decoration: none;
+                            ">
+                            Lưu thay đổi
+                            </button>
+                        </div>
+                    </li>
+                </form>
+            </ul>
+            <button class="float-left md-4 mt-auto mb-auto mr-4 btn-submit" style="background-color: #44c767;
+            border-radius: 28px; border: 1px solid #18ab29;">
+                <a href="#" class="btn btn-link">
+                    Lập hóa đơn
+                </a>
+            </button>
+            <button class="float-right md-4 mt-auto mb-auto mr-4 btn-submit" style="background-color: #44c767;
+            border-radius: 28px; border: 1px solid #18ab29;">
+                <a href="#" class="btn btn-link">
+                    Ghi Nợ
+                </a>
+            </button>
+        </div>
+        <!-- End Form Edit Product -->
+    </div>
+</div>
+
+
+<script>
+    var sexEl = document.getElementById("inputGroupSelect01");
+    sexEl.value = "{{admin.PHAI}}";
+</script>

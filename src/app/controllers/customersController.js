@@ -1,20 +1,20 @@
-const accountService = require('../services/accountService');
+const customerService = require('../services/customersService');
 const pagination = require('../../public/js/pages/pagination');
 
-class AccountController{
-    //[GET]:accounts/
+class customerController{
+    //[GET]:customers/
      async list(req, res, next){
         if(true){
             const itemPerPage = 10;
             const title = req.query.title;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-            const accounts = await accountService.list(title,page,itemPerPage);
-            const TotalPage = Math.ceil(accounts.count/itemPerPage) > page + 1 ? Math.ceil(accounts.count/itemPerPage) : page + 1
+            const customers = await customerService.list(title,page,itemPerPage)
+            const TotalPage = Math.ceil(customers.count/itemPerPage) > page + 1 ? Math.ceil(customers.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
-            const counter = await accountService.countBin()
-            res.render('accounts/editAccount', {
+            const counter = await customerService.countBin()
+            res.render('customer/editCustomer', {
                 Items: pagItems,
-                accounts: accounts.rows,
+                customers: customers.rows,
                 message: req.query.message,
                 counter,
                 title: title,
@@ -23,40 +23,41 @@ class AccountController{
             res.redirect('/');
         }
     }
-    //[POST]:accounts/add
+    //[POST]:customers/add
      async add(req, res , next){
         try {
-            const account = await accountService.add(req);
-            res.redirect('/accounts?message='+account)
+            const customer = await customerService.add(req);
+            res.redirect('/customers?message=' + customer)
         }
         catch(err){
-            return res.render('accounts/editAccount',{message: 'Something went wrong !!! Try again!'});
+            var message =  'Something went wrong !!! Try again!'
+            res.redirect('/customers?message=' + message)
         }
     }
     
-    //[DELETE]:accounts/:id/del
+    //[DELETE]:customers/:id/del
     async delete(req, res, next) {
         try {
-            await accountService.softDelete(req)
-            res.redirect('/accounts')
+            await customerService.softDelete(req)
+            res.redirect('/customers')
         } catch (error) {
             next(error);
         }
     }
-    //[GET]:accounts/recyclebin
+    //[GET]:customers/recyclebin
     async recyclebin(req, res, next){
         // if(req.user){
             const itemPerPage = 10;
             const title = req.query.title;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-            const accounts = await accountService.binList(title, page,itemPerPage);
-            const TotalPage = Math.ceil(accounts.count/itemPerPage) > page + 1 ? Math.ceil(accounts.count/itemPerPage) : page + 1
+            const customers = await customerService.binList(title, page,itemPerPage);
+            const TotalPage = Math.ceil(customers.count/itemPerPage) > page + 1 ? Math.ceil(customers.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
-            const counter = await accountService.countBin()
+            
 
-            res.render('accounts/binAccount', {
+            res.render('customer/binCustomer', {
                 Items: pagItems,
-                accounts: accounts.rows,
+                customers: customers.rows,
                 message: req.query.message,
                 title: title,
             });
@@ -65,39 +66,39 @@ class AccountController{
         // }
     }
 
-    //[PATCH]:accounts/:id/restore
+    //[PATCH]:customers/:id/restore
     async restore(req, res, next){
         try {
-            await accountService.Restore(req.params.id)
-            res.redirect('/accounts')
+            await customerService.Restore(req.params.id)
+            res.redirect('/customers')
         } catch (error) {
             next(error)
         }
     }
 
-    //[DELETE]:accounts/:id/destroy
+    //[DELETE]:customers/:id/destroy
     async destroy(req, res, next){
         try {
-            await accountService.destroyDelete(req.params.id)
+            await customerService.destroyDelete(req.params.id)
             res.redirect('back')
         } catch (error) {
             next(error)
         }
     }
-    //[GET]:accounts/:id/edit
+    //[GET]:customers/:id/edit
     async edit(req, res, next){
         try {
-            var admin = await accountService.getInfor(req.params.id)
-            console.log(admin.MANV)
-            res.render('accounts/inforAccount',{admin})
+            var admin = await customerService.getInfor(req.params.id)      
+            res.render('customer/inforCustomer',{admin})
         } catch (error) {
             next(error)
         }
     }
-    //[POST]:accounts/:id/edit
+    //[POST]:customers/:id/edit
     async update(req, res, next){
         try {
-            
+            await customerService.updateSave(req)
+            res.redirect('back')
         } catch (error) {
             next(error)
         }
@@ -108,4 +109,4 @@ class AccountController{
 
 
 
-module.exports = new AccountController
+module.exports = new customerController

@@ -1,0 +1,212 @@
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Customer Table</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <h4 class="header-title">Edit Customer</h4>
+                        <p class="sub-header">
+                            from your customer Table.
+                        </p>
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-12 text-sm-center form-inline">
+                                    <div class="form-group mr-2">
+                                        <a href="#addAdminModal" data-toggle="modal">
+                                            <button class="btn btn-primary">
+                                                <i class="mdi mdi-plus-circle mr-2"></i>
+                                                <span>Add customer</span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="form-group mr-2">
+                                        <a href="/customers/recyclebin">
+                                            <button class="btn btn-primary">
+                                                <i class="fa fa-recycle mr-2"></i>
+                                                <span> Recycle Bin ({{counter}}) </span>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="form-group">
+                                        <form action="" >
+                                            <input id="demo-input-search2" type="text" placeholder="Search"
+                                                class="form-control" name="title">
+                                            <button type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-search mr-2"></i>
+                                                    <span> Search </span>
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                {{#if message}}<h4 style="color: red; margin-left: 10px">{{message}}</h4>{{/if}}
+                            </div>
+                        </div>
+
+                        <table id="demo-foo-addrow"
+                            class="table table-centered table-striped table-bordered mb-0 toggle-circle"
+                            data-page-size="7">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Full name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Number phone</th>
+                                    <th rowspan="2">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each customers}}
+                                <tr>
+                                    <td>{{this.MAKH}}</td>
+                                    <td>{{this.HOTEN}}</td>
+                                    <td>{{this.EMAIL}}</td>
+                                    <td>{{this.DIACHI}}</td>
+                                    <td>{{this.SDT}}</td>
+                                    <td>
+                                        <a href="/customers/{{this.MAKH}}/edit" class="edit btn btn-link">
+                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                        </a>
+                                        <a href="#delete-customer-modals" class="delete-btns btn btn-link"
+                                            data-toggle="modal" data-customerId="{{this.MAKH}}"
+                                            data-target="#delete-customer-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="delete">&#xe872;</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
+                        {{!-- Pagination --}}
+                        <div style="margin-top: 30px ">
+                            <ul class="pagination justify-content-end">
+                                {{#each Items}}
+                                <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
+                                        href="/customers?title={{../title}}&&page={{item}}">{{item}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+
+        </div> <!-- content -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+    {{!-- model delete --}}
+    <div class="modal fade" id="delete-customer-modals">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Bạn có thật sự muốn xóa ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-delete-customer"
+                        class="btn-delete-customer btn btn-primary btn-danger">Xóa bỏ</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Form Add admin customer -->
+    <div id="addAdminModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="POST" action="/customers/add">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add Customer</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="form-group">
+                                <label for="username">Name</label>
+                                <input class="form-control" type="text" name="HOTEN" required placeholder="Enter name">
+                            </div>
+                            <div class="form-group">
+                                <label for="PHAI">Sex</label><br>
+                                <select class="form-select" name="PHAI">
+                                    <option selected value="NAM">male </option>
+                                    <option value="NU">female </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Birth date</label>
+                                <input class="form-control" type="date" name="NGAYSINH" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Address</label>
+                                <input class="form-control" type="text" name="DIACHI" required
+                                    placeholder="Enter user Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Email</label>
+                                <input class="form-control" type="text" name="EMAIL" required
+                                    placeholder="Enter user Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">Number phone</label>
+                                <input class="form-control" type="text" name="SDT" required
+                                    placeholder="Enter user Number phone">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-success" value="Add">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- End Form add admin customer -->
+
+    <form name="form-delete-customers" method="POST"></form>
+
+    <script>
+        
+
+        var deleteForm = document.forms['form-delete-customers']
+        var deleteBtns = Array.from(document.getElementsByClassName('delete-btns')); // lấy tất cả các button delete dưới dạng mảng
+        var deleteConfirm = document.querySelector('.btn-delete-customer')
+        for (const deleteBtn of deleteBtns) {
+            deleteBtn.onclick = function (e) {
+                var customer = this.getAttribute('data-customerid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
+                deleteConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
+                    deleteForm.action = `/customers/${customer}/del?_method=DELETE`; // truyền  url chứa id của từng khóa học vào action và với method DELETE
+                    deleteForm.submit(); // và submit form .
+                }
+            }
+
+        }
+    </script>
+    {{!-- end model delete --}}

@@ -83,9 +83,6 @@ genKeyAccount = async (role) => {
 };
 
 exports.softDelete = async (req) => {
-    const Nhanvien = await models.nhanvien.findOne({
-        where: { MANV: req.params.id },
-    });
     await models.nhanvien.destroy({
         where: {
             MANV: req.params.id,
