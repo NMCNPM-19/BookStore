@@ -34,8 +34,12 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input id="demo-input-search2" type="text" placeholder="Search"
-                                            class="form-control" autocomplete="off">
+                                        <form action="?title=">
+                                            <input id="demo-input-search2" type="text" placeholder="Search"
+                                            class="form-control" name="title" value=""autocomplete="off">
+                                            <button class="-outline-success my-2 my-sm-0" type="submit">Tìm</button>
+                                        </form>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +89,7 @@
                             <ul class="pagination justify-content-end">
                                 {{#each Items}}
                                 <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
-                                        href="/editProduct?page={{item}}">{{item}}</a></li>
+                                        href="?title={{../title}}&&page={{item}}">{{item}}</a></li>
                                 {{/each}}
                             </ul>
                         </div>
