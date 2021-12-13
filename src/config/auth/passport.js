@@ -5,14 +5,17 @@ const {models} = require('../sequelize');
 const bcrypt = require('bcrypt');
 
 passport.use(new LocalStrategy({
-        usernameField: 'email',
+        usernameField: 'username',
         passwordField: 'password'
     },
     async function(username, password, done) {
         try {
-            const user = await models.account.findOne({ where: {EMAIL: username, ROLE: 'Admin'}, raw: true });
+            const user = await models.nhanvien.findOne({ where: {USER: username}, raw: true });
             if (!user) {
                 return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (user.STATUS !== 'Active') {
+                return done(null, false, { message: 'Account was disalbe.' });
             }
             const match = await validPassword(user, password);
             if (!match) {
@@ -26,7 +29,7 @@ passport.use(new LocalStrategy({
 ));
 
 passport.serializeUser(function(user, done) {
-    done(null, {accountID: user.ID, owner: user.OWNER});
+    done(null, {accountID: user.ID, owner: user.OWNER, role: user.LOAINV});
 });
   
 passport.deserializeUser(function(user, done) {
@@ -34,7 +37,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 function validPassword(user, password){
-    return bcrypt.compare(password, user.PASSWORD);
+    return bcrypt.compare(password, user.PASS);
 }
 
 module.exports = passport;

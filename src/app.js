@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const methodOverride = require('method-override');
 const exphbs = require('express-handlebars')
+const flash = require('connect-flash');
 
 //Router for app
 const router = require('./routes');
@@ -33,6 +34,7 @@ app.use(cookieParser());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: process.env.SESSION_SECRET }));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 

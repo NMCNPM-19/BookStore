@@ -4,7 +4,7 @@ const pagination = require('../../public/js/pages/pagination');
 class AccountController{
     //[GET]:accounts/
      async list(req, res, next){
-        // if(req.user){
+        if(req.user.role === 'Adm'){
             const itemPerPage = 10;
             const title = req.query.title;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
@@ -19,9 +19,9 @@ class AccountController{
                 counter,
                 title: title,
             });
-        // } else{
-        //     res.redirect('/');
-        // }
+        } else{
+            res.redirect('/');
+        }
     }
     //[POST]:accounts/add
      async add(req, res , next){
