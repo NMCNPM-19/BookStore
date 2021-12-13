@@ -4,7 +4,7 @@ const pagination = require('../../public/js/pages/pagination');
 class AccountController{
     //[GET]:accounts/
      async list(req, res, next){
-        // if(req.user){
+        if(req.user.role === 'Adm'){
             const itemPerPage = 10;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const accounts = await accountService.list(page,itemPerPage);
@@ -27,9 +27,9 @@ class AccountController{
                 Items: pagItems,
                 accounts: accounts.rows
             });
-        // } else{
-        //     res.redirect('/');
-        // }
+        } else{
+            res.redirect('/');
+        }
     }
 
 
@@ -50,8 +50,8 @@ class AccountController{
         }
     }
     
-    //[DELETE]:accounts/:id/del
-    // delete
+    //[POST]:accounts/:id/del
+    // disable or enable account
     async hiden(req, res) {
         await accountService.hiden(req);
         res.redirect('back');
