@@ -33,7 +33,7 @@ class productController{
     };
     //[GET]: products/update/:id
     async update(req, res, next){
-        if(!req.user){
+        if(req.user){
             const product = await productService.update(req);
             const NXB = await productService.getNXB()
             res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) });

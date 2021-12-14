@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
-                        <h4 class="page-title">Account</h4>
+                        <h4 class="page-title">Edit Product</h4>
                         <div class="float-left md-4  mr-4">
                             <a href="/accounts/" class="btn btn-link">
                                 <i class="ri-arrow-left-line"></i>
@@ -29,37 +29,37 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-4">
-                            <img src="{{admin.HINHANH}}" alt="{{admin.IDHINHANH}}" style = "width:400px ;height:500px;" />
-                            <input type="file" class="mt-auto mb-auto ml-2" name="file">
+                            <img src="{{admin.HINHANH}}" alt="{{admin.IDHINHANH}}" style = "border-radius:5%; width:350px ;height:450px;" />
+                            
                         </div>
                         <div class="col-8">
-                            <form action="/accounts/{{admin.MANV}}/edit?_method=put" method="post">
-                                <li class="list-group-item row">
+                            <form action="/admins/{{admin.USER}}/edit?_method=put" method="post">
+                                <li class="list-group-item">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text mb-1" id="inputGroup-sizing-default"
+                                            <span class="input-group-text" id="inputGroup-sizing-default"
                                                 value="{{admin.MANV}}">Họ tên</span>
                                         </div>
                                         <input name="HOTEN" type="text" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
-                                            value="{{admin.HOTEN}}"/>
+                                            value="{{admin.HOTEN}}" readonly/>
 
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text mb-1"
+                                            <span class="input-group-text"
                                                 id="inputGroup-sizing-default">Email</span>
                                         </div>
                                         <input name="EMAIL" type="email" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
-                                            value="{{admin.EMAIL}}"/>
+                                            value="{{admin.EMAIL}}" readonly/>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <label class="input-group-text" for="inputGroupSelect01">Giới
                                                 tính</label>
                                         </div>
-                                        <select class="custom-select" name="PHAI" id="inputGroupSelect01">
+                                        <select class="custom-select" name="PHAI" id="inputGroupSelect01" readonly="readonly" aria-disabled="true">
                                             <option value="NAM">Nam</option>
                                             <option value="NU">Nữ</option>
                                         </select>
@@ -70,14 +70,14 @@
                                                 điện thoại</span>
                                         </div>
                                         <input name="SDT" type="text" class="form-control"
-                                            aria-describedby="inputGroup-sizing-default" value="{{admin.SDT}}"/>
+                                            aria-describedby="inputGroup-sizing-default" value="{{admin.SDT}}" readonly/>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroup-sizing-default">CCCD</span>
                                         </div>
                                         <input name="CCCD" type="text" class="form-control"
-                                            aria-describedby="inputGroup-sizing-default" value="{{admin.CCCD}}"/>
+                                            aria-describedby="inputGroup-sizing-default" value="{{admin.CCCD}}" readonly/>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
@@ -86,17 +86,9 @@
                                         </div>
                                         <input name="DIACHI" type="text" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
-                                            value="{{admin.DIACHI}}"/>
+                                            value="{{admin.DIACHI}}" readonly/>
                                     </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroup-sizing-default">Hình
-                                                ảnh</span>
-                                        </div>
-                                        <input name="HINHANH" type="text" class="form-control"
-                                            aria-describedby="inputGroup-sizing-default"
-                                            value="{{admin.HINHANH}}"/>
-                                    </div>
+                                    
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text" id="inputGroup-sizing-default">Ngày
@@ -104,16 +96,12 @@
                                         </div>
                                         <input name="NGAYSINH" type="date" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
-                                            value="{{admin.NGAYSINH}}" />
+                                            value="{{admin.NGAYSINH}}" readonly/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
                                     </div>
-                                    <div class="input-group">
-                                        <input type="submit" class="btn btn-info" value="Confirm">
-                                    </div>
                                 </li>
-                                
                             </form>
                         </div>
                     </div>

@@ -47,7 +47,7 @@ class AccountController{
     }
     //[GET]:accounts/recyclebin
     async recyclebin(req, res, next){
-        // if(req.user){
+        if(req.user){
             const itemPerPage = 10;
             const title = req.query.title;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
@@ -62,13 +62,14 @@ class AccountController{
                 message: req.query.message,
                 title: title,
             });
-        // } else{
-        //     res.redirect('/');
-        // }
+        } else{
+            res.redirect('/');
+        }
     }
 
     //[PATCH]:accounts/:id/restore
     async restore(req, res, next){
+        
         try {
             await accountService.Restore(req.params.id)
             res.redirect('/accounts')
@@ -88,18 +89,22 @@ class AccountController{
     }
     //[GET]:accounts/:id/edit
     async edit(req, res, next){
-        try {
-            var admin = await accountService.getInfor(req.params.id)
-            console.log(admin.MANV)
-            res.render('accounts/inforAccount',{admin})
-        } catch (error) {
-            next(error)
+        if(req.user){
+            try {
+                var admin = await accountService.getInfor(req.params.id)
+                res.render('accounts/inforAccount',{admin})
+            } catch (error) {
+                next(error)
+            }
+        } else{
+            res.redirect('/');
         }
     }
-    //[POST]:accounts/:id/edit
+    //[PUT]:accounts/:id/edit
     async update(req, res, next){
         try {
-            
+            await accountService.saveUpdate(req);
+            res.redirect('back');
         } catch (error) {
             next(error)
         }

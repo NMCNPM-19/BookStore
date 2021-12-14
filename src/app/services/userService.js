@@ -1,19 +1,14 @@
 const bcrypt = require("bcrypt");
 const {models} = require('../../config/sequelize')
-const passport = require("../../config/auth/passport");
+
 
 //User profile
-exports.getProfile = async (req) => {
+exports.viewProfile = async (req) => {
     const profile = await models.nhanvien.findOne({ where: {MANV: req.user.accountID}, raw: true })
     if (!profile) {
         return
     }
     return profile;
-}
-exports.updateProfile = async (req) => {
-    return models.nhanvien.update(
-        { HOTEN: req.body.owner },
-        { where: { MANV: req.params.id } });
 }
 
 //User password

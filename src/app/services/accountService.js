@@ -57,6 +57,21 @@ exports.add = async (req) => {
     return "add success";
 };
 
+exports.saveUpdate = async(req) => {
+    const nhanvien = await models.nhanvien.findOne({where: {MANV: req.params.id}});
+    if(req.file){
+        var result
+        if(nhanvien.IDHINHANH){
+            result = await cloudImage.updateIMG(req.file.path, nhanvien.IDHINHANH);
+        }else{
+            result = await cloudImage.uploadIMG(req.file.path);
+        }
+        req.body.HINHANH = result.secure_url
+        req.body.IDHINHANH = result.public_id
+    }
+    nhanvien.set(req.body)
+    await nhanvien.save()
+}
 genKeyAccount = async (role) => {
     var accounts = await models.nhanvien.findAll({});
     var i = 1;
