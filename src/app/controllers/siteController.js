@@ -9,7 +9,6 @@ class SiteController{
         else {
             res.render('index', {user: req.user});
         }
-        next();
     }
 }
 module.exports = new SiteController;

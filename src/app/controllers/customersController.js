@@ -4,7 +4,7 @@ const pagination = require('../../public/js/pages/pagination');
 class customerController{
     //[GET]:customers/
      async list(req, res, next){
-        if(true){
+        if(req.user){
             const itemPerPage = 10;
             const title = req.query.title;
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;

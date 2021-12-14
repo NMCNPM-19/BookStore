@@ -1,0 +1,57 @@
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container-fluid">
+            
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Change password</h4>
+                    </div>
+                </div>
+            </div>     
+            <!-- end page title --> 
+        </div>
+        <!-- Form Edit Product -->
+        <div id="editProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    {{#if message}}<h4 style="color: red; margin-left: 10px">{{message}}</h4>{{/if}}
+                    
+                    <form method="POST" action="/user/changePasswd/{{user.accountID}}?_method=PUT">
+                        <div class="modal-header">						
+                            <h1 class="modal-title">Change your password</h1>
+                            <a href="javascript:history.back()">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </a>
+                        </div>
+                        <div class="modal-body">				
+                            <div class="form-group">
+                                <label>Current password</label>
+                                <input type="password" class="form-control" name="currPasswd">
+                            </div>
+                            <div class="form-group">
+                                <label>New password</label>
+                                <input type="password" class="form-control" name="newPasswd" id="password" onkeyup="checkPass()">
+                            </div>
+                            <div class="form-group">
+                                <label>Re password</label>
+                                <input type="password" class="form-control" name="reNewPasswd" id="password2" onkeyup="checkPass()">
+                                <span id="confirmMessage" class="confirmMessage"></span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-info" value="Confirm">
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+<!-- End Form Edit Product -->
+    </div>
+</div>
+
+<script src="/js/re-enterPw.js"></script>

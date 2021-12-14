@@ -164,12 +164,13 @@
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input class="form-control password" type="password" required id="password" name="PASS"
-                                    placeholder="Enter your password">
+                                    placeholder="Enter your password" onkeyup="checkPass()">
                             </div>
                             <div class="form-group">
                                 <label for="password">RePassword</label>
-                                <input class="form-control password" type="password" required id="password"
-                                    name="REPASS" placeholder="Enter your password again">
+                                <input class="form-control password" type="password" required id="password2"
+                                    name="REPASS" placeholder="Enter your password again" onkeyup="checkPass()">
+                                <span id="confirmMessage" class="confirmMessage"></span>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" onclick="visibility()">
@@ -254,4 +255,5 @@
 
         }
     </script>
+    <script src="/js/re-enterPw.js"></script>
     {{!-- end model delete --}}

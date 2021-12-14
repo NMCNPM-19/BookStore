@@ -1,4 +1,3 @@
-const passport = require("../../config/auth/passport");
 
 class authController{
     //[GET]: /logout
