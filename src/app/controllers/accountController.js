@@ -5,7 +5,7 @@ class AccountController{
     //[GET]:accounts/
      async list(req, res, next){
         if(req.user){
-            if(!req.user.emp && !req.user.mag) {
+            if(req.user.LOAINV = 'adm') {
                 const itemPerPage = 10;
                 const title = req.query.title;
                 const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
@@ -109,7 +109,15 @@ class AccountController{
             next(error)
         }
     }
-
+    //[POST]:accounts/:id/delete
+    async reset(req, res, next){
+        try {
+            await accountService.resetPass(req.params.id);
+            res.redirect('back');
+        } catch (error) {
+            next(error)
+        }
+    }
 
 }
 
