@@ -13,7 +13,7 @@ class passwdController{
     async change(req, res ,next){
         try {
             const message = await userService.changePasswd(req);
-            res.render('user/changePasswd',{message});
+            res.render('user/changePasswd',{user :req.user ,message});
         }
         catch(err){
             res.redirect('user/changePasswd',{message: 'Something went wrong !!! Try again!'});
