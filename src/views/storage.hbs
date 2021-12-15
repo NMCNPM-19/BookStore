@@ -26,7 +26,7 @@
                                             <input id="demo-input-search2" type="text" placeholder="Search"
                                             class="form-control" name="title" value=""autocomplete="off">
 
-												<label for="start">Start month:</label>
+												<span for="start">Start month:</span>
 												<input type="month" id="start" name="chooseMonth" min="2018-03" value={{chooseMonth}}>
                                             <button class="-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
                                                 <i class="fa fa-search mr-2"></i>
@@ -71,7 +71,7 @@
                             <ul class="pagination justify-content-end">
                                 {{#each Items}}
                                 <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
-                                        href="?title={{../title}}&&chooseMonth={{chooseMonth}}&&page={{item}}">{{item}}</a></li>
+                                        href="?title={{../title}}&&chooseMonth={{this.chooseMonth}}&&page={{item}}">{{item}}</a></li>
                                 {{/each}}
                             </ul>
                         </div>
