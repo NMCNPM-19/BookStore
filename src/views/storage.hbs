@@ -25,6 +25,9 @@
                                         <form action="?title=">
                                             <input id="demo-input-search2" type="text" placeholder="Search"
                                             class="form-control" name="title" value=""autocomplete="off">
+
+												<label for="start">Start month:</label>
+												<input type="month" id="start" name="chooseMonth" min="2018-03" value={{chooseMonth}}>
                                             <button class="-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
                                                 <i class="fa fa-search mr-2"></i>
                                                 <span> Tìm kiếm </span>
@@ -35,6 +38,7 @@
                                 </div>
                             </div>
                         </div>
+					
 
                         <table id="demo-foo-addrow"
                             class="table table-centered table-striped table-bordered mb-0 toggle-circle"
@@ -42,34 +46,21 @@
                             <thead>
                                 <tr>
 
-                                    <th>ID</th>
-                                    <th>Author</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>atCreated</th>
-                                    <th rowspan="2">Edit</th>
+                                    <th>ID Mã sách</th>
+                                    <th>Số lượng đầu</th>
+                                    <th>Số lượng cuối</th>
+                                    <th>Tổng nhập </th>
+									<th>Tổng xuất </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each products}}
+                                {{#each storageBook}}
                                 <tr>
                                     <td>{{this.masach}}</td>
-                                    <td>{{this.tacgia}}</td>
-                                    <td>{{this.tensach}}</td>
-                                    <td>{{this.gia}}</td>
-                                    <td>{{this.atCreated}}</td>
-                                    <td>
-                                        <a href="products/update/{{this.masach}}" class="edit btn btn-link">
-                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                        </a>
-
-                                        <a href="#delete-book-modals" class="delete-btns btn btn-link" data-toggle="modal"
-                                            data-bookId="{{this.masach}}" data-target="#delete-book-modals">
-                                            <i class="material-icons " data-toggle="tooltip" title="delete">&#xe872;</i>
-                                        </a>
-
-
-                                    </td>
+                                    <td>{{this.SLDau}}</td>
+                                    <td>{{this.SLCuoi}}</td>
+                                    <td>{{this.Tongnhap}}</td>
+									<td>{{this.Tongxuat}}</td>
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -80,7 +71,7 @@
                             <ul class="pagination justify-content-end">
                                 {{#each Items}}
                                 <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
-                                        href="?title={{../title}}&&page={{item}}">{{item}}</a></li>
+                                        href="?title={{../title}}&&chooseMonth={{chooseMonth}}&&page={{item}}">{{item}}</a></li>
                                 {{/each}}
                             </ul>
                         </div>
@@ -99,6 +90,9 @@
     <!-- End Page content -->
     <!-- ============================================================== -->
 
+<script>
+
+</script>
 
 
 
