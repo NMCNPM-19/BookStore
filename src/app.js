@@ -41,6 +41,7 @@ app.use(passport.session());
 app.use((req, res, next) => {
   if(req.user){
     res.locals.user = req.user;
+    
   if(req.user.LOAINV =='adm'){
     res.locals.user.adm = true
   }
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
   if(req.user.LOAINV =='mag'){
     res.locals.user.mag = true
   }
+  
   }
   
 

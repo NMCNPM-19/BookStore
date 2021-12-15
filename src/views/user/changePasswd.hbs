@@ -20,7 +20,7 @@
                 <div class="modal-content">
                     {{#if message}}<h4 style="color: red; margin-left: 10px">{{message}}</h4>{{/if}}
                     
-                    <form method="POST" action="/user/changePasswd/{{user.accountID}}?_method=PUT">
+                    <form method="POST" action="/user/changePasswd/{{user.MANV}}?_method=PUT">
                         <div class="modal-header">						
                             <h1 class="modal-title">Change your password</h1>
                             <a href="javascript:history.back()">

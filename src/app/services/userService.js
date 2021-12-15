@@ -4,7 +4,7 @@ const {models} = require('../../config/sequelize')
 
 //User profile
 exports.viewProfile = async (req) => {
-    const profile = await models.nhanvien.findOne({ where: {MANV: req.user.accountID}, raw: true })
+    const profile = await models.nhanvien.findOne({ where: {MANV: req.user.MANV}, raw: true })
     if (!profile) {
         return
     }
