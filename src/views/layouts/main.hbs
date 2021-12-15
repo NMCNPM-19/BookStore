@@ -31,8 +31,11 @@
                     {{!-- <img src="/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle"> --}}
 
                     <span class="pro-user-name ml-1">
-                          Hello, {{#if user.owner}}{{user.owner}}{{else}}admin{{/if}} <i class="mdi mdi-chevron-down"></i> 
-                      </span>
+                        {{#if user}}
+                        {{user.HOTEN}}
+                        <img src="{{user.HINHANH}}" alt="avatar" class="user-avatar" style="">
+                        {{else}}admin{{/if}} <i class="mdi mdi-chevron-down"></i> 
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                     <!-- item-->

@@ -160,3 +160,10 @@ exports.Restore = async (manv) => {
 exports.getInfor= async (manv) =>{
     return await models.nhanvien.findOne({ where: { MANV: manv } , raw : true});
 }
+
+exports.resetPass = async (manv) =>{
+    const nhanvien =  await models.nhanvien.findOne({ where: { MANV: manv }, raw : true});
+    var password = await bcrypt.hash(nhanvien.EMAIL, 10)
+    await models.nhanvien.update({PASS : password},
+                                 { where: { MANV: manv }});
+}

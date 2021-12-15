@@ -83,6 +83,11 @@
                                         <a href="/accounts/{{this.MANV}}/edit" class="edit btn btn-link">
                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
                                         </a>
+                                        <a href="#reset-account-modals" class="reset-btns btn btn-link"
+                                            data-toggle="modal" data-accountId="{{this.MANV}}"
+                                            data-target="#reset-account-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="reset passwword">&#xe8b8;</i>
+                                        </a>
                                         <a href="#delete-account-modals" class="delete-btns btn btn-link"
                                             data-toggle="modal" data-accountId="{{this.MANV}}"
                                             data-target="#delete-account-modals">
@@ -131,6 +136,27 @@
                     <button type="button" id="btn-delete-account"
                         class="btn-delete-account btn btn-primary btn-danger">Xóa bỏ</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{!-- model reset --}}
+    <div class="modal fade" id="reset-account-modals">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn reset mật khẩu không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-reset-account"
+                        class="btn-reset-account btn btn-primary btn-danger">Có</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                 </div>
             </div>
         </div>
@@ -228,6 +254,7 @@
     <!-- End Form add admin account -->
 
     <form name="form-delete-accounts" method="POST"></form>
+    <form name="form-reset-accounts" method="POST"></form>
 
     <script>
         function visibility() {
@@ -252,8 +279,28 @@
                     deleteForm.submit(); // và submit form .
                 }
             }
-
         }
+ 
+        var resetForm = document.forms['form-reset-accounts']
+        var resetBtns = Array.from(document.getElementsByClassName('reset-btns')); // lấy tất cả các button reset dưới dạng mảng
+        var resetConfirm = document.querySelector('.btn-reset-account')
+        for (const resetBtn of resetBtns) {
+            resetBtn.onclick = function (e) {
+                var account = this.getAttribute('data-accountid')// khi onclick vào button xóa của khóa học nào thì sẽ nhận được id của khóa học đó
+                resetConfirm.onclick = function (e) {  // sau đó click vào button confirm xóa để 
+                    resetForm.action = `/accounts/${account}/reset?_method=POST`; // truyền  url chứa id của từng khóa học vào action và với method reset
+                    resetForm.submit(); // và submit form .
+                }
+            }
+        }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
     </script>
     <script src="/js/re-enterPw.js"></script>
-    {{!-- end model delete --}}
+    {{!-- end model reset --}}

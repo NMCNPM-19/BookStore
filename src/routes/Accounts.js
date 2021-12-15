@@ -11,6 +11,7 @@ router.put('/:id/edit',accountController.update)
 router.post('/add',upload.single('image'),accountController.add);
 router.delete('/:id/del',accountController.delete)
 router.patch('/:id/restore',accountController.restore);
+router.post('/:id/reset',accountController.reset);
 router.delete('/:id/destroy',accountController.destroy)
 
 

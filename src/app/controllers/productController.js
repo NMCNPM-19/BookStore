@@ -58,7 +58,7 @@ class productController{
     //[GET]: /products/
     async list(req, res, next){
         if(req.user){
-            if(!req.user.emp) {
+            if(req.user.LOAINV != 'emp') {
                 const itemPerPage = 10;
                 const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
                 const title = req.query.title
