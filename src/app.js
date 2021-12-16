@@ -6,6 +6,9 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash');
+
+
+
 const userOnl = require('./app/middlewares/userOnl')
 const sessionCart = require('./app/middlewares/sessionCart')
 //Router for app
@@ -22,7 +25,7 @@ app.engine(
     '.hbs',
     exphbs.engine({
         extname :'hbs',
-        helpers: require('./helper/handlebars')
+        helpers: require('./helper/handlebars'),
     })
 );
 app.set('views', path.join(__dirname ,'views'));

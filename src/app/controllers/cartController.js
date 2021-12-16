@@ -5,9 +5,19 @@ class cartController{
     //[GET]: /cart
     async cartList(req, res ,next){
         try {
-            var product = await cartservice.getSachs();
-            var cart = req.session.cart|| null
-            res.render('cart/cart', { product: multipleSequelizeToObject(product) ,  totalPrice: 0 })
+
+            if (!req.session.cart) {
+                return res.render('cart/cart', {
+                  products: null
+                });
+              }
+              var cart = new Cart(req.session.cart);
+              console.log(cart.getItems())
+              res.render('cart/cart', {
+                title: 'NodeJS Shopping Cart',
+                products:  cart.getItems(),
+                totalPrice: cart.totalPrice
+              });
         } catch (error) {
             next(error)
         }
@@ -20,6 +30,7 @@ class cartController{
             var product = await cartservice.getSachbyID(productId);
             cart.add(product, productId);
             req.session.cart = cart;
+            res.redirect('/')
 
         } catch (error) {
             next(error)
@@ -28,7 +39,11 @@ class cartController{
 
     async remove(req, res, next){
         try {
-            
+            var productId = req.params.id;
+            var cart = new Cart(req.session.cart ? req.session.cart : {});
+            cart.remove(productId);
+            req.session.cart = cart;
+            res.redirect('/cart');
         } catch (error) {
             next(error)
         }

@@ -1,5 +1,5 @@
 const Handlebars = require('handlebars');
-
+const express_handlebars_sections = require('express-handlebars-sections');
 module.exports = {
   option: (value, label, selectedValue) => {
     var selectedProperty = value == selectedValue ? 'selected="selected"' : '';
@@ -13,7 +13,7 @@ module.exports = {
         ' </option>',
     );
   },
-
+  section: express_handlebars_sections(),
   gender: (value1, value2) => {
     var value;
     if (value1 === 'NAM') {

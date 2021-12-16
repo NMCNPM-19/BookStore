@@ -2,7 +2,12 @@
 	<div class="content">
 		<div class="container">
 			<div class="book-information">
-				<h2 style="color: orange;">Tất cả sách</h2>
+				<nav class="navbar navbar-light bg-light">
+				<form action =""  class="form-inline">
+					<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+				</form>
+				</nav>
 
 
 				<div class="mt-4">
@@ -18,10 +23,15 @@
 
 						<div class="card-body">
 							<div class="card-title">
-							{{this.tensach}}
+							<h4>
+								{{this.tensach}}
+							</h4>
 							</div>
-
 							<p class="card-text">{{this.gia}}</p>
+							<p class="card-text"></p>
+						</div>
+						<div class="card-footer">
+							<a href="cart/add/{{../user.LOAINV}}/{{this.masach}}" class="btn btn-primary">Add to cartcart</a>
 						</div>
 						</div>
 					</a>
