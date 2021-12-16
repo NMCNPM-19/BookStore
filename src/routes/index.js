@@ -3,6 +3,8 @@ const RouterAccount = require('./Accounts')
 const RouterCustomer = require('./Customers')
 const RouterProfile = require('./User')
 const RouterProduct = require('./Products')
+const RouterStorage = require('./Storage')
+const RouterDebt=require('./Debt')
 const RouterCart = require('./Cart')
 function route(app){
     
@@ -12,7 +14,8 @@ function route(app){
     app.use('/user',RouterProfile)
     app.use('/accounts',RouterAccount)
     app.use('/customers',RouterCustomer)
-  
+    app.use('/storage',RouterStorage)
+    app.use('/debt',RouterDebt)
 }
 
 module.exports = route 
