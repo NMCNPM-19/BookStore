@@ -3,6 +3,7 @@ const pagination = require('../../public/js/pages/pagination');
 const productService = require('../services/productService');
 const {multipleSequelizeToObject,SequelizeToObject} = require('../../util/sequelize');
 const e = require('express');
+
 class productController{
     //[POST] : product/store
     async store(req, res, next){
