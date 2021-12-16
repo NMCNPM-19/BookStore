@@ -13,5 +13,5 @@ router.get('/update/:id', ProductController.update);
 router.put('/saveUpdate/:id', upload.single('image'),ProductController.saveUpdate);
 //list product
 router.get('/', ProductController.list);
-  
+
 module.exports = router;
