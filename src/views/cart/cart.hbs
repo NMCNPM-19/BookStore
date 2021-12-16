@@ -1,0 +1,90 @@
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <aside class="col-lg-9">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">Product</th>
+                                    <th scope="col" width="120">Quantity</th>
+                                    <th scope="col" width="120">Price</th>
+                                    <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {{#each products}}
+                                <tr>
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src="{{this.item.IMAGE}}" class="img-sm"></div>
+                                            <figcaption class="info"> <a href="#" class="title text-dark"
+                                                    data-abc="true">{{this.item.tensach}}</a>
+                                                <p class="text-muted small">{{this.item.tacgia}} <br> {{this.item.ngayXB}}</p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <input class="form-control text-center input-quantity " min="0" step="1" type="number" value={{this.quantity}} >
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap"> <var class="price">{{this.price}} vnd </var> </div>
+                                    </td>
+                                    <td class="text-right d-none d-md-block">
+                                        <a href="/cart/remove/{{this.item.masach}}" class="btn btn-light" data-abc="true"> Remove </a>
+                                    </td>
+                                </tr>
+                                {{/each}}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aside>
+            <aside class="col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group"> <label>Thông tin mua hàng</label>
+                                <div class="input-group"> <input type="text" class="form-control coupon" name=""
+                                        placeholder="Coupon code"> <span class="input-group-append"> <button
+                                            class="btn btn-primary btn-apply coupon">Apply</button> </span> </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-right ml-3">{{totalPrice}}</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Total:</dt>
+                            <dd class="text-right text-dark b ml-3"><strong>{{totalPrice}}</strong></dd>
+                        </dl>
+                        <hr>
+                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true">invoice printing</a>
+                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Debt</a>
+                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Confirm</a>
+                        <a href="/" class="btn btn-out mt-2 btn-success btn-square btn-main mt-2" data-abc="true">Add Book</a>
+                    </div>
+
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+{{#section 'script'}}
+<script>
+    var quantity = $('.input-quantity')
+    if(quantity){
+        console.log(quantity)
+        alert('here')
+    }
+    
+</script>
+{{/section}}

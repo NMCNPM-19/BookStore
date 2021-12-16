@@ -7,6 +7,10 @@ const methodOverride = require('method-override');
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash');
 
+
+
+const userOnl = require('./app/middlewares/userOnl')
+const sessionCart = require('./app/middlewares/sessionCart')
 //Router for app
 const router = require('./routes');
 
@@ -21,7 +25,7 @@ app.engine(
     '.hbs',
     exphbs.engine({
         extname :'hbs',
-        helpers: require('./helper/handlebars')
+        helpers: require('./helper/handlebars'),
     })
 );
 app.set('views', path.join(__dirname ,'views'));
@@ -38,26 +42,8 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  if(req.user){
-    res.locals.user = req.user;
-    
-  if(req.user.LOAINV =='adm'){
-    res.locals.user.adm = true
-  }
-  if(req.user.LOAINV =='emp'){
-    res.locals.user.emp = true
-  }
-  if(req.user.LOAINV =='mag'){
-    res.locals.user.mag = true
-  }
-  
-  }
-  
-
-  next();
-})
-
+app.use(userOnl)
+app.use(sessionCart)
 
 router(app)
 
