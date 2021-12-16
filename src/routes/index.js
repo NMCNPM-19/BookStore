@@ -5,6 +5,7 @@ const RouterProfile = require('./User')
 const RouterProduct = require('./Products')
 const RouterStorage = require('./Storage')
 const RouterDebt=require('./Debt')
+const RouterOrder = require('./Order')
 function route(app){
     
     app.use('/',RouterSite)
@@ -14,6 +15,8 @@ function route(app){
     app.use('/customers',RouterCustomer)
     app.use('/storage',RouterStorage)
     app.use('/debt',RouterDebt)
+    app.use('/importOrder',RouterOrder)
+    
 }
 
 module.exports = route 

@@ -26,7 +26,7 @@ class AccountController{
         }
     }
     //[POST]:accounts/add
-     async add(req, res , next){
+    async add(req, res , next){
         try {
             const account = await accountService.add(req);
             res.redirect('/accounts?message='+account)
