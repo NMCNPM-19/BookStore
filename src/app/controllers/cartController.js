@@ -59,14 +59,17 @@ class cartController{
     async resfesh(req, res , next) {
         try{
             if (!req.session.cart) {
-                return res.render('cart/cart', {
-                  products: null
-                });
+                res.status(200).json({
+                    title: 'NodeJS Shopping Cart',
+                    products : null ,
+                    totalPrice: 0})
               }
+              
               var cart = new Cart(req.session.cart);
+              var products = cart.getItems() ? cart.getItems() : {}
                 res.status(200).json({
                 title: 'NodeJS Shopping Cart',
-                products:  cart.getItems(),
+                products  ,
                 totalPrice: cart.totalPrice})
         }catch(error){
             next(error)
