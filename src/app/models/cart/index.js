@@ -27,4 +27,17 @@ module.exports = function Cart(cart) {
         }
         return arr;
     };
+    this.update = function(id,quantity) {
+        var cartItem = this.items[id];
+        if (!cartItem) {
+            cartItem = this.items[id] = {item: item, quantity: 0, price: 0};
+        }
+        this.totalItems-=cartItem.quantity;
+        this.totalPrice -= cartItem.price;
+
+        cartItem.quantity=quantity;
+        cartItem.price = cartItem.item.gia * cartItem.quantity;
+        this.totalItems+=cartItem.quantity;
+        this.totalPrice += cartItem.price;
+    }
 };

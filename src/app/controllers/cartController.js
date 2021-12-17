@@ -12,12 +12,7 @@ class cartController{
                 });
               }
               var cart = new Cart(req.session.cart);
-              console.log(cart.getItems())
-              res.render('cart/cart', {
-                title: 'NodeJS Shopping Cart',
-                products:  cart.getItems(),
-                totalPrice: cart.totalPrice
-              });
+              res.render('cart/cart');
         } catch (error) {
             next(error)
         }
@@ -48,6 +43,35 @@ class cartController{
             next(error)
         }
     }
-    
+    async update(req, res, next){
+        try {
+            console.log('here')
+            var quantity = req.query.quantity;
+            var id = req.query.id;
+            var cart = new Cart(req.session.cart ? req.session.cart : {});
+            cart.update(id, quantity)
+            req.session.cart = cart
+            res.status(201).json({})
+        } catch (error) {
+            next(error)
+        }
+    }
+    async resfesh(req, res , next) {
+        try{
+            if (!req.session.cart) {
+                return res.render('cart/cart', {
+                  products: null
+                });
+              }
+              var cart = new Cart(req.session.cart);
+                res.status(200).json({
+                title: 'NodeJS Shopping Cart',
+                products:  cart.getItems(),
+                totalPrice: cart.totalPrice})
+        }catch(error){
+            next(error)
+        }
+    }
+
 }
 module.exports = new cartController
