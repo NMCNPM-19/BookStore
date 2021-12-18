@@ -1,12 +1,14 @@
 const { models } = require("../../config/sequelize");
-
+const { Op } = require("sequelize");
 
 exports.getSachs = async() => {
  return await models.sach.findAll({})
 }
 exports.getSachbyID = async(masach) => {
     return await models.sach.findOne({
-        where: {masach},
+        where: {
+            masach
+        },
         raw : true 
     })
 }

@@ -8,6 +8,7 @@ var _nophaitra = require("./nophaitra");
 var _nxb = require("./nxb");
 var _phieumua = require("./phieumua");
 var _phieunhap = require("./phieunhap");
+var _rules = require("./rules");
 var _sach = require("./sach");
 var _theloai = require("./theloai");
 var _theloaiofsach = require("./theloaiofsach");
@@ -24,6 +25,7 @@ function initModels(sequelize) {
   var nxb = _nxb(sequelize, DataTypes);
   var phieumua = _phieumua(sequelize, DataTypes);
   var phieunhap = _phieunhap(sequelize, DataTypes);
+  var rules = _rules(sequelize, DataTypes);
   var sach = _sach(sequelize, DataTypes);
   var theloai = _theloai(sequelize, DataTypes);
   var theloaiofsach = _theloaiofsach(sequelize, DataTypes);
@@ -81,6 +83,7 @@ function initModels(sequelize) {
     nxb,
     phieumua,
     phieunhap,
+    rules,
     sach,
     theloai,
     theloaiofsach,
