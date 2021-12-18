@@ -2,6 +2,8 @@ const pagination = require('../../public/js/pages/pagination');
 const debtService = require('../services/debtService');
 const {multipleSequelizeToObject,SequelizeToObject} = require('../../util/sequelize');
 const e = require('express');
+// dùng để in csv
+const CsvParser = require("json2csv").Parser;
 
 
 class debtController{
@@ -36,11 +38,54 @@ class debtController{
                 message: req.query.message,
                 title: title,
                 chooseMonth: secondChooseMonth,
+                amount: Debts.count,
             })
         } else{
            res.redirect('/');
         }
     }
+
+    async printMonth(req, res, next){
+        if(req.user){
+             let chooseMonth=req.query.chooseMonth;
+             var month;
+             if (chooseMonth){
+                 month=chooseMonth.split("-");
+                 month=month.join('');
+             }
+             else {
+                 let date=new Date;
+                 month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+                 console.log(date.getMonth());
+                 console.log(month);
+             }
+                 
+             console.log(month); 
+             let printTable = [];
+             const Debts = await debtService.listMonth(month);
+           
+            Debts.forEach(element => {
+                const {MAKH,nodau,nocuoi,tongno,tongtra} =element;
+                printTable.push( {MAKH,nodau,nocuoi,tongno,tongtra})
+            });
+            console.log(printTable);
+            const csvFields = ["MAKH", "nodau", "nocuoi", "tongno","tongtra"];
+            const csvParser = new CsvParser({ csvFields });
+            let csvData=[];
+            if (printTable){
+                csvData = csvParser.parse(printTable);
+            }
+
+            res.setHeader("Content-Type", "text/csv");
+            res.setHeader("Content-Disposition", "attachment; filename=TonNO.csv");
+            res.status(200).end(csvData);
+         } else{
+             res.redirect('/');
+         }
+     }
 }
+
+
+
 
 module.exports=new debtController;

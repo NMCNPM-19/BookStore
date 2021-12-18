@@ -12,7 +12,7 @@ exports.list = (title,Month,page, itemPerPage) => {
     }
     return models.tonno.findAndCountAll({
         where: {
-            [Op.or]: [
+            [Op.and]: [
                 {
                     NGAYTHANG: {
                         [Op.like]: secondCondition,
@@ -27,6 +27,26 @@ exports.list = (title,Month,page, itemPerPage) => {
         },
         offset: page * itemPerPage,
         limit: itemPerPage,
+        raw: true,
+    });
+};
+
+
+exports.listMonth = (Month) => {
+    var secondCondition="";
+    if (Month){
+        secondCondition=Month;
+    }
+    return models.tonno.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    NGAYTHANG: {
+                        [Op.like]: secondCondition,
+                    },
+                },
+            ],
+        },
         raw: true,
     });
 };

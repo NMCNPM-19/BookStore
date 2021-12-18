@@ -6,6 +6,8 @@ const logger = require('morgan');
 const methodOverride = require('method-override');
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash');
+const doc=require("jspdf");
+
 
 
 
