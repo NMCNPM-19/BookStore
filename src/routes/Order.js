@@ -8,7 +8,7 @@ const importController = require('../app/controllers/importController');
 router.post('/add', importController.add);
 // view order
 router.get('/view/:id', importController.view);
-//list product
+//list orders
 router.get('/', importController.list);
   
 module.exports = router;

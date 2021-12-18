@@ -1,4 +1,4 @@
-const orderService = require('../services/orderService');
+const importService = require('../services/orderService');
 const pagination = require('../../public/js/pages/pagination');
 
 
@@ -24,7 +24,7 @@ class orderController{
                 const itemPerPage = 10;
                 const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
                 const title = req.query.title
-                const order = await orderService.list(title,month, page,itemPerPage);
+                const order = await importService.list(title,month, page,itemPerPage);
                 const TotalPage = Math.ceil(order.count/itemPerPage) > page + 1 ? Math.ceil(order.count/itemPerPage) : page + 1
                 const pagItems = pagination.paginationFunc(page+1, TotalPage);
 

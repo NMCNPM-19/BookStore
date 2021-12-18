@@ -1,5 +1,6 @@
 var Cart = require('../models/cart');
 const cartservice = require('../services/cartService')
+const rulesService = require('../services/rulesService')
 const {multipleSequelizeToObject} = require('../../util/sequelize')
 class cartController{
     //[GET]: /cart
@@ -12,7 +13,7 @@ class cartController{
                 });
               }
               var cart = new Cart(req.session.cart);
-              res.render('cart/cart');
+              res.render('cart/cart',{cart});
         } catch (error) {
             next(error)
         }
@@ -20,12 +21,21 @@ class cartController{
     //[GET]: /cart/add/:LOAINV/:id
     async add(req, res, next){
         try {
+            var emp = req.params.LOAINV === 'emp'
             var productId = req.params.id;
-            var cart = new Cart(req.session.cart ? req.session.cart : {});
+                            
+            var minQuantity = await rulesService.getMinQuantity(emp)
+            var curr_quantity_max = await rulesService.getCurrMax()
             var product = await cartservice.getSachbyID(productId);
-            cart.add(product, productId);
-            req.session.cart = cart;
-            res.redirect('/')
+            if (!emp && product.SL > curr_quantity_max) {
+                alert('Số lượng sách hiện tại vượt mức quy định')
+            } 
+            else {
+                var cart = new Cart(req.session.cart ? req.session.cart : {});
+                cart.add(product, productId, minQuantity);
+                req.session.cart = cart;
+                res.redirect('/')
+            }
 
         } catch (error) {
             next(error)
