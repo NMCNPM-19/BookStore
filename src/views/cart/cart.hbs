@@ -194,7 +194,7 @@
      console.log(quantity)
     }
     $(document).ready(function(){ 
-        $('body').on('input','input.input-quantity',function(e){
+        $('body').on('change','input.input-quantity',function(e){
             e.preventDefault()
         
         let quantity = $(this).val()
