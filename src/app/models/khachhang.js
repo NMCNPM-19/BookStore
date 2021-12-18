@@ -33,6 +33,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     sequelize,
     tableName: 'khachhang',
+    hasTrigger: true,
     timestamps: true,
     paranoid: true,
     indexes: [

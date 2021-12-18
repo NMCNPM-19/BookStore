@@ -32,7 +32,7 @@ exports.list = (title, page, itemPerPage) => {
 exports.add = async (req) => {
     req.body.MAKH = await genKeyCus("KH");
     console.log(req.body);
-    await models.khachhang.create({
+    return await models.khachhang.create({
         MAKH: req.body.MAKH,
         HOTEN: req.body.HOTEN,
         NGAYSINH: req.body.NGAYSINH,
@@ -41,7 +41,7 @@ exports.add = async (req) => {
         EMAIL: req.body.EMAIL,
         SDT: req.body.SDT,
     });
-    return "add success";
+    ;
 };
 
 genKeyCus = async (role) => {

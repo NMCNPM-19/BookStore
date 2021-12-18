@@ -7,9 +7,11 @@ const RouterStorage = require('./Storage')
 const RouterDebt=require('./Debt')
 const RouterOrder = require('./Order')
 const RouterCart = require('./Cart')
+const RouterSelling = require('./Selling')
 function route(app){
     
     app.use('/',RouterSite)
+    app.use('/selling',RouterSelling)
     app.use('/cart',RouterCart)
     app.use('/products',RouterProduct)
     app.use('/user',RouterProfile)

@@ -33,18 +33,20 @@ exports.list = (title,Month,page, itemPerPage) => {
 };
 
 exports.add = async(req) => {
-    models.ct_phieunhap.Create({
-        where: {
-
-        }
-    })
-    return models.phieunhap.Create({
-        where: {
+    for (var item in req.body.item) {
+        models.ct_phieunhap.Create({
             MAPN: req.body.MAPN,
-            NGAYNHAP : req.body.NGAYNHAP,
-            MANXB : req.body.MANXB,
-            MANV : req.body.MANV,
-        }
+            MASACH: item.MASACH,
+            SL: item.SL
+        })
+    }
+    return models.phieunhap.Create({
+        
+        MAPN: req.body.MAPN,
+        NGAYNHAP : req.body.NGAYNHAP,
+        MANXB : req.body.MANXB,
+        MANV : req.body.MANV,
+    
     });
 }
 exports.getInfor= async (MAPN) =>{

@@ -27,11 +27,15 @@ class customerController{
      async add(req, res , next){
         try {
             const customer = await customerService.add(req);
-            res.redirect('/customers?message=' + customer)
+            var message
+            if(customer){
+                message = "add success"
+            }else 
+                message = "add fail"
+            res.redirect('/customers?message=' + message)
         }
         catch(err){
-            var message =  'Something went wrong !!! Try again!'
-            res.redirect('/customers?message=' + message)
+            next(err)
         }
     }
     

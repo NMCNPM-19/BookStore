@@ -104,12 +104,15 @@ class AccountController{
     async update(req, res, next){
         try {
             await accountService.saveUpdate(req);
+            if(req.user.MANV = req.params.id){
+                res.redirect('/logout')
+            }else
             res.redirect('back');
         } catch (error) {
             next(error)
         }
     }
-    //[POST]:accounts/:id/delete
+    //[POST]:accounts/:id/reset
     async reset(req, res, next){
         try {
             await accountService.resetPass(req.params.id);

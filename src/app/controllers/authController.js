@@ -9,6 +9,7 @@ class authController{
 
     //[GET]: /login 
     login(req, res) {
+
         res.render('login', {
             layout: false,
             message: req.flash()
