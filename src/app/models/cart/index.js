@@ -2,15 +2,12 @@ module.exports = function Cart(cart) {
     this.items = cart.items || {};
     this.totalItems = cart.totalItems || 0;
     this.totalPrice = cart.totalPrice || 0;
-    this.minQuantity = cart.minQuantity 
     
     this.add = function(item, id, quantity) {
         var cartItem = this.items[id];
         if (!cartItem) {
-            cartItem = this.items[id] = {item: item, quantity : 0, price: 0};
-            
+            cartItem = this.items[id] = {item: item, quantity , price: 0};
         }
-        this.minQuantity = quantity
         cartItem.quantity++;
         cartItem.price = cartItem.item.gia * cartItem.quantity;
         this.totalItems++;

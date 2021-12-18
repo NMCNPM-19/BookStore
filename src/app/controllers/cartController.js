@@ -6,14 +6,16 @@ class cartController{
     //[GET]: /cart
     async cartList(req, res ,next){
         try {
-
-            if (!req.session.cart) {
-                return res.render('cart/cart', {
-                  products: null
-                });
-              }
-              var cart = new Cart(req.session.cart);
-              res.render('cart/cart',{cart});
+            var emp = req.params.LOAINV == 'emp'
+            const min = await rulesService.getMinQuantity(emp)
+            // if (!req.session.cart) {
+            //     return res.render('cart/cart', {
+            //       products: null
+            //     });
+            //   }
+            //   var cart = new Cart(req.session.cart);
+            
+              res.render('cart/cart',{min});
         } catch (error) {
             next(error)
         }
@@ -25,6 +27,7 @@ class cartController{
             var productId = req.params.id;
                             
             var minQuantity = await rulesService.getMinQuantity(emp)
+            console.log(minQuantity)
             var curr_quantity_max = await rulesService.getCurrMax()
             var product = await cartservice.getSachbyID(productId);
             if (!emp && product.SL > curr_quantity_max) {
