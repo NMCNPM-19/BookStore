@@ -57,6 +57,16 @@
                                 <label>Giá</label>
                                 <input type="number" class="form-control" value="{{product.gia}}" name="gia" required>
                             </div>
+                            <div class="form-group mt-1">
+                                <label for="des">Thể Loại</label>
+                            <div class="container" style="border : 1px solid; ">
+                                <div class="row p-2 ">
+                                    {{#each Theloai}}
+                                    {{{category this.maTL this.tenTL ../mytheloai}}}
+                                    {{/each}}
+                                </div>
+                            </div>
+                            </div>
                             <div class="form-group">
                                 <label>Ảnh</label><br>
                                 <img src="{{product.IMAGE}}" alt="{{product.IMAGE}}" width="500" height="600"><br>

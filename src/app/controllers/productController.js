@@ -38,7 +38,10 @@ class productController{
         if(req.user){
             const product = await productService.update(req);
             const NXB = await productService.getNXB()
-            res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) });
+            const mytheloai = await productService.catofbook(req);
+            const Theloai = await productService.getTL();
+            console.log(mytheloai)
+            res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) ,Theloai: multipleSequelizeToObject(Theloai), mytheloai });
         } else{
             res.redirect('/');
         }
