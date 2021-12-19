@@ -46,7 +46,8 @@ class orderController{
             req.body.MAPN = await importService.genKeyPN();
             const created = await importService.add(req);
             if(created){
-                return res.redirect('back');
+                req.session.cart = {}
+                return res.redirect('back');                
             }
             else {
                 res.status(401).json("Lỗi! Kiểm tra số lượng nhập");
@@ -61,15 +62,38 @@ class orderController{
     //[GET] importOrder/view/:id
     async view(req, res, next){
         if(req.user){
-            try {
-                const MAPN = req.params.id;
-                const ct_pn = await importService.getInfor(MAPN)
-                const emp = await importService.getEmp(MAPN)
-                const books = await order.importService.getBooks(MAPN)
-                res.render('orders/importDetail',{ct_pn, emp, books: books.rows})
-            } catch (error) {
-                next(error)
-            }
+            // if(req.user.LOAINV != 'emp') {
+                try {
+                    const MAPN = req.params.id;
+                    const ct_pn = await importService.getInfor(MAPN)
+                    const emp = await importService.getEmp(ct_pn.MANV)
+                    var books = await importService.getImportDetail(MAPN)
+                    for (let book of books.rows) {
+                        book.THELOAI = ""
+                        const sach = await importService.getBooks(book.MASACH)
+                        book.TACGIA = sach[0].tacgia
+                        sach.forEach(theloai => {
+                            book.THELOAI += theloai['theloaiofsaches.maTL_theloai.tenTL']
+                            if (theloai != sach[sach.length - 1]) {
+                                book.THELOAI += ', '
+                            }
+                        });
+                        
+                    }; 
+                    const itemPerPage = 10;
+                    const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+                    const title = req.query.title;
+                    const TotalPage = Math.ceil(books.count/itemPerPage) > page + 1 ? Math.ceil(books.count/itemPerPage) : page + 1
+                    const pagItems = pagination.paginationFunc(page+1, TotalPage);
+                    res.render('orders/importDetail',{
+                        ct_pn, emp, 
+                        Items: pagItems,
+                        title: title,
+                        books: books.rows})
+                } catch (error) {
+                    next(error)
+                }
+            //}
         } else{
             res.redirect('/');
         }
