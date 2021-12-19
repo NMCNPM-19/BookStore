@@ -1,4 +1,4 @@
-const importService = require('../services/orderService');
+const importService = require('../services/importService');
 const pagination = require('../../public/js/pages/pagination');
 
 
@@ -20,14 +20,13 @@ class orderController{
                     secondChooseMonth=month;
                 }
 
-                
                 const itemPerPage = 10;
                 const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
                 const title = req.query.title
                 const order = await importService.list(title,month, page,itemPerPage);
                 const TotalPage = Math.ceil(order.count/itemPerPage) > page + 1 ? Math.ceil(order.count/itemPerPage) : page + 1
                 const pagItems = pagination.paginationFunc(page+1, TotalPage);
-
+                console.log(order);
                 res.render('orders/import', {
                     Items: pagItems,
                     order: order.rows,
@@ -44,8 +43,8 @@ class orderController{
     //[POST]:importOrder/add
     async add(req, res, next){
         try {
-            req.body.MAPN = await orderService.genKeyPN();
-            const created = await orderService.add(req);
+            req.body.MAPN = await importService.genKeyPN();
+            const created = await importService.add(req);
             if(created){
                 return res.redirect('back');
             }
@@ -63,12 +62,11 @@ class orderController{
     async view(req, res, next){
         if(req.user){
             try {
-                MAPN = req.params.id;
-                const ct_pn = await orderService.getInfor(MAPN)
-                const nxb = order.orderService.getNXB(MAPN)
-                const emp = order.orderService.getEmp(MAPN)
-                const books = await order.order.orderService.getBooks(MAPN)
-                res.render('orders/importDetail',{ct_pn, nxb, emp})
+                const MAPN = req.params.id;
+                const ct_pn = await importService.getInfor(MAPN)
+                const emp = await importService.getEmp(MAPN)
+                const books = await order.importService.getBooks(MAPN)
+                res.render('orders/importDetail',{ct_pn, emp, books: books.rows})
             } catch (error) {
                 next(error)
             }
