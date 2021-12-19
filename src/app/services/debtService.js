@@ -12,7 +12,7 @@ exports.list = (title,Month,page, itemPerPage) => {
     }
     return models.tonno.findAndCountAll({
         where: {
-            [Op.or]: [
+            [Op.and]: [
                 {
                     NGAYTHANG: {
                         [Op.like]: secondCondition,

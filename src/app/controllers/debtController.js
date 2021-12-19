@@ -16,6 +16,7 @@ class debtController{
             if (chooseMonth){
                 month=chooseMonth.split("-");
                 month=month.join('');
+                console.log(month);
             }
             else {
                 let date=new Date;
@@ -28,6 +29,7 @@ class debtController{
             console.log(month);
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const Debts = await debtService.list(title,month,page,itemPerPage)
+            console.log(Debts)
             const TotalPage = Math.ceil(Debts.count/itemPerPage) > page + 1 ? Math.ceil(Debts.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
             res.render('debt',{
