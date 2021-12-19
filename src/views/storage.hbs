@@ -38,8 +38,14 @@
                                 </div>
                             </div>
                         </div>
-					
-
+                        {{#if this.amount}}
+                        <li>
+                            <a  href="/storage/print?chooseMonth={{this.chooseMonth}}" class="waves-effect">
+                                <i class='fas fa-print'></i>
+                                <span> Download </span>
+                            </a>
+                        </li>
+                        {{/if}}
                         <table id="demo-foo-addrow"
                             class="table table-centered table-striped table-bordered mb-0 toggle-circle"
                             data-page-size="7">
@@ -90,9 +96,8 @@
     <!-- End Page content -->
     <!-- ============================================================== -->
 
-<script>
 
-</script>
+
 
 
 

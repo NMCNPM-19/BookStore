@@ -30,3 +30,23 @@ exports.list = (title,Month,page, itemPerPage) => {
         raw: true,
     });
 };
+
+
+exports.listMonth = (Month) => {
+    var secondCondition="";
+    if (Month){
+        secondCondition=Month;
+    }
+    return models.tonno.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    NGAYTHANG: {
+                        [Op.like]: secondCondition,
+                    },
+                },
+            ],
+        },
+        raw: true,
+    });
+};
