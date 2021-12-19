@@ -52,10 +52,6 @@ function initModels(sequelize) {
   nhanvien.hasMany(phieumua, { as: "phieumuas", foreignKey: "MANV"});
   phieunhap.belongsTo(nhanvien, { as: "MANV_nhanvien", foreignKey: "MANV"});
   nhanvien.hasMany(phieunhap, { as: "phieunhaps", foreignKey: "MANV"});
-  nodatra.belongsTo(nophaitra, { as: "MaNoPT_nophaitra", foreignKey: "MaNoPT"});
-  nophaitra.hasMany(nodatra, { as: "nodatras", foreignKey: "MaNoPT"});
-  phieunhap.belongsTo(nxb, { as: "MANXB_nxb", foreignKey: "MANXB"});
-  nxb.hasMany(phieunhap, { as: "phieunhaps", foreignKey: "MANXB"});
   sach.belongsTo(nxb, { as: "manxb_nxb", foreignKey: "manxb"});
   nxb.hasMany(sach, { as: "saches", foreignKey: "manxb"});
   ct_phieumua.belongsTo(phieumua, { as: "MAPM_phieumua", foreignKey: "MAPM"});

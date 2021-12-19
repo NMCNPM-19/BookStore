@@ -7,7 +7,7 @@ const CsvParser = require("json2csv").Parser;
 
 
 class debtController{
-    //[GET]:\storage
+    //[GET]: debt/
     async list(req, res, next){
         if(req.user){
             const itemPerPage = 10;
@@ -18,14 +18,14 @@ class debtController{
             if (chooseMonth){
                 month=chooseMonth.split("-");
                 month=month.join('');
-                console.log(month);
             }
             else {
                 let date=new Date;
                 month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
                 console.log(date.getMonth());
-                console.log(month);
                 secondChooseMonth=month;
+                month=month.split("-");
+                month=month.join('');
             }
                 
             console.log(month);
@@ -41,12 +41,14 @@ class debtController{
                 title: title,
                 chooseMonth: secondChooseMonth,
                 amount: Debts.count,
+
             })
         } else{
            res.redirect('/');
         }
     }
 
+    //[GET]: /debt/print
     async printMonth(req, res, next){
         if(req.user){
              let chooseMonth=req.query.chooseMonth;
@@ -59,7 +61,7 @@ class debtController{
                  let date=new Date;
                  month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
                  console.log(date.getMonth());
-                 console.log(month);
+
              }
                  
              console.log(month); 
@@ -84,7 +86,38 @@ class debtController{
          } else{
              res.redirect('/');
          }
-     }
+    }
+
+    //[GET]: /debt/info/:id/
+    async info(req, res, next){
+        try {
+            console.log(await debtService.updateDebtNew(req.params.id))
+            const customers = await debtService.getCustomer(req)
+            res.status(200).json({customers})
+        } catch (error) {
+            next(error)
+        }
+    }
+    //[POST]: /debt/:id/add
+    async add (req, res , next) {
+        try {
+            var debt = await debtService.addDebt(req)
+            res.redirect('back')
+        } catch (error) {
+            next(error)
+        }
+    }
+    //[POST]: /debt/:id/pay
+    async pay (req, res , next){
+        try {
+            var debt = await debtService.payDebt(req)
+            res.redirect('back')
+        } catch (error) {
+            next(error)
+        }
+    }
+
+
 }
 
 

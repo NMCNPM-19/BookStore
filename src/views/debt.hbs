@@ -58,6 +58,7 @@
                                     <th>Nợ cuối</th>
                                     <th>Tổng nợ </th>
 									<th>Tổng trả </th>
+                                    <th>tùy chỉnh</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,6 +69,21 @@
                                     <td>{{this.nocuoi}}</td>
                                     <td>{{this.tongno}}</td>
 									<td>{{this.tongtra}}</td>
+                                    <td>
+                          
+                                            <a href="#add-debt-modals" class="add-btns btn btn-link"
+                                            data-toggle="modal" data-id="{{this.MAKH}}"
+                                            data-target="#add-debt-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="add">&#xe227;</i>
+                                            </a>
+
+                                            <a href="#pay-debt-modals" class="pay-btns btn btn-link"
+                                            data-toggle="modal" data-id="{{this.MAKH}}"
+                                            data-target="#pay-debt-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="pay">&#xe8a1;</i>
+                                            </a>
+
+                                    </td>
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -97,7 +113,121 @@
     <!-- End Page content -->
     <!-- ============================================================== -->
 
+    <div class="modal hide fade" id="pay-debt-modals">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pay Debt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-pay-debts" method="POST">
+                        <div class="form-group">
+                            <label>Họ Tên Khách hàng</label>
+                            <input type="text" class="form-control" id="pay-HOTEN" name="HOTEN" disabled>
+                     </div>
+                     <div class="form-group">
+                            <label>Ngày trả nợ</label>
+                            <input type="date" class="form-control" id="pay-ngaytra" name="ngaytra" required>
+                     </div>
+                     <div class="form-group">
+                            <label>Số tiền trả</label>
+                            <input type="number" class="form-control" id="pay-sotien" min = "0" step ="1000" name="sotien" required>
+                     </div>
+                    </form>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="form-pay-debts" id="btn-pay-debt"
+                        class="btn-pay-debt btn btn-primary btn-danger">Confirm</button>
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hide fade" id="add-debt-modals">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Debt</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-add-debts" method="POST">
+                        <div class="form-group">
+                            <label>Họ Tên Khách hàng</label>
+                            <input type="text" class="form-control" id="add-HOTEN" name="HOTEN" disabled>
+                     </div>
+                     <div class="form-group">
+                            <label>Ngày nợ</label>
+                            <input type="date" class="form-control" id="add-ngayno" name="ngayno" required>
+                     </div>
+                     <div class="form-group">
+                            <label>Số tiền nợ</label>
+                            <input type="number" class="form-control" id="add-sono" min = "0" step ="1000" name="sono" required>
+                     </div>
+                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" form="form-add-debts"  id="btn-add-debt"
+                        class="btn-add-debt btn btn-primary btn-danger">Confirm</button>
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+
+
+
 <script>
+        var Form = document.forms['form-pay-debts']
+        var Btns = Array.from(document.getElementsByClassName('pay-btns')); // lấy tất cả các button  dưới dạng mảng
+        var Confirm = document.querySelector('.btn-pay-debt')
+        for (const Btn of Btns) {
+            Btn.onclick = function (e) {
+                var debt = this.getAttribute('data-id')
+                var customer
+                $.ajax({
+                    url: `/debt/info/${debt}`,
+                    method: 'GET',
+                    success: function(data){
+                       customer = data.customers
+                       $('#pay-HOTEN').val(customer.HOTEN)
+                       $('#form-pay-debts').attr("action", `/debt/${debt}/pay?_method=POST`)
+                    }
+                })
+            }
+        }
+
+        var Form = document.forms['form-add-debts']
+        var Btns = Array.from(document.getElementsByClassName('add-btns')); // lấy tất cả các button  dưới dạng mảng
+        var Confirm = document.querySelector('.btn-add-debt')
+        for (const Btn of Btns) {
+            Btn.onclick = function (e) {
+                var debt = this.getAttribute('data-id')
+                 var customer
+                 $.ajax({
+                    url: `/debt/info/${debt}`,
+                    method: 'GET',
+                    success: function(data){
+                       customer = data.customers
+                       $('#add-HOTEN').val(customer.HOTEN)
+                       $('#form-add-debts').attr("action", `/debt/${debt}/add?_method=POST`)
+                    }
+                })
+            
+            }
+        }
+
+
+
 
 </script>
 
