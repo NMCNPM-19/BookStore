@@ -10,6 +10,7 @@ class productController{
         try {
             req.body.masach = await productService.genKeybook();
             const [book, created] = await productService.store(req);
+            
             if(created){
                 return res.redirect('back');
             }

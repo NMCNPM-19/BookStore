@@ -129,7 +129,7 @@ genKeyAdd = async (role) => {
     while (true) {
         check = true;
         str = "" + i;
-        while (str.length < 3) {
+        while (str.length <= 3) {
             str = 0 + str;
         }
         s_key = role + str;
@@ -154,7 +154,7 @@ genKeyPay = async (role) => {
     while (true) {
         check = true;
         str = "" + i;
-        while (str.length < 3) {
+        while (str.length <= 3) {
             str = 0 + str;
         }
         s_key = role + str;

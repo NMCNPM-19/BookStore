@@ -55,7 +55,7 @@ exports.genKeybook = async () => {
 exports.store = async(req) => {
     const result = await cloudImage.uploadIMG(req.file.path);
     
-    return models.sach.findOrCreate({
+    const h =  await models.sach.findOrCreate({
         where: {
             masach: req.body.masach,
             tensach : req.body.tensach,
@@ -69,6 +69,16 @@ exports.store = async(req) => {
             IMAGE_PUBLICID: result.public_id
         }
     });
+    if (req.body.category) {
+      req.body.category.forEach(async (element) => {
+        await models.theloaiofsach.create({
+          masach: req.body.masach,
+          maTL: element,
+        });
+      });
+    }
+    
+    return h;
 }
 exports.update = (req) => {
     return models.sach.findOne({

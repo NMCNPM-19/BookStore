@@ -24,11 +24,12 @@
                                     <div class="form-group">
                                         <form action="?title=">
                                             <input id="demo-input-search2" type="text" placeholder="Search"
-                                            class="form-control" name="title" value=""autocomplete="off">
+                                                class="form-control" name="title" value="" autocomplete="off">
 
-												<span for="start">Start month:</span>
-												<input type="month" id="start" name="chooseMonth" min="2018-03" value={{chooseMonth}}>
-                                            <button class="-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
+                                            <span for="start">Start month:</span>
+                                            <input type="month" id="start" name="chooseMonth" min="2018-03"
+                                                value={{chooseMonth}}>
+                                            <button class="btn-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
                                                 <i class="fa fa-search mr-2"></i>
                                                 <span> Tìm kiếm </span>
                                             </button>
@@ -39,15 +40,25 @@
                             </div>
                         </div>
                         {{#if this.amount}}
-                        <li>
-                            <a  href="/debt/print?chooseMonth={{this.chooseMonth}}" class="waves-effect">
+                        <li class="mb-2 mt-2">
+                            <a href="/debt/print?chooseMonth={{this.chooseMonth}}" class="waves-effect">
                                 <i class='fas fa-print'></i>
                                 <span> Download </span>
                             </a>
+                            <div class="float-right mb-2 mt-2">
+                                <a href = "/debt/hisAdd" class="btn-link my-2 my-sm-0 btn btn-primary" >
+                                   <i class="fa fa-history mr-2"></i>
+                                    <span> Lịch sử nợ </span>
+                                </a>
+                                <a href = "/debt/hisPay" class="btn-link my-2 my-sm-0 btn btn-primary" >
+                                   <i class="fa fa-history mr-2"></i>
+                                    <span> Lịch sử trả </span>
+                                </a>
+                            </div>
                         </li>
                         {{/if}}
-
-                        <table id="demo-foo-addrow"
+                        
+                        <table id="demo-foo-addrow mt-2"
                             class="table table-centered table-striped table-bordered mb-0 toggle-circle"
                             data-page-size="7">
                             <thead>
@@ -57,7 +68,7 @@
                                     <th>Nợ đầu</th>
                                     <th>Nợ cuối</th>
                                     <th>Tổng nợ </th>
-									<th>Tổng trả </th>
+                                    <th>Tổng trả </th>
                                     <th>tùy chỉnh</th>
                                 </tr>
                             </thead>
@@ -68,20 +79,18 @@
                                     <td>{{this.nodau}}</td>
                                     <td>{{this.nocuoi}}</td>
                                     <td>{{this.tongno}}</td>
-									<td>{{this.tongtra}}</td>
+                                    <td>{{this.tongtra}}</td>
                                     <td>
-                          
-                                            <a href="#add-debt-modals" class="add-btns btn btn-link"
-                                            data-toggle="modal" data-id="{{this.MAKH}}"
-                                            data-target="#add-debt-modals">
-                                            <i class="material-icons " data-toggle="tooltip" title="add">&#xe227;</i>
-                                            </a>
 
-                                            <a href="#pay-debt-modals" class="pay-btns btn btn-link"
-                                            data-toggle="modal" data-id="{{this.MAKH}}"
-                                            data-target="#pay-debt-modals">
+                                        <a href="#add-debt-modals" class="add-btns btn btn-link" data-toggle="modal"
+                                            data-id="{{this.MAKH}}" data-target="#add-debt-modals">
+                                            <i class="material-icons " data-toggle="tooltip" title="add">&#xe227;</i>
+                                        </a>
+
+                                        <a href="#pay-debt-modals" class="pay-btns btn btn-link" data-toggle="modal"
+                                            data-id="{{this.MAKH}}" data-target="#pay-debt-modals">
                                             <i class="material-icons " data-toggle="tooltip" title="pay">&#xe8a1;</i>
-                                            </a>
+                                        </a>
 
                                     </td>
                                 </tr>
@@ -94,7 +103,8 @@
                             <ul class="pagination justify-content-end">
                                 {{#each Items}}
                                 <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
-                                        href="?title={{../title}}&&chooseMonth={{this.chooseMonth}}&&page={{item}}">{{item}}</a></li>
+                                        href="?title={{../title}}&&chooseMonth={{this.chooseMonth}}&&page={{item}}">{{item}}</a>
+                                </li>
                                 {{/each}}
                             </ul>
                         </div>
@@ -108,7 +118,7 @@
 
     </div>
 
-
+</div>
     <!-- ============================================================== -->
     <!-- End Page content -->
     <!-- ============================================================== -->
@@ -125,17 +135,18 @@
                         <div class="form-group">
                             <label>Họ Tên Khách hàng</label>
                             <input type="text" class="form-control" id="pay-HOTEN" name="HOTEN" disabled>
-                     </div>
-                     <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label>Ngày trả nợ</label>
                             <input type="date" class="form-control" id="pay-ngaytra" name="ngaytra" disabled>
-                     </div>
-                     <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label>Số tiền trả</label>
-                            <input type="number" class="form-control" id="pay-sotien" min = "0" step ="1000" name="sotien" required>
-                     </div>
+                            <input type="number" class="form-control" id="pay-sotien" min="0" step="1000" name="sotien"
+                                required>
+                        </div>
                     </form>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" form="form-pay-debts" id="btn-pay-debt"
@@ -159,19 +170,20 @@
                         <div class="form-group">
                             <label>Họ Tên Khách hàng</label>
                             <input type="text" class="form-control" id="add-HOTEN" name="HOTEN" disabled>
-                     </div>
-                     <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label>Ngày nợ</label>
                             <input type="date" class="form-control" id="add-ngayno" name="ngayno" disabled>
-                     </div>
-                     <div class="form-group">
+                        </div>
+                        <div class="form-group">
                             <label>Số tiền nợ</label>
-                            <input type="number" class="form-control" id="add-sono" min = "0" step ="1000" name="sono" required>
-                     </div>
-                </form>
+                            <input type="number" class="form-control" id="add-sono" min="0" step="1000" name="sono"
+                                required>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" form="form-add-debts"  id="btn-add-debt"
+                    <button type="submit" form="form-add-debts" id="btn-add-debt"
                         class="btn-add-debt btn btn-primary btn-danger" disabled>Confirm</button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
@@ -180,18 +192,18 @@
         </div>
     </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
 
 
 
-<script>
-    
+    <script>
+
         var now = new Date();
         var day = ("0" + now.getDate()).slice(-2);
         var month = ("0" + (now.getMonth() + 1)).slice(-2);
-        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+        var today = now.getFullYear() + "-" + (month) + "-" + (day);
         var Form = document.forms['form-pay-debts']
         var Btns = Array.from(document.getElementsByClassName('pay-btns')); // lấy tất cả các button  dưới dạng mảng
         var Confirm = document.querySelector('.btn-pay-debt')
@@ -203,19 +215,19 @@
                 $.ajax({
                     url: `/debt/info/${debt}`,
                     method: 'GET',
-                    success: function(data){
-                       customer = data.customers
-                       $('#pay-HOTEN').val(customer.HOTEN)      
-                       $('#form-pay-debts').attr("action", `/debt/${debt}/pay?_method=POST`)
-                       $('#pay-sotien').on('input', (e) => {
+                    success: function (data) {
+                        customer = data.customers
+                        $('#pay-HOTEN').val(customer.HOTEN)
+                        $('#form-pay-debts').attr("action", `/debt/${debt}/pay?_method=POST`)
+                        $('#pay-sotien').on('input', (e) => {
                             var value = e.target.value
-                        console.log(data.debtCus.nocuoi)
-                            if(value > 0 && value < data.debtCus.nocuoi){
+                            console.log(data.debtCus.nocuoi)
+                            if (value > 0 && value < data.debtCus.nocuoi) {
                                 $('#btn-pay-debt').removeAttr("disabled")
-                            }else{
+                            } else {
                                 $('#btn-pay-debt').attr('disabled', 'disabled')
                             }
-                       })
+                        })
                     }
                 })
             }
@@ -227,40 +239,31 @@
         for (const Btn of Btns) {
             Btn.onclick = function (e) {
                 var debt = this.getAttribute('data-id')
-                 var customer
-                 $('#add-ngayno').val(today)
-                 $.ajax({
+                var customer
+                $('#add-ngayno').val(today)
+                $.ajax({
                     url: `/debt/info/${debt}`,
                     method: 'GET',
-                    success: function(data){
-                       customer = data.customers
-                       $('#add-HOTEN').val(customer.HOTEN)
-                       $('#form-add-debts').attr("action", `/debt/${debt}/add?_method=POST`)
+                    success: function (data) {
+                        customer = data.customers
+                        $('#add-HOTEN').val(customer.HOTEN)
+                        $('#form-add-debts').attr("action", `/debt/${debt}/add?_method=POST`)
                         $('#add-sono').on('input', (e) => {
                             var value = e.target.value
-                            if(value < data.rule && value > 0){
+                            if (value < data.rule && value > 0) {
                                 $('#btn-add-debt').removeAttr("disabled")
-                            }else{
+                            } else {
                                 $('#btn-add-debt').attr('disabled', 'disabled')
                             }
-                       })
+                        })
 
                     }
                 })
-            
+
             }
         }
 
 
 
 
-</script>
-
-
-
-
-
-
-
-
-
+    </script>

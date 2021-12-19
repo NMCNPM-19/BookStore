@@ -34,7 +34,7 @@ class debtController{
             console.log(Debts)
             const TotalPage = Math.ceil(Debts.count/itemPerPage) > page + 1 ? Math.ceil(Debts.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
-            res.render('debt',{
+            res.render('debt/debt',{
                 Items: pagItems,
                 Debts: Debts.rows,
                 message: req.query.message,
