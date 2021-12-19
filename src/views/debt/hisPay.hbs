@@ -1,0 +1,83 @@
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <h4 class="page-title">Lịch sử tra nợ</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card-box">
+                        <div class="mb-2">
+                            <div class="row">
+                                <div class="col-12 text-sm-center form-inline">
+                                    <div class="form-group">
+                                        <form action="?title=">
+                                            <input id="demo-input-search2" type="text" placeholder="Search"
+                                                class="form-control" name="title" value="" autocomplete="off">
+                                            <button class="btn-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
+                                                <i class="fa fa-search mr-2"></i>
+                                                <span> Tìm kiếm </span>
+                                            </button>
+                                        </form>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                        <table id="demo-foo-addrow mt-2"
+                            class="table table-centered table-striped table-bordered mb-0 toggle-circle"
+                            data-page-size="7">
+                            <thead>
+                                <tr>
+
+                                    <th>Mã giấy nợ</th>
+                                    <th>ID khách hàng</th>
+                                    <th>Tên khách hàng</th>
+                                    <th>Số tiền </th>
+                                    <th>Ngày trả nợ</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each phieuno}}
+                                <tr>
+                                    <td>{{this.MaNoDT}}</td>
+                                    <td>{{this.MAKH}}</td>
+                                    <td>{{this.HOTEN}}</td>
+                                    <td>{{this.sotien}}</td>
+                                    <td>{{this.ngaytra}}</td>
+                    
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
+                        {{!-- Pagination --}}
+                        <div style="margin-top: 30px ">
+                            <ul class="pagination justify-content-end">
+                                {{#each Items}}
+                                <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link"
+                                        href="?title={{../title}}&&page={{item}}">{{item}}</a>
+                                </li>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                    </div> <!-- end card-box -->
+                </div> <!-- end col -->
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>

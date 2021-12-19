@@ -226,12 +226,42 @@ exports.getListdebt = async (title,page,itemPerPage) => {
                     MAKH: {
                         [Op.like]: "%" + condition + "%",
                     },
-                },],
+                },{
+                }
+            ],
         },
         offset: page * itemPerPage,
         limit: itemPerPage,
-        raw: true,
+        raw: true
     });
-
-
+}
+exports.getListPay = async (title,page,itemPerPage) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return models.nodatra.findAndCountAll({
+        include:[{
+            model: models.khachhang,
+            as: 'MAKH_khachhang',
+        }],
+        where: {
+            [Op.or]: [
+                {
+                    MaNoDT: {
+                        [Op.like]: "%" + condition + "%",
+                    },
+                },
+                {
+                    MAKH: {
+                        [Op.like]: "%" + condition + "%",
+                    },
+                },{
+                }
+            ],
+        },
+        offset: page * itemPerPage,
+        limit: itemPerPage,
+        raw: true
+    });
 }
