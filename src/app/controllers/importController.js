@@ -62,7 +62,7 @@ class orderController{
     //[GET] importOrder/view/:id
     async view(req, res, next){
         if(req.user){
-            // if(req.user.LOAINV != 'emp') {
+            if(req.user.LOAINV != 'emp') {
                 try {
                     const MAPN = req.params.id;
                     const ct_pn = await importService.getInfor(MAPN)
@@ -71,6 +71,7 @@ class orderController{
                     for (let book of books.rows) {
                         book.THELOAI = ""
                         const sach = await importService.getBooks(book.MASACH)
+                        book.TENSACH = sach[0].tensach
                         book.TACGIA = sach[0].tacgia
                         sach.forEach(theloai => {
                             book.THELOAI += theloai['theloaiofsaches.maTL_theloai.tenTL']
@@ -93,7 +94,7 @@ class orderController{
                 } catch (error) {
                     next(error)
                 }
-            //}
+            }
         } else{
             res.redirect('/');
         }

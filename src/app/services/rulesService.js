@@ -18,3 +18,7 @@ exports.getMinQuantity = async (emp) => {
     rules = await this.getRules()
     return rules.import_min
 }
+exports.getSoldMin = async () => {
+    rules = await this.getRules()
+    return rules.curr_sale_min
+}
