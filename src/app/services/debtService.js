@@ -192,3 +192,15 @@ exports.payDebt = async (req) => {
         ngaytra: req.body.ngaytra,
     })
 }
+
+exports.debtCust = async (req) => {
+    let date = new Date();
+    month =date.getFullYear().toString() + "-" + (date.getMonth() + 1).toString();
+    month = month.split("-");
+    month = month.join("");
+    var timeHere = month;
+    return await models.tonno.findOne({ where: { MAKH: req.params.id  , NGAYTHANG : timeHere} });
+}
+exports.ruleDebt = () => {
+    return models.rules.findOne({where: {Locker : 'X'}})
+}

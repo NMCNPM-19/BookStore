@@ -91,9 +91,10 @@ class debtController{
     //[GET]: /debt/info/:id/
     async info(req, res, next){
         try {
-            console.log(await debtService.updateDebtNew(req.params.id))
+            const debtCus = await debtService.debtCust(req)
             const customers = await debtService.getCustomer(req)
-            res.status(200).json({customers})
+            const rule = (await debtService.ruleDebt()).dept_min
+            res.status(200).json({customers,debtCus,rule})
         } catch (error) {
             next(error)
         }

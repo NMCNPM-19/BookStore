@@ -128,7 +128,7 @@
                      </div>
                      <div class="form-group">
                             <label>Ngày trả nợ</label>
-                            <input type="date" class="form-control" id="pay-ngaytra" name="ngaytra" required>
+                            <input type="date" class="form-control" id="pay-ngaytra" name="ngaytra" disabled>
                      </div>
                      <div class="form-group">
                             <label>Số tiền trả</label>
@@ -139,7 +139,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" form="form-pay-debts" id="btn-pay-debt"
-                        class="btn-pay-debt btn btn-primary btn-danger">Confirm</button>
+                        class="btn-pay-debt btn btn-primary btn-danger" disabled>Confirm</button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
                 </div>
@@ -162,7 +162,7 @@
                      </div>
                      <div class="form-group">
                             <label>Ngày nợ</label>
-                            <input type="date" class="form-control" id="add-ngayno" name="ngayno" required>
+                            <input type="date" class="form-control" id="add-ngayno" name="ngayno" disabled>
                      </div>
                      <div class="form-group">
                             <label>Số tiền nợ</label>
@@ -172,7 +172,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" form="form-add-debts"  id="btn-add-debt"
-                        class="btn-add-debt btn btn-primary btn-danger">Confirm</button>
+                        class="btn-add-debt btn btn-primary btn-danger" disabled>Confirm</button>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Back</button>
                 </div>
@@ -187,6 +187,11 @@
 
 
 <script>
+    
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
         var Form = document.forms['form-pay-debts']
         var Btns = Array.from(document.getElementsByClassName('pay-btns')); // lấy tất cả các button  dưới dạng mảng
         var Confirm = document.querySelector('.btn-pay-debt')
@@ -194,13 +199,23 @@
             Btn.onclick = function (e) {
                 var debt = this.getAttribute('data-id')
                 var customer
+                $('#pay-ngaytra').val(today)
                 $.ajax({
                     url: `/debt/info/${debt}`,
                     method: 'GET',
                     success: function(data){
                        customer = data.customers
-                       $('#pay-HOTEN').val(customer.HOTEN)
+                       $('#pay-HOTEN').val(customer.HOTEN)      
                        $('#form-pay-debts').attr("action", `/debt/${debt}/pay?_method=POST`)
+                       $('#pay-sotien').on('input', (e) => {
+                            var value = e.target.value
+                        console.log(data.debtCus.nocuoi)
+                            if(value > 0 && value < data.debtCus.nocuoi){
+                                $('#btn-pay-debt').removeAttr("disabled")
+                            }else{
+                                $('#btn-pay-debt').attr('disabled', 'disabled')
+                            }
+                       })
                     }
                 })
             }
@@ -213,6 +228,7 @@
             Btn.onclick = function (e) {
                 var debt = this.getAttribute('data-id')
                  var customer
+                 $('#add-ngayno').val(today)
                  $.ajax({
                     url: `/debt/info/${debt}`,
                     method: 'GET',
@@ -220,6 +236,15 @@
                        customer = data.customers
                        $('#add-HOTEN').val(customer.HOTEN)
                        $('#form-add-debts').attr("action", `/debt/${debt}/add?_method=POST`)
+                        $('#add-sono').on('input', (e) => {
+                            var value = e.target.value
+                            if(value < data.rule && value > 0){
+                                $('#btn-add-debt').removeAttr("disabled")
+                            }else{
+                                $('#btn-add-debt').attr('disabled', 'disabled')
+                            }
+                       })
+
                     }
                 })
             
