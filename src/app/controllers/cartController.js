@@ -6,7 +6,7 @@ class cartController{
     //[GET]: /cart
     async cartList(req, res ,next){
         try {
-            var emp = req.params.LOAINV == 'emp'
+            var emp = req.user.LOAINV === 'emp'
             const min = await rulesService.getMinQuantity(emp)
             // if (!req.session.cart) {
             //     return res.render('cart/cart', {

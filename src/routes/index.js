@@ -7,11 +7,11 @@ const RouterStorage = require('./Storage')
 const RouterDebt=require('./Debt')
 const RouterOrder = require('./Order')
 const RouterCart = require('./Cart')
-const RouterSelling = require('./Selling')
+const RouterBill = require('./Bill')
 function route(app){
     
     app.use('/',RouterSite)
-    app.use('/selling',RouterSelling)
+    app.use('/bill',RouterBill)
     app.use('/cart',RouterCart)
     app.use('/products',RouterProduct)
     app.use('/user',RouterProfile)

@@ -48,11 +48,15 @@
                                 <span> Download </span>
                             </a>
                             <div class=" text-sm-center form-inline">
+                                        <span class="font-weight-bold">Mã khách hàng: &nbsp;</span> 
+                                        <span>{{ct_pm.MAKH}}</span>
+                            </div>
+                            <div class=" text-sm-center form-inline">
                                         <span class="font-weight-bold">Ngày nhập: &nbsp;</span> 
-                                        <span>{{ct_pn.NGAYNHAP}}</span>
+                                        <span>{{ct_pm.NGAYMUA}}</span>
                             </div>
                             <div class="mb-2 mt-2">
-                                <a href = "/accounts/{{ct_pn.MANV}}/edit" class="btn-link my-2 my-sm-0 btn btn-primary" >
+                                <a href = "/accounts/{{ct_pm.MANV}}/edit" class="btn-link my-2 my-sm-0 btn btn-primary" >
                                     <i class="fa fa-user mr-2"></i>
                                     <span> Thông tin nhân viên nhập </span>
                                 </a>
@@ -65,9 +69,9 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Books</th>
-                                    <th>Author</th>
                                     <th>Category</th>
                                     <th>Number</th>
+                                    <th>Price</th>
                                     <th>Book detail</th> 
                                 </tr>
                             </thead>
@@ -76,9 +80,9 @@
                                 <tr>
                                     <td>{{this.MASACH}}</td>
                                     <td>{{this.TENSACH}}</td>
-                                    <td>{{this.TACGIA}}</td>
                                     <td>{{this.THELOAI}}</td>
                                     <td>{{this.SL}}</td>
+                                    <td>{{this.GIA}}</td>
                                     <td>
                                         <a href="products/update/{{this.masach}}" class="edit btn btn-link">
                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>

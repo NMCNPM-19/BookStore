@@ -6,7 +6,10 @@
             <aside class="col-lg-9">
                 <div class="card">
                     <div class="table-responsive">
-                        <form id="cart-form" action="importOrder/add" method="POST">
+                        <form id="cart-form" {{#if user.emp}}
+                                                action="bill/add"
+                                            {{else}}action="importOrder/add"
+                                            {{/if}} method="POST">
                             <table class="table table-borderless table-shopping-cart">
                                 <thead class="text-muted">
                                     <tr class="small text-uppercase">
@@ -17,8 +20,11 @@
                                     </tr>
                                 </thead>
                                 <tbody class="pro">
-                                    
-                                    
+
+                                    {{!-- TEST --}}
+                                {{#if user.emp}}
+                                <input type="hidden" name="MAKH" value="KH0002"> 
+                                {{/if}}   
                                 </tbody>
                             </table>
                         </form>
@@ -60,10 +66,9 @@
                         </dl>
                         <hr>
                         <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Debt</a>
-                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Sell</a>
-                         {{else}}
-                         <button form="cart-form" type="submit" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Import</button>
-                         {{/if}}
+                        {{/if}}
+                         <button form="cart-form" type="submit" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true">Confirm</button>
+                         
                          <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true">invoice printing</a>
                         <a href="/" class="btn btn-out mt-2 btn-success btn-square btn-main mt-2" data-abc="true">Add Book</a>
                     </div>
