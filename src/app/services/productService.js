@@ -99,9 +99,20 @@ exports.saveUpdate = async(req) => {
         req.body.IMAGE = result.secure_url
         req.body.IMAGE_PUBLICID = result.public_id
     }
-    req.body.atUpdated = Date.now()
+
+    await models.theloaiofsach.destroy({
+      where: {masach : req.params.id}
+    })
+
+    if (req.body.category) {
+      req.body.category.forEach(async (element) => {
+        await models.theloaiofsach.create({
+          masach: req.params.id,
+          maTL: element,
+        });
+      });
+    }
     book.set(req.body)
-    console.log(book)
     await book.save()
 }
 exports.saveDelete = async (req) => {
@@ -127,3 +138,6 @@ exports.getBooks = (title) => {
     });
   };
 
+exports.catofbook = (req) => {
+  return models.theloaiofsach.findAll({where: { masach : req.params.id} , raw: true})
+}

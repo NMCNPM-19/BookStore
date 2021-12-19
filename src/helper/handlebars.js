@@ -36,4 +36,24 @@ module.exports = {
       );
     }
   },
+  category:(maTL,tenTL,myTLs)=>{
+    var checked = ''
+    for(const item of myTLs){
+      if(maTL == item.maTL){
+          checked = 'checked'
+        break;
+      }
+    }
+    
+    return new Handlebars.SafeString(`
+    <div class="form-check col-4 align-self-center">
+        <input class="form-check-input" type="checkbox" ${checked} name="category" value="${maTL}" id="TL-${maTL}">
+        <label class="form-check-label" for="TL-${maTL}">
+          ${tenTL}
+        </label>
+    </div>
+    `)
+  }
+
+
 };
