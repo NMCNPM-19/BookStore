@@ -1,7 +1,6 @@
 const {models, sequelize} = require('../../config/sequelize')
 const { Op } = require("sequelize");
 
-
 exports.list = (title,Month,page, itemPerPage) => {
     var condition = "";
     var secondCondition="";
@@ -34,7 +33,7 @@ exports.list = (title,Month,page, itemPerPage) => {
 
 exports.add = async(req) => {
     try {
-        return await sequelize.transaction(async (t) => {
+        await sequelize.transaction(async (t) => {
             let date=new Date;
             const phieunhap = await models.phieunhap.create({
                 
@@ -43,14 +42,24 @@ exports.add = async(req) => {
                 MANV : req.user.MANV,
             
             }, {transaction: t});
-            for (var i = 0; i < req.body.masach.length; i++) {
+            if (!Array.isArray(req.body.masach)) {
                 await models.ct_phieunhap.create({
                     MAPN: req.body.MAPN,
-                    MASACH: req.body.masach[i],
-                    SL: req.body.SL[i]
+                    MASACH: req.body.masach,
+                    SL: req.body.SL
                 }, {transaction: t})
             }
+            else {
+                for (var i = 0; i < req.body.masach.length; i++) {
+                    await models.ct_phieunhap.create({
+                        MAPN: req.body.MAPN,
+                        MASACH: req.body.masach[i],
+                        SL: req.body.SL[i]
+                    }, {transaction: t})
+                }
+            }
         })
+        return true
     } catch (err) {
         console.log('queries failed', err);
     }
@@ -58,12 +67,24 @@ exports.add = async(req) => {
 exports.getInfor= async (MAPN) =>{
     return await models.phieunhap.findOne({ where: { MAPN: MAPN } , raw : true});
 }
-exports.getBooks = async (MAPN) => {
-    return await models.ct_phieunhap.findAll({where: {MAPN: MAPN}, raw : true})
+exports.getImportDetail = async (MAPN) => {
+    return await models.ct_phieunhap.findAndCountAll({where: {MAPN: MAPN}, raw : true})
 }
-
+exports.getBooks = async (MASACH) => {
+    return await models.sach.findAll({ 
+        where: { masach: MASACH },
+        include: [{
+            model: models.theloaiofsach, 
+            as: 'theloaiofsaches',
+            include: [{
+                model: models.theloai,
+                as: 'maTL_theloai'
+            }]
+        }],
+        raw : true});
+}
 exports.getEmp = async (nvID) =>{
-    return await models.nhanvien.findOne({where: {MANV: nvID}}, raw = true)
+    return await models.nhanvien.findOne({where: {MANV: nvID}, raw : true})
 }
 
 exports.genKeyPN = async () => {
