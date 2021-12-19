@@ -10,14 +10,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DATEONLY,
       allowNull: true
     },
-    MANXB: {
-      type: DataTypes.STRING(6),
-      allowNull: true,
-      references: {
-        model: 'nxb',
-        key: 'manxb'
-      }
-    },
     MANV: {
       type: DataTypes.STRING(6),
       allowNull: true,
@@ -44,13 +36,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "MANV" },
-        ]
-      },
-      {
-        name: "FK_PNHAP_NXB",
-        using: "BTREE",
-        fields: [
-          { name: "MANXB" },
         ]
       },
     ]

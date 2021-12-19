@@ -1,4 +1,4 @@
-const {models} = require('../../config/sequelize')
+const {models, sequelize} = require('../../config/sequelize')
 const { Op } = require("sequelize");
 
 
@@ -33,21 +33,27 @@ exports.list = (title,Month,page, itemPerPage) => {
 };
 
 exports.add = async(req) => {
-    for (var item in req.body.item) {
-        models.ct_phieunhap.Create({
-            MAPN: req.body.MAPN,
-            MASACH: item.MASACH,
-            SL: item.SL
+    try {
+        return await sequelize.transaction(async (t) => {
+            let date=new Date;
+            const phieunhap = await models.phieunhap.create({
+                
+                MAPN: req.body.MAPN,
+                NGAYNHAP : date,
+                MANV : req.user.MANV,
+            
+            }, {transaction: t});
+            for (var i = 0; i < req.body.masach.length; i++) {
+                await models.ct_phieunhap.create({
+                    MAPN: req.body.MAPN,
+                    MASACH: req.body.masach[i],
+                    SL: req.body.SL[i]
+                }, {transaction: t})
+            }
         })
+    } catch (err) {
+        console.log('queries failed', err);
     }
-    return models.phieunhap.Create({
-        
-        MAPN: req.body.MAPN,
-        NGAYNHAP : req.body.NGAYNHAP,
-        MANXB : req.body.MANXB,
-        MANV : req.body.MANV,
-    
-    });
 }
 exports.getInfor= async (MAPN) =>{
     return await models.phieunhap.findOne({ where: { MAPN: MAPN } , raw : true});
@@ -55,11 +61,9 @@ exports.getInfor= async (MAPN) =>{
 exports.getBooks = async (MAPN) => {
     return await models.ct_phieunhap.findAll({where: {MAPN: MAPN}, raw : true})
 }
-exports.getNXB = (nxbID) =>{
-    return models.nxb.findOne({where: {manxb: nxbID}}, raw = true)
-}
-exports.getEmp = (nvID) =>{
-    return models.nhanvien.findOne({where: {MANV: nvID}}, raw = true)
+
+exports.getEmp = async (nvID) =>{
+    return await models.nhanvien.findOne({where: {MANV: nvID}}, raw = true)
 }
 
 exports.genKeyPN = async () => {
@@ -70,7 +74,7 @@ exports.genKeyPN = async () => {
     while (true) {
       check = true;
       str = '' + i;
-      while (str.length < 6) {
+      while (str.length < 5) {
         str = 0 + str;
       }
       s_key = str;

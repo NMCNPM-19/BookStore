@@ -58,17 +58,15 @@
 
                                     <th>Mã phiếu</th>
                                     <th>Ngày nhập</th>
-                                    <th>Mã NXB </th>
 									<th>Mã nhân viên</th>
                                     <th>Xem thêm</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each phieunhap}}
+                                {{#each order}}
                                 <tr>
                                     <td>{{this.MAPN}}</td>
                                     <td>{{this.NGAYNHAP}}</td>
-                                    <td>{{this.MANXB}}</td>
 									<td>{{this.MANV}}</td>
                                     <td>
                                         <a href="importOrder/view/{{this.MAPN}}" class="edit btn btn-link">

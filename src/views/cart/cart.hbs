@@ -6,20 +6,22 @@
             <aside class="col-lg-9">
                 <div class="card">
                     <div class="table-responsive">
-                        <table class="table table-borderless table-shopping-cart">
-                            <thead class="text-muted">
-                                <tr class="small text-uppercase">
-                                    <th scope="col">Product</th>
-                                    <th scope="col" width="120">Quantity</th>
-                                    <th scope="col" width="120">Price</th>
-                                    <th scope="col" class="text-right d-none d-md-block" width="200"></th>
-                                </tr>
-                            </thead>
-                            <tbody class="pro">
-                                
-                                
-                            </tbody>
-                        </table>
+                        <form id="cart-form" action="importOrder/add" method="POST">
+                            <table class="table table-borderless table-shopping-cart">
+                                <thead class="text-muted">
+                                    <tr class="small text-uppercase">
+                                        <th scope="col">Product</th>
+                                        <th scope="col" width="120">Quantity</th>
+                                        <th scope="col" width="120">Price</th>
+                                        <th scope="col" class="text-right d-none d-md-block" width="200"></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="pro">
+                                    
+                                    
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </aside>
@@ -47,6 +49,7 @@
                 <div class="card">
 
                     <div class="card-body">
+                        {{#if user.emp}}
                         <dl class="dlist-align">
                             <dt>Total price:</dt>
                             <dd class="text-right ml-3"><p id="tong"></p></dd>
@@ -56,9 +59,12 @@
                             <dd class="text-right text-dark b ml-3"><strong><p id="tong"></p></strong></dd>
                         </dl>
                         <hr>
-                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true">invoice printing</a>
                         <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Debt</a>
-                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Confirm</a>
+                        <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Sell</a>
+                         {{else}}
+                         <button form="cart-form" type="submit" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true"> Import</button>
+                         {{/if}}
+                         <a href="#" class="btn btn-out mt-2 btn-primary btn-square btn-main" data-abc="true">invoice printing</a>
                         <a href="/" class="btn btn-out mt-2 btn-success btn-square btn-main mt-2" data-abc="true">Add Book</a>
                     </div>
 
@@ -99,7 +105,8 @@
                                             </figure>
                                         </td>
                                         <td>
-                                            <input class="form-control text-center input-quantity" data-masach="${i.item.masach}" min="${min}"  step="1" type="number" value=${i.quantity} >
+                                            <input type="hidden" name="masach" value="${i.item.masach}">
+                                            <input class="form-control text-center input-quantity" data-masach="${i.item.masach}" name="SL" min="${min}"  step="1" type="number" value=${i.quantity} >
                                         </td>
                                         <td>
                                             <div class="price-wrap"> <var class="price">${i.price} vnd </var> </div>

@@ -6,14 +6,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false,
       primaryKey: true
     },
-    MaNoPT: {
-      type: DataTypes.STRING(6),
-      allowNull: false,
-      references: {
-        model: 'nophaitra',
-        key: 'MaNoPT'
-      }
-    },
     MAKH: {
       type: DataTypes.STRING(6),
       allowNull: false,
@@ -49,13 +41,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "MAKH" },
-        ]
-      },
-      {
-        name: "nodatra_nophaitra_MaNoPT_fk",
-        using: "BTREE",
-        fields: [
-          { name: "MaNoPT" },
         ]
       },
     ]
