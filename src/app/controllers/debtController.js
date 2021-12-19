@@ -118,10 +118,45 @@ class debtController{
         }
     }
 
+    //[GET] : /debt/hisAdd
+    async hisAdd (req, res, next){
+        try {
+            const itemPerPage = 10;
+            const title = req.query.title;
+            const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+            var phieuno = await debtService.getListdebt(title,page,itemPerPage)
+
+            const TotalPage = Math.ceil(phieuno.count/itemPerPage) > page + 1 ? Math.ceil(phieuno.count/itemPerPage) : page + 1
+            const pagItems = pagination.paginationFunc(page+1, TotalPage);
+            res.render('debt/hisAdd',{
+                Items: pagItems,
+                phieuno: phieuno.rows ,
+                title: title,
+            })
+        } catch (error) {
+            next(error)
+        }
+
+    }
+    //[GET] : /debt/hisAdd
+    async hisPay (req, res, next){
+        try {
+            res.render('debt/hisPay')
+        } catch (error) {
+            next(error);
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
-
-
-
-
 module.exports=new debtController;

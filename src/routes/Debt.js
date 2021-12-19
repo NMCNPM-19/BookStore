@@ -8,4 +8,6 @@ router.get('/print',debtController.printMonth)
 router.get('/info/:id',debtController.info)
 router.post('/:id/add',debtController.add)
 router.post('/:id/pay',debtController.pay)
+router.get('/hisAdd',debtController.hisAdd)
+router.get('/hisPay',debtController.hisPay)
 module.exports =router;

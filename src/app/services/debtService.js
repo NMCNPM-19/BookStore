@@ -204,3 +204,34 @@ exports.debtCust = async (req) => {
 exports.ruleDebt = () => {
     return models.rules.findOne({where: {Locker : 'X'}})
 }
+
+exports.getListdebt = async (title,page,itemPerPage) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return models.nophaitra.findAndCountAll({
+        include:[{
+            model: models.khachhang,
+            as: 'MAKH_khachhang',
+        }],
+        where: {
+            [Op.or]: [
+                {
+                    MaNoPT: {
+                        [Op.like]: "%" + condition + "%",
+                    },
+                },
+                {
+                    MAKH: {
+                        [Op.like]: "%" + condition + "%",
+                    },
+                },],
+        },
+        offset: page * itemPerPage,
+        limit: itemPerPage,
+        raw: true,
+    });
+
+
+}
