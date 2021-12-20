@@ -20,24 +20,24 @@ class cartController{
             next(error)
         }
     }
-    //[GET]: /cart/add/:LOAINV/:id
+    //[GET]: /cart/add/
     async add(req, res, next){
         try {
-            var emp = req.params.LOAINV === 'emp'
-            var productId = req.params.id;
+            var emp = req.user.LOAINV === 'emp'
+            var productId = req.body.masach;
                             
             var minQuantity = await rulesService.getMinQuantity(emp)
-            console.log(minQuantity)
+            console.log(productId)
             var curr_quantity_max = await rulesService.getCurrMax()
             var product = await cartservice.getSachbyID(productId);
             if (!emp && product.SL > curr_quantity_max) {
-                alert('Số lượng sách hiện tại vượt mức quy định')
+                res.json({message: 'Số lượng sách hiện tại vượt mức quy định'})
             } 
             else {
                 var cart = new Cart(req.session.cart ? req.session.cart : {});
                 cart.add(product, productId, minQuantity);
                 req.session.cart = cart;
-                res.redirect('/')
+                res.json({message: 'Thành công!'})
             }
 
         } catch (error) {

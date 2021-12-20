@@ -1,3 +1,4 @@
+<section>
 <div class="content-page">
 	<div class="content">
 		<div class="container">
@@ -15,8 +16,9 @@
 					{{#each products}}
 
 					<div class="col-sm-6 col-lg-4" style = "margin-bottom: 20px;">
-								<a href="products/update/{{this.masach}}">
+					<input type="hidden" name="masach" value="{{this.masach}}">
 					<div class="card" style=" height:100%">
+						<a href="products/update/{{this.masach}}"></a>
 						<div class="card-top">
 						<img src="{{this.IMAGE}}" class="card-img-top" alt="{{this.tensach}}" style="overflow: hidden; object-fit: contain;" width="300" height="400" />
 						</div>
@@ -30,11 +32,13 @@
 							<p class="card-text">{{this.gia}}</p>
 							<p class="card-text"></p>
 						</div>
+						</a>
 						<div class="card-footer">
-							<a href="cart/add/{{../user.LOAINV}}/{{this.masach}}" class="btn btn-primary">Add to cart</a>
+							<button value="{{this.masach}}" class="cart_selection btn btn-primary">Add to cartcart</button>
 						</div>
 						</div>
-					</a>
+					
+					
 					</div>
 
 
@@ -54,6 +58,28 @@
 
 	</div> <!-- content -->
 </div>
+</section>
 			<!-- ============================================================== -->
             <!-- End Page content -->
             <!-- ============================================================== -->
+{{#section 'script'}}
+    <script>
+		console.log('DC');
+		$(".cart_selection").on('click',function () {
+			var masach = $(this).val()
+			console.log(masach)
+				$.ajax({
+				url: '/cart/add',
+				type: 'POST',
+				data: {
+					
+					masach: masach,
+				},
+				success: function (data) {
+					alert(data.message)
+				}
+			});
+		});
+
+	</script>
+{{/section}}
