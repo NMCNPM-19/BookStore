@@ -8,6 +8,7 @@ const RouterDebt=require('./Debt')
 const RouterOrder = require('./Order')
 const RouterCart = require('./Cart')
 const RouterBill = require('./Bill')
+const RouterRule = require('./Rule')
 function route(app){
     
     app.use('/',RouterSite)
@@ -20,7 +21,7 @@ function route(app){
     app.use('/storage',RouterStorage)
     app.use('/debt',RouterDebt)
     app.use('/importOrder',RouterOrder)
-    
+    app.use('/rule',RouterRule)
 }
 
 module.exports = route 
