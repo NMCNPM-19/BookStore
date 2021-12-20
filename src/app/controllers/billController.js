@@ -4,8 +4,9 @@ const rulesService = require('../services/rulesService')
 const e = require('express');
 
 
+
 class sellingController{
-    //[GET]: \bill
+    //[GET]: /bill
     async list(req, res, next){
         if(req.user){
             const itemPerPage = 10;
@@ -23,7 +24,7 @@ class sellingController{
                 secondChooseMonth=month;
             }
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-            const bill = await billService.list(title,month,page,itemPerPage)
+            const bill = await billService.list(title,month,page,itemPerPage, req.user.MANV)
             const TotalPage = Math.ceil(bill.count/itemPerPage) > page + 1 ? Math.ceil(bill.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
             res.render('bill/bill',{

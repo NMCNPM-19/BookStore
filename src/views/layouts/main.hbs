@@ -112,6 +112,18 @@
                             <span>  Customer </span>
                         </a>
                     </li>
+                    <li>
+                            <a href="/bill" class="waves-effect">
+                                <i class="fas fa-dolly-flatbed"></i>
+                                <span> Bán hàng </span>
+                            </a>
+                    </li>
+                    <li>
+                            <a href="/debt" class="waves-effect">
+                                <i class='fas fa-money-check-alt'></i>
+                                <span> Công nợ </span>
+                            </a>
+                    </li>
                     {{#unless user.emp}} <!-- employee can't access these features -->
                          {{#unless user.mag}} <!-- only admin can access these features -->
                             <li>
@@ -120,6 +132,7 @@
                                     <span> Account </span>
                                 </a>
                             </li>
+                            
                         {{/unless}}
                         
                         <li>
@@ -136,24 +149,14 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="/debt" class="waves-effect">
-                                <i class='fas fa-money-check-alt'></i>
-                                <span> Công nợ </span>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="/importOrder" class="waves-effect">
                                 <i class="fas fa-dolly-flatbed"></i>
                                 <span>Phiếu nhập</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="/bill" class="waves-effect">
-                                <i class="fas fa-dolly-flatbed"></i>
-                                <span> Bán hàng </span>
-                            </a>
-                        </li>
+                        
                     {{/unless}}
                 </ul>
 
