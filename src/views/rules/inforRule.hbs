@@ -11,17 +11,8 @@
                                 <li class="list-group-item row">
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text mb-1" id="inputGroup-sizing-default">Locker</span>
-                                        </div>
-                                        <input name="Locker" type="text" class="form-control"
-                                            aria-describedby="inputGroup-sizing-default"
-                                            value="{{rules.Locker}}"/>
-
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
                                             <span class="input-group-text mb-1"
-                                                id="inputGroup-sizing-default">IMPORT_MIN</span>
+                                                id="inputGroup-sizing-default">Số lượng nhập tối thiểu</span>
                                         </div>
                                         <input name="import_min" type="number" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
@@ -29,21 +20,21 @@
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroup-sizing-default">CURR_QUANTITY_MAX</span>
+                                            <span class="input-group-text" id="inputGroup-sizing-default">Lượng tồn kho tối đa trước khi nhập</span>
                                         </div>
                                         <input name="curr_quantity_max" type="number" class="form-control"
                                             aria-describedby="inputGroup-sizing-default" value="{{rules.curr_quantity_max}}"/>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroup-sizing-default">DEPT_MIN</span>
+                                            <span class="input-group-text" id="inputGroup-sizing-default">Tiền nợ tối đa</span>
                                         </div>
                                         <input name="dept_min" type="number" class="form-control"
                                             aria-describedby="inputGroup-sizing-default" value="{{rules.dept_min}}"/>
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroup-sizing-default">CURR_SALE_MIN</span>
+                                            <span class="input-group-text" id="inputGroup-sizing-default">Lượng tồn kho tối thiểu sau khi bán</span>
                                         </div>
                                         <input name="curr_sale_min" type="number" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
@@ -51,11 +42,17 @@
                                     </div>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroup-sizing-default">TOTAL_COST_EXCEED_DEBT</span>
+                                            <span class="input-group-text" id="inputGroup-sizing-default">Số tiền thu có vượt số tiền khách đang nợ</span>
                                         </div>
-                                        <input name="total_cost_exceed_debt" type="text" class="form-control"
+                                        <input name="total_cost_exceed_debt" type="checkbox" class="form-control"
                                             aria-describedby="inputGroup-sizing-default"
-                                            value="{{rules.total_cost_exceed_debt}}" />
+                                            value="1"
+                                            {{#if rules.total_cost_exceed_debt}}
+                                                checked="false"
+                                            {{else}}
+                                                aria-checked="true"
+                                            {{/if}}
+                                         />
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -76,3 +73,7 @@
         <!-- End Form Edit Product -->
     </div>
 </div>
+
+<script>
+
+</script>
