@@ -31,7 +31,6 @@ exports.list = (title, page, itemPerPage) => {
 
 exports.add = async (req) => {
     req.body.MAKH = await genKeyCus("KH");
-    console.log(req.body);
     return await models.khachhang.create({
         MAKH: req.body.MAKH,
         HOTEN: req.body.HOTEN,

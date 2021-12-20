@@ -22,16 +22,13 @@ class debtController{
             else {
                 let date=new Date;
                 month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
-                console.log(date.getMonth());
                 secondChooseMonth=month;
                 month=month.split("-");
                 month=month.join('');
             }
-                
-            console.log(month);
+            
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const Debts = await debtService.list(title,month,page,itemPerPage)
-            console.log(Debts)
             const TotalPage = Math.ceil(Debts.count/itemPerPage) > page + 1 ? Math.ceil(Debts.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
             res.render('debt/debt',{
@@ -60,11 +57,9 @@ class debtController{
              else {
                  let date=new Date;
                  month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
-                 console.log(date.getMonth());
 
              }
-                 
-             console.log(month); 
+             
              let printTable = [];
              const Debts = await debtService.listMonth(month);
            
@@ -72,7 +67,7 @@ class debtController{
                 const {MAKH,nodau,nocuoi,tongno,tongtra} =element;
                 printTable.push( {MAKH,nodau,nocuoi,tongno,tongtra})
             });
-            console.log(printTable);
+            
             const csvFields = ["MAKH", "nodau", "nocuoi", "tongno","tongtra"];
             const csvParser = new CsvParser({ csvFields });
             let csvData=[];

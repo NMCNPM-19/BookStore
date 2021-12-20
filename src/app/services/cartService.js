@@ -15,3 +15,13 @@ exports.getSachbyID = async(masach) => {
 exports.getlistCust = async() => {
     return await models.khachhang.findAll({raw: true})
 }
+exports.getquantityBook = async(masach) => {
+    let date=new Date;
+    var month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+    month=month.split("-");
+    month=month.join('');
+    return await models.tonkho.findOne({where: { 
+        masach: masach,
+        NGAYTHANG:month,
+    },raw: true})
+}

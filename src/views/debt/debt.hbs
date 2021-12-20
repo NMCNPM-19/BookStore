@@ -221,7 +221,6 @@
                         $('#form-pay-debts').attr("action", `/debt/${debt}/pay?_method=POST`)
                         $('#pay-sotien').on('input', (e) => {
                             var value = e.target.value
-                            console.log(data.debtCus.nocuoi)
                             if (value > 0 && value < data.debtCus.nocuoi) {
                                 $('#btn-pay-debt').removeAttr("disabled")
                             } else {

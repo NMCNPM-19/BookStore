@@ -25,19 +25,23 @@ class cartController{
         try {
             var emp = req.user.LOAINV === 'emp'
             var productId = req.body.masach;
-                            
             var minQuantity = await rulesService.getMinQuantity(emp)
-            console.log(productId)
             var curr_quantity_max = await rulesService.getCurrMax()
+            var curr_quantity_min = await rulesService.getCurrMin()
             var product = await cartservice.getSachbyID(productId);
-            if (!emp && product.SL > curr_quantity_max) {
+            var stockPr = await cartservice.getquantityBook(productId)
+            if (!emp && stockPr.SLCuoi  > curr_quantity_max) {
                 res.json({message: 'Số lượng sách hiện tại vượt mức quy định'})
             } 
             else {
-                var cart = new Cart(req.session.cart ? req.session.cart : {});
-                cart.add(product, productId, minQuantity);
-                req.session.cart = cart;
-                res.json({message: 'Thành công!'})
+                if(emp && stockPr.SLCuoi - minQuantity < curr_quantity_min){
+                    res.json({message: 'Số lượng sách hiện tại vượt mức quy định'})
+                }else{
+                    var cart = new Cart(req.session.cart ? req.session.cart : {});
+                    cart.add(product, productId, minQuantity);
+                    req.session.cart = cart;
+                    res.json({message: 'Thành công!'})
+                }
             }
 
         } catch (error) {
@@ -59,13 +63,26 @@ class cartController{
     //[GET]:/update-quantity
     async update(req, res, next){
         try {
-            console.log('here')
+            var emp = req.user.LOAINV === 'emp'
             var quantity = req.query.quantity;
             var id = req.query.id;
-            var cart = new Cart(req.session.cart ? req.session.cart : {});
-            cart.update(id, quantity)
-            req.session.cart = cart
-            res.status(201).json({})
+            var curr_quantity_max = await rulesService.getCurrMax()
+            var curr_quantity_min = await rulesService.getCurrMin()
+            var stockPr = await cartservice.getquantityBook(id)
+            if( emp && stockPr.SLCuoi - quantity < curr_quantity_min){
+                res.status(201).json({message: 'Số lượng sách hiện tại vượt mức quy định'})
+            }else{
+                if (!emp && stockPr.SLCuoi  > curr_quantity_max){
+                res.status(201).json({message: 'Số lượng sách hiện tại vượt mức quy định'})
+                }else{
+                    var cart = new Cart(req.session.cart ? req.session.cart : {});
+                    cart.update(id, quantity)
+                    req.session.cart = cart
+                    res.status(201).json({})
+                }
+                
+            }
+            
         } catch (error) {
             next(error)
         }

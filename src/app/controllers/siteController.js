@@ -17,7 +17,7 @@ class SiteController{
                 const products = await productService.list(title,page,itemPerPage);
                 const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
                 const pagItems = pagination.paginationFunc( +1, TotalPage);
-                console.log(title)
+                
 
 
                 res.render('index', {
