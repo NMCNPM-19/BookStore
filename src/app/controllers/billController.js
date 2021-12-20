@@ -2,6 +2,8 @@ const pagination = require('../../public/js/pages/pagination');
 const billService = require('../services/billService');
 const rulesService = require('../services/rulesService')
 const e = require('express');
+// dùng để in csv
+const CsvParser = require("json2csv").Parser;
 
 
 
@@ -63,26 +65,15 @@ class sellingController{
         if(req.user){
             if(req.user.LOAINV != 'emp') {
                 try {
+                    const itemPerPage = 10;
+                    const title = req.query.title;
+                    const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+
                     const MAPM = req.params.id;
                     const ct_pm = await billService.getInfor(MAPM)
                     const emp = await billService.getEmp(ct_pm.MANV)
-                    var books = await billService.getImportDetail(MAPM)
-                    for (let book of books.rows) {
-                        book.THELOAI = ""
-                        const sach = await billService.getBooks(book.MASACH)
-                        book.TENSACH = sach[0].tensach
-                        book.GIA = sach[0].gia
-                        sach.forEach(theloai => {
-                            book.THELOAI += theloai['theloaiofsaches.maTL_theloai.tenTL']
-                            if (theloai != sach[sach.length - 1]) {
-                                book.THELOAI += ', '
-                            }
-                        });
-                        
-                    }; 
-                    const itemPerPage = 10;
-                    const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-                    const title = req.query.title;
+                    var books = await billService.getBillDetail(MAPM, title, page, itemPerPage)
+                    books.rows = await billService.getBookInfor(books.rows)
                     const TotalPage = Math.ceil(books.count/itemPerPage) > page + 1 ? Math.ceil(books.count/itemPerPage) : page + 1
                     const pagItems = pagination.paginationFunc(page+1, TotalPage);
                     res.render('bill/billDetail',{
@@ -98,6 +89,34 @@ class sellingController{
             res.redirect('/');
         }
     }
+     //[GET]: /bill/print/:id
+     async print(req, res, next){
+        if(req.user){ 
+            let printTable = [];
+            const MAPM = req.params.id;
+            const ct_pm = await billService.getInfor(MAPM)
+            const books = await billService.getBillDetail(MAPM,"", 0, 10000) //get all books
+            books.rows = await billService.getBookInfor(books.rows)
+            books.rows.forEach(element => {
+                const {MASACH,TENSACH,THELOAI,SL, GIA} =element;
+                printTable.push( {MASACH,TENSACH,THELOAI,SL,GIA})
+            });
+            console.log(printTable);
+            const csvFields = ["MASACH", "TENSACH", "TACGIAO", "THELOAI","SOLUONG"];
+            const csvParser = new CsvParser({ csvFields , withBOM: true});
+            let csvData=[];
+            if (printTable){
+                csvData = csvParser.parse(printTable);
+            }
+            const file_name = MAPM+"-"+ct_pm.NGAYMUA+"-"+ct_pm.MANV+"-"+ct_pm.MAKH;
+            res.setHeader("Content-Type", "text/csv; charset=utf-8;");
+            res.setHeader("Content-Disposition", "attachment; filename="+file_name+".csv");
+            res.status(200).end(csvData);
+        } else{
+            res.redirect('/');
+        }
+    }
+
 }
 
 module.exports= new sellingController;

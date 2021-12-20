@@ -9,6 +9,7 @@ router.post('/add', billController.add);
 // view order
 router.get('/view/:id', billController.view);
   
-module.exports = router;
+//print order
+router.get('/print/:id', billController.print);
 
-module.exports =router;
+module.exports = router;

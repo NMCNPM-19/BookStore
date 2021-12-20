@@ -78,8 +78,28 @@ exports.add = async(req) => {
 exports.getInfor = async (MAPM) =>{
     return await models.phieumua.findOne({ where: { MAPM: MAPM } , raw : true});
 }
-exports.getImportDetail = async (MAPM) => {
-    return await models.ct_phieumua.findAndCountAll({where: {MAPM: MAPM}, raw : true})
+exports.getBillDetail = async (MAPM, title, page, itemPerPage) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return await models.ct_phieumua.findAndCountAll(
+        {where: {
+            [Op.and]: [
+                {
+                    MAPM: MAPM
+                },
+                {
+                    MASACH: {
+                        [Op.like]: "%" + condition + "%",
+                    },
+                }
+            ]
+            },
+        raw : true,
+        offset: page*itemPerPage, 
+        limit: itemPerPage, 
+    })
 }
 exports.getBooks = async (MASACH) => {
     return await models.sach.findAll({ 
@@ -93,6 +113,22 @@ exports.getBooks = async (MASACH) => {
             }]
         }],
         raw : true});
+    
+}
+exports.getBookInfor = async (books_rows) => {
+    for (let book of books_rows) {
+        book.THELOAI = ""
+        const sach = await this.getBooks(book.MASACH)
+        book.TENSACH = sach[0].tensach
+        book.GIA = sach[0].gia
+        sach.forEach(theloai => {
+            book.THELOAI += theloai['theloaiofsaches.maTL_theloai.tenTL']
+            if (theloai != sach[sach.length - 1]) {
+                book.THELOAI += ', '
+            }
+        });        
+    }
+    return books_rows;
 }
 exports.getEmp = async (nvID) =>{
     return await models.nhanvien.findOne({where: {MANV: nvID}, raw : true})
