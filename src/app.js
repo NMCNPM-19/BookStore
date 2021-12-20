@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash');
 const doc=require("jspdf");
+const express_handlebars_sections = require('express-handlebars-sections');
 
 
 
@@ -30,6 +31,8 @@ app.engine(
         helpers: require('./helper/handlebars'),
     })
 );
+express_handlebars_sections(exphbs);
+
 app.set('views', path.join(__dirname ,'views'));
 app.set('view engine', 'hbs');
 
