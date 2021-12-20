@@ -1,0 +1,78 @@
+<div class="content-page">
+    <div class="content">
+
+        <!-- Form Edit Product -->
+        <div class="">
+            <ul class="list-group list-group-flush">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8">
+                            <form action="/rule/edit?_method=put" method="post">
+                                <li class="list-group-item row">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mb-1" id="inputGroup-sizing-default">Locker</span>
+                                        </div>
+                                        <input name="Locker" type="text" class="form-control"
+                                            aria-describedby="inputGroup-sizing-default"
+                                            value="{{rules.Locker}}"/>
+
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text mb-1"
+                                                id="inputGroup-sizing-default">IMPORT_MIN</span>
+                                        </div>
+                                        <input name="import_min" type="number" class="form-control"
+                                            aria-describedby="inputGroup-sizing-default"
+                                            value="{{rules.import_min}}"/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">CURR_QUANTITY_MAX</span>
+                                        </div>
+                                        <input name="curr_quantity_max" type="number" class="form-control"
+                                            aria-describedby="inputGroup-sizing-default" value="{{rules.curr_quantity_max}}"/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">DEPT_MIN</span>
+                                        </div>
+                                        <input name="dept_min" type="number" class="form-control"
+                                            aria-describedby="inputGroup-sizing-default" value="{{rules.dept_min}}"/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">CURR_SALE_MIN</span>
+                                        </div>
+                                        <input name="curr_sale_min" type="number" class="form-control"
+                                            aria-describedby="inputGroup-sizing-default"
+                                            value="{{rules.curr_sale_min}}"/>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="inputGroup-sizing-default">TOTAL_COST_EXCEED_DEBT</span>
+                                        </div>
+                                        <input name="total_cost_exceed_debt" type="text" class="form-control"
+                                            aria-describedby="inputGroup-sizing-default"
+                                            value="{{rules.total_cost_exceed_debt}}" />
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="submit" class="btn btn-info" value="Confirm">
+                                    </div>
+                                </li>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </ul>
+        </div>
+        <!-- End Form Edit Product -->
+    </div>
+</div>
