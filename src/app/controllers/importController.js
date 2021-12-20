@@ -1,6 +1,7 @@
 const importService = require('../services/importService');
 const pagination = require('../../public/js/pages/pagination');
-
+// dùng để in csv
+const CsvParser = require("json2csv").Parser;
 
 class orderController{
     //[GET]: /products/
@@ -64,26 +65,16 @@ class orderController{
         if(req.user){
             if(req.user.LOAINV != 'emp') {
                 try {
+                    const itemPerPage = 10;
+                    const title = req.query.title;
+                    const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+
                     const MAPN = req.params.id;
                     const ct_pn = await importService.getInfor(MAPN)
                     const emp = await importService.getEmp(ct_pn.MANV)
-                    var books = await importService.getImportDetail(MAPN)
-                    for (let book of books.rows) {
-                        book.THELOAI = ""
-                        const sach = await importService.getBooks(book.MASACH)
-                        book.TENSACH = sach[0].tensach
-                        book.TACGIA = sach[0].tacgia
-                        sach.forEach(theloai => {
-                            book.THELOAI += theloai['theloaiofsaches.maTL_theloai.tenTL']
-                            if (theloai != sach[sach.length - 1]) {
-                                book.THELOAI += ', '
-                            }
-                        });
-                        
-                    }; 
-                    const itemPerPage = 10;
-                    const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-                    const title = req.query.title;
+                    var books = await importService.getImportDetail(MAPN, title, page, itemPerPage)
+                    books.rows = await importService.getBookInfor(books.rows)
+                    
                     const TotalPage = Math.ceil(books.count/itemPerPage) > page + 1 ? Math.ceil(books.count/itemPerPage) : page + 1
                     const pagItems = pagination.paginationFunc(page+1, TotalPage);
                     res.render('orders/importDetail',{
@@ -98,6 +89,33 @@ class orderController{
         } else{
             res.redirect('/');
         }
+    }
+    //[GET]: /importOrder/print/:id
+    async print(req, res, next){
+        if(req.user){ 
+            let printTable = [];
+            const MAPN = req.params.id;
+            const ct_pn = await importService.getInfor(MAPN)
+            const books = await importService.getImportDetail(MAPN,"", 0, 10000) //get all books
+            books.rows = await importService.getBookInfor(books.rows)
+            books.rows.forEach(element => {
+                const {MASACH,TENSACH,TACGIA,THELOAI,SL} =element;
+                printTable.push( {MASACH,TENSACH,TACGIA,THELOAI,SL})
+            });
+            console.log(printTable);
+            const csvFields = ["MASACH", "TENSACH", "TACGIAO", "THELOAI","SOLUONG"];
+            const csvParser = new CsvParser({ csvFields , withBOM: true});
+            let csvData=[];
+            if (printTable){
+                csvData = csvParser.parse(printTable);
+            }
+            const file_name = MAPN+"-"+ct_pn.NGAYNHAP+"-"+ct_pn.MANV;
+            res.setHeader("Content-Type", "text/csv; charset=utf-8;");
+            res.setHeader("Content-Disposition", "attachment; filename="+file_name+".csv");
+            res.status(200).end(csvData);
+         } else{
+             res.redirect('/');
+         }
     }
 }
 

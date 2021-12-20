@@ -5,19 +5,23 @@ const {multipleSequelizeToObject} = require('../../util/sequelize')
 class cartController{
     //[GET]: /cart
     async cartList(req, res ,next){
-        try {
-            var emp = req.user.LOAINV === 'emp'
-            const min = await rulesService.getMinQuantity(emp)
-            // if (!req.session.cart) {
-            //     return res.render('cart/cart', {
-            //       products: null
-            //     });
-            //   }
-            //   var cart = new Cart(req.session.cart);
-            
-              res.render('cart/cart',{min});
-        } catch (error) {
-            next(error)
+        if (req.user) {
+            try {
+                var emp = req.user.LOAINV === 'emp'
+                const min = await rulesService.getMinQuantity(emp)
+                // if (!req.session.cart) {
+                //     return res.render('cart/cart', {
+                //       products: null
+                //     });
+                //   }
+                //   var cart = new Cart(req.session.cart);
+                
+                res.render('cart/cart',{min});
+            } catch (error) {
+                next(error)
+            }
+        } else{
+            res.redirect('/');
         }
     }
     //[GET]: /cart/add/

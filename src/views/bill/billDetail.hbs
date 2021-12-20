@@ -28,7 +28,7 @@
 
                                     <div class="form-group">
                                         <form action="?title=">
-                                            <input id="demo-input-search2" type="text" placeholder="Search"
+                                            <input id="demo-input-search2" type="text" placeholder="Search by ID"
                                             class="form-control" name="title" value=""autocomplete="off">
                                             <button class="-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
                                                 <i class="fa fa-search mr-2"></i>
@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="mb-2 mt-2 d-flex justify-content-between">
-                            <a href="#/importOrder/print?MAPN={{ct_pn.MAPN}}" class="waves-effect d-flex align-items-center">
+                            <a href="/bill/print/{{ct_pm.MAPM}}" class="waves-effect d-flex align-items-center">
                                 <i class='fas fa-print'></i>
                                 <span> Download </span>
                             </a>
