@@ -2,7 +2,7 @@ const {models, sequelize}  = require("../../config/sequelize");
 const { Op } = require("sequelize");
 
 
-exports.list = (title,Month,page, itemPerPage) => {
+exports.list = (title,Month,page, itemPerPage,MANV) => {
     var condition = "";
     var secondCondition="";
     if (title) {
@@ -11,25 +11,35 @@ exports.list = (title,Month,page, itemPerPage) => {
     if (Month){
         secondCondition=Month;
     }
+    var manvcondition = '';
+    if(MANV.slice(0,3) == 'emp'){
+        manvcondition = MANV
+    }
     return models.phieumua.findAndCountAll({
-        where: {
-            [Op.or]: [
-                {
-                    NGAYMUA: {
-                        [Op.like]: secondCondition,
+        where: { 
+            [Op.and]:[{
+                [Op.or]: [
+                    {
+                        NGAYMUA: {
+                            [Op.like]: secondCondition,
+                        },
                     },
-                },
-                {
-                    MAPM: {
-                        [Op.like]: "%" + condition + "%",
+                    {
+                        MAPM: {
+                            [Op.like]: "%" + condition + "%",
+                        },
                     },
-                },
-            ],
+                ],
+            },{
+                MANV:{
+                    [Op.like]: "%" + manvcondition + "%",
+                }
+            }]
         },
-        offset: page * itemPerPage,
-        limit: itemPerPage,
-        raw: true,
-    });
+            offset: page * itemPerPage,
+            limit: itemPerPage,
+            raw: true,
+        });
 };
 
 exports.add = async(req) => {

@@ -48,7 +48,7 @@ class cartController{
             next(error)
         }
     }
-
+    //[GET]:/remove/:id
     async remove(req, res, next){
         try {
             var productId = req.params.id;
@@ -60,6 +60,7 @@ class cartController{
             next(error)
         }
     }
+    //[GET]:/update-quantity
     async update(req, res, next){
         try {
             console.log('here')
@@ -73,6 +74,7 @@ class cartController{
             next(error)
         }
     }
+    //[GET]:/resfesh
     async resfesh(req, res , next) {
         try{
             if (!req.session.cart) {
@@ -92,6 +94,14 @@ class cartController{
             next(error)
         }
     }
-
+    //[GET]:/listUser
+    async listCust(req, res , next) {
+        try {
+            const list = await cartservice.getlistCust()
+            res.status(200).json({list})
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 module.exports = new cartController

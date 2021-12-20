@@ -210,58 +210,60 @@ exports.getListdebt = async (title,page,itemPerPage) => {
     if (title) {
       condition = title;
     }
-    return models.nophaitra.findAndCountAll({
+   var rows = await models.nophaitra.findAll({
         include:[{
             model: models.khachhang,
             as: 'MAKH_khachhang',
-        }],
-        where: {
-            [Op.or]: [
-                {
-                    MaNoPT: {
+            where: {
+                [Op.or]:[{
+                    HOTEN :{
                         [Op.like]: "%" + condition + "%",
-                    },
-                },
-                {
+                    }
+                },{
                     MAKH: {
                         [Op.like]: "%" + condition + "%",
-                    },
-                },{
+                    }
                 }
-            ],
-        },
+            ]
+            }
+        }],
         offset: page * itemPerPage,
         limit: itemPerPage,
         raw: true
     });
+    const counts = rows.length
+    return {counts, rows}
 }
 exports.getListPay = async (title,page,itemPerPage) => {
     var condition = '';
     if (title) {
       condition = title;
     }
-    return models.nodatra.findAndCountAll({
+    var rows = await models.nodatra.findAll({
         include:[{
             model: models.khachhang,
             as: 'MAKH_khachhang',
+            where: {
+                [Op.or]: [
+                    {
+                        HOTEN: {
+                            [Op.like]: "%" + condition + "%",
+                        },
+                    },
+                    {
+                        MAKH: {
+                            [Op.like]: "%" + condition + "%",
+                        },
+                    },{
+                        
+                    }
+                ],
+            },
         }],
-        where: {
-            [Op.or]: [
-                {
-                    MaNoDT: {
-                        [Op.like]: "%" + condition + "%",
-                    },
-                },
-                {
-                    MAKH: {
-                        [Op.like]: "%" + condition + "%",
-                    },
-                },{
-                }
-            ],
-        },
         offset: page * itemPerPage,
         limit: itemPerPage,
         raw: true
     });
+    const count = rows.length
+    return {count,rows}
 }

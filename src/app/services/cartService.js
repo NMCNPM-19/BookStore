@@ -12,3 +12,6 @@ exports.getSachbyID = async(masach) => {
         raw : true 
     })
 }
+exports.getlistCust = async() => {
+    return await models.khachhang.findAll({raw: true})
+}
