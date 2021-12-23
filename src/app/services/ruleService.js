@@ -11,8 +11,6 @@ exports.getRule=()=>{
 
 exports.updateSave = async (req) => {
     const Rules = await models.rules.findOne();
-    console.log("Body trước");
-    console.log(req.body);
     req.body.import_min=Number(req.body.import_min);
     req.body.curr_quantity_max=Number(req.body.curr_quantity_max);
     req.body.dept_min=Number(req.body.dept_min);
@@ -24,6 +22,5 @@ exports.updateSave = async (req) => {
         req.body.total_cost_exceed_debt=Number(0)
     }
     Rules.set(req.body);
-    console.log(req.body);
     await Rules.save()
 }

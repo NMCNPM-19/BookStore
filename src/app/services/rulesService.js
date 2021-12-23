@@ -11,6 +11,10 @@ exports.getCurrMax = async () => {
     rules = await this.getRules()
     return rules.curr_quantity_max
 }
+exports.getCurrMin = async () => {
+    rules = await this.getRules()
+    return rules.curr_quantity_min
+}
 exports.getMinQuantity = async (emp) => {
     if (emp) {
         return 0;

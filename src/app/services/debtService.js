@@ -79,7 +79,7 @@ exports.updateDebtNew = async(MAKH) => {
             ],
         },
     });
-    console.log(nowDebt)
+    
     if(nowDebt.count == 0){
         var nam = timeHere.slice(0,4)
         var thang = timeHere.slice(4) - 1

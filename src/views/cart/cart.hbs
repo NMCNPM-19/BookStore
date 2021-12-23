@@ -135,6 +135,7 @@
                 url: '/cart/update-quantity',
                 method: 'GET',
                 data: {
+                    LOAINV,
                     quantity: quantity,
                     id: id,
                 },
@@ -143,6 +144,9 @@
                     $('tbody.pro').empty()
                     $('p#tong').empty()
                     loadfunctions()
+                    if(data.message){
+                        alert(data.message)
+                    }
                 }
             })
         });

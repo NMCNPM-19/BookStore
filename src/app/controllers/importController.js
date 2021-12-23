@@ -27,7 +27,7 @@ class orderController{
                 const order = await importService.list(title,month, page,itemPerPage);
                 const TotalPage = Math.ceil(order.count/itemPerPage) > page + 1 ? Math.ceil(order.count/itemPerPage) : page + 1
                 const pagItems = pagination.paginationFunc(page+1, TotalPage);
-                console.log(order);
+                
                 res.render('orders/import', {
                     Items: pagItems,
                     order: order.rows,

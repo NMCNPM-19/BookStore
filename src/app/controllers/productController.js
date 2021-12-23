@@ -40,7 +40,7 @@ class productController{
             const NXB = await productService.getNXB()
             const mytheloai = await productService.catofbook(req);
             const Theloai = await productService.getTL();
-            console.log(mytheloai)
+            
             res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) ,Theloai: multipleSequelizeToObject(Theloai), mytheloai });
         } else{
             res.redirect('/');
@@ -72,7 +72,6 @@ class productController{
                 const pagItems = pagination.paginationFunc(page+1, TotalPage);
                 const NXB = await productService.getNXB()
                 
-                console.log(title)
 
                 res.render('products/editProduct', {
                     Items: pagItems,

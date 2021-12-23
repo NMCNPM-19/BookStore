@@ -64,10 +64,9 @@
             <!-- ============================================================== -->
 {{#section 'script'}}
     <script>
-		console.log('DC');
 		$(".cart_selection").on('click',function () {
 			var masach = $(this).val()
-			console.log(masach)
+			
 				$.ajax({
 				url: '/cart/add',
 				type: 'POST',

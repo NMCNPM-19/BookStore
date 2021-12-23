@@ -9,7 +9,6 @@ const e = require('express');
         if(req.user){
             try {
                 var rules = await ruleService.getRule()
-                console.log(rules);
                 res.render('rules/inforRule',{rules})
             } catch (error) {
                 next(error)
@@ -20,7 +19,6 @@ const e = require('express');
     }
 
     async update(req, res, next){
-        console.log("Hàm update rule được gọi")
         try {
             await ruleService.updateSave(req);
             res.redirect('back');
