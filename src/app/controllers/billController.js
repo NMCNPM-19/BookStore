@@ -22,7 +22,7 @@ class sellingController{
             }
             else {
                 let date=new Date;
-                month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+                month=date.getFullYear().toString()+"-"+('0' + (date.getMonth()+1).toString()).slice(-2);
                 secondChooseMonth=month;
             }
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;

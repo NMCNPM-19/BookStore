@@ -24,7 +24,7 @@ class cartController{
             res.redirect('/');
         }
     }
-    //[GET]: /cart/add/
+    //[POST]: /cart/add/
     async add(req, res, next){
         try {
             var emp = req.user.LOAINV === 'emp'
