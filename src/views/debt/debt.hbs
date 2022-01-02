@@ -13,7 +13,7 @@
                 </div>
             </div>
             <!-- end page title -->
-
+            {{#if this}}
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box">
@@ -113,7 +113,9 @@
                 </div> <!-- end col -->
             </div>
             <!-- end row -->
-
+            {{else}}
+                <h1> Không tồn tại</h1>
+            {{/if}}
         </div> <!-- content -->
 
     </div>
