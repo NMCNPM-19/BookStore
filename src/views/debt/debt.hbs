@@ -13,7 +13,7 @@
                 </div>
             </div>
             <!-- end page title -->
-
+            {{#if this}}
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box">
@@ -28,7 +28,7 @@
 
                                             <span for="start">Start month:</span>
                                             <input type="month" id="start" name="chooseMonth" min="2018-03"
-                                                value={{chooseMonth}}>
+                                                value="{{chooseMonth}}">
                                             <button class="btn-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
                                                 <i class="fa fa-search mr-2"></i>
                                                 <span> Tìm kiếm </span>
@@ -113,7 +113,9 @@
                 </div> <!-- end col -->
             </div>
             <!-- end row -->
-
+            {{else}}
+                <h1> Không tồn tại</h1>
+            {{/if}}
         </div> <!-- content -->
 
     </div>
@@ -195,7 +197,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
 
-
+    
 
 
     <script>

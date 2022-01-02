@@ -9,7 +9,7 @@ exports.list = (title,Month,page, itemPerPage,MANV) => {
         condition = title;
     }
     if (Month){
-        secondCondition=Month;
+        secondCondition=Month.split('-');
     }
     var manvcondition = '';
     if(MANV.slice(0,3) == 'emp'){
@@ -18,11 +18,12 @@ exports.list = (title,Month,page, itemPerPage,MANV) => {
     return models.phieumua.findAndCountAll({
         where: { 
             [Op.and]:[{
-                [Op.or]: [
+                [Op.and]: [
                     {
-                        NGAYMUA: {
-                            [Op.like]: secondCondition,
-                        },
+                        [Op.and]: [
+                            sequelize.where(sequelize.fn('YEAR', sequelize.col('`phieumua`.`NGAYMUA`')), secondCondition[0]),
+                            sequelize.where(sequelize.fn('MONTH', sequelize.col('`phieumua`.`NGAYMUA`')), secondCondition[1])
+                        ]
                     },
                     {
                         MAPM: {

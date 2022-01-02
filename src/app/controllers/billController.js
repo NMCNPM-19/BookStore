@@ -15,16 +15,13 @@ class sellingController{
             const title = req.query.title;
             let chooseMonth=req.query.chooseMonth;
             let secondChooseMonth=chooseMonth;
-            var month;
-            if (chooseMonth){
-                month=chooseMonth.split("-");
-                month=month.join('');
-            }
-            else {
+            var month = chooseMonth;
+            if (!chooseMonth) {
                 let date=new Date;
-                month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+                month=date.getFullYear().toString()+"-"+('0' + (date.getMonth()+1).toString()).slice(-2);
                 secondChooseMonth=month;
             }
+           // console.log(MONTH(month));
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const bill = await billService.list(title,month,page,itemPerPage, req.user.MANV)
             const TotalPage = Math.ceil(bill.count/itemPerPage) > page + 1 ? Math.ceil(bill.count/itemPerPage) : page + 1

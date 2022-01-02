@@ -24,6 +24,7 @@
             <!-- end page title -->
         </div>
         <!-- Form Edit Product -->
+        {{#if this}}
         <div class="">
             <ul class="list-group list-group-flush">
                 <div class="container">
@@ -122,6 +123,9 @@
 
             </ul>
         </div>
+        {{else}}
+            <h1>Không tồn tại</h1>
+        {{/if}}
         <!-- End Form Edit Product -->
     </div>
 </div>

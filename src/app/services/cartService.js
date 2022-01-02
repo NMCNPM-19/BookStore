@@ -17,7 +17,7 @@ exports.getlistCust = async() => {
 }
 exports.getquantityBook = async(masach) => {
     let date=new Date;
-    var month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+    var month=date.getFullYear().toString()+"-"+('0' + (date.getMonth()+1).toString()).slice(-2);
     month=month.split("-");
     month=month.join('');
     return await models.tonkho.findOne({where: { 

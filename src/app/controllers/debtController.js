@@ -21,7 +21,7 @@ class debtController{
             }
             else {
                 let date=new Date;
-                month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+                month=date.getFullYear().toString()+"-"+('0' + (date.getMonth()+1).toString()).slice(-2);
                 secondChooseMonth=month;
                 month=month.split("-");
                 month=month.join('');
@@ -56,7 +56,7 @@ class debtController{
              }
              else {
                  let date=new Date;
-                 month=date.getFullYear().toString()+"-"+(date.getMonth()+1).toString();
+                 month=date.getFullYear().toString()+"-"+('0' + (date.getMonth()+1).toString()).slice(-2);
 
              }
              
