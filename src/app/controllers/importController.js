@@ -10,12 +10,8 @@ class orderController{
             if(req.user.LOAINV != 'emp') {
                 let chooseMonth=req.query.chooseMonth;
                 let secondChooseMonth=chooseMonth;
-                var month;
-                if (chooseMonth){
-                    month=chooseMonth.split("-");
-                    month=month.join('');
-                }
-                else {
+                var month =  chooseMonth ;
+                if (!chooseMonth){
                     let date=new Date;
                     month=date.getFullYear().toString()+"-"+('0' + (date.getMonth()+1).toString()).slice(-2);
                     secondChooseMonth=month;

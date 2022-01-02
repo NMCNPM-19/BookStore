@@ -8,15 +8,16 @@ exports.list = (title,Month,page, itemPerPage) => {
         condition = title;
     }
     if (Month){
-        secondCondition=Month;
+        secondCondition=Month.split('-');
     }
     return models.phieunhap.findAndCountAll({
         where: {
-            [Op.or]: [
+            [Op.and]: [
                 {
-                    NGAYNHAP: {
-                        [Op.like]: secondCondition,
-                    },
+                    [Op.and]: [
+                        sequelize.where(sequelize.fn('YEAR', sequelize.col('`phieunhap`.`NGAYNHAP`')), secondCondition[0]),
+                        sequelize.where(sequelize.fn('MONTH', sequelize.col('`phieunhap`.`NGAYNHAP`')), secondCondition[1])
+                    ]
                 },
                 {
                     MAPN: {
