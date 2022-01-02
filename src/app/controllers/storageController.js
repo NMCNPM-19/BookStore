@@ -10,6 +10,7 @@ class storageController{
     //[GET]:\storage
     async list(req, res, next){
        if(req.user){
+        if(req.user.LOAINV != 'emp') {
             const itemPerPage = 10;
             const title = req.query.title;
             let chooseMonth=req.query.chooseMonth;
@@ -39,6 +40,7 @@ class storageController{
                 chooseMonth: secondChooseMonth,
                 amount: storageBook.count,
             })
+        }
         } else{
             res.redirect('/');
         }
@@ -47,6 +49,7 @@ class storageController{
 
     async printMonth(req, res, next){
         if(req.user){
+            if(req.user.LOAINV != 'emp') {
              let chooseMonth=req.query.chooseMonth;
              var month;
              if (chooseMonth){
@@ -78,6 +81,7 @@ class storageController{
             res.setHeader("Content-Type", "text/csv");
             res.setHeader("Content-Disposition", "attachment; filename=Tonkho.csv");
             res.status(200).end(csvData);
+        }
          } else{
              res.redirect('/');
          }

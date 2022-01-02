@@ -7,41 +7,53 @@ const e = require('express');
 class productController{
     //[POST] : product/store
     async store(req, res, next){
-        try {
-            req.body.masach = await productService.genKeybook();
-            const [book, created] = await productService.store(req);
-            
-            if(created){
-                return res.redirect('back');
-            }
-            else {
-                res.status(401).json("Sản phẩm đã tồn tại!");
-            }
+        if(req.user){
+            if(req.user.LOAINV != 'emp') {
+                try {
+                    req.body.masach = await productService.genKeybook();
+                    const [book, created] = await productService.store(req);
+                    
+                    if(created){
+                        return res.redirect('back');
+                    }
+                    else {
+                        res.status(401).json("Sản phẩm đã tồn tại!");
+                    }
+                }
+                catch(err){
+                next(err)
+                }
+            } 
+        } else{
+            res.redirect('/');
         }
-        catch(err){
-          next(err)
-        }
-
     };
     //[PUT]: products/saveUpdate/:id
     async saveUpdate(req, res, next){
-        try {
-            await productService.saveUpdate(req);
-            res.redirect('back');
-        } catch (error) {
-            next(error);
+        if(req.user){
+            if(req.user.LOAINV != 'emp') {
+                try {
+                    await productService.saveUpdate(req);
+                    res.redirect('back');
+                } catch (error) {
+                    next(error);
+                }
+            } 
+        } else{
+            res.redirect('/');
         }
-        
     };
     //[GET]: products/update/:id
     async update(req, res, next){
         if(req.user){
-            const product = await productService.update(req);
-            const NXB = await productService.getNXB()
-            const mytheloai = await productService.catofbook(req);
-            const Theloai = await productService.getTL();
-            
-            res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) ,Theloai: multipleSequelizeToObject(Theloai), mytheloai });
+            if(req.user.LOAINV != 'emp') {
+                const product = await productService.update(req);
+                const NXB = await productService.getNXB()
+                const mytheloai = await productService.catofbook(req);
+                const Theloai = await productService.getTL();
+                
+                res.render('products/formUpdatePro', { product : SequelizeToObject(product), NXB: multipleSequelizeToObject(NXB) ,Theloai: multipleSequelizeToObject(Theloai), mytheloai });
+            } 
         } else{
             res.redirect('/');
         }
@@ -49,9 +61,11 @@ class productController{
     //[DELETE]: products/:id/del
     async delete(req, res, next){
         try {
-            if(!req.user){
-                await productService.saveDelete(req)
-                res.redirect('back')
+            if(req.user){
+                if(req.user.LOAINV != 'emp') {
+                    await productService.saveDelete(req)
+                    res.redirect('back')
+                }
             }else{
                 res.redirect('/');
             }

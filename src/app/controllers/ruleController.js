@@ -7,11 +7,13 @@ const e = require('express');
  class RuleController{
      async edit(req, res, next){
         if(req.user){
-            try {
-                var rules = await rulesService.getRules()
-                res.render('rules/inforRule',{rules})
-            } catch (error) {
-                next(error)
+            if(req.user.LOAINV == 'adm') {
+                try {
+                    var rules = await rulesService.getRules()
+                    res.render('rules/inforRule',{rules})
+                } catch (error) {
+                    next(error)
+                }
             }
         } else{
             res.redirect('/');
@@ -19,11 +21,17 @@ const e = require('express');
     }
 
     async update(req, res, next){
-        try {
-            await rulesService.updateSave(req);
-            res.redirect('back');
-        } catch (error) {
-            next(error)
+        if(req.user){
+            if(req.user.LOAINV != 'adm') {
+                try {
+                    await rulesService.updateSave(req);
+                    res.redirect('back');
+                } catch (error) {
+                    next(error)
+                }
+            }
+        } else{
+            res.redirect('/');
         }
     }
 

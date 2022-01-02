@@ -89,26 +89,28 @@ class orderController{
     //[GET]: /importOrder/print/:id
     async print(req, res, next){
         if(req.user){ 
-            let printTable = [];
-            const MAPN = req.params.id;
-            const ct_pn = await importService.getInfor(MAPN)
-            const books = await importService.getImportDetail(MAPN,"", 0, 10000) //get all books
-            books.rows = await importService.getBookInfor(books.rows)
-            books.rows.forEach(element => {
-                const {MASACH,TENSACH,TACGIA,THELOAI,SL} =element;
-                printTable.push( {MASACH,TENSACH,TACGIA,THELOAI,SL})
-            });
-            console.log(printTable);
-            const csvFields = ["MASACH", "TENSACH", "TACGIAO", "THELOAI","SOLUONG"];
-            const csvParser = new CsvParser({ csvFields , withBOM: true});
-            let csvData=[];
-            if (printTable){
-                csvData = csvParser.parse(printTable);
+            if(req.user.LOAINV != 'emp') {
+                let printTable = [];
+                const MAPN = req.params.id;
+                const ct_pn = await importService.getInfor(MAPN)
+                const books = await importService.getImportDetail(MAPN,"", 0, 10000) //get all books
+                books.rows = await importService.getBookInfor(books.rows)
+                books.rows.forEach(element => {
+                    const {MASACH,TENSACH,TACGIA,THELOAI,SL} =element;
+                    printTable.push( {MASACH,TENSACH,TACGIA,THELOAI,SL})
+                });
+                console.log(printTable);
+                const csvFields = ["MASACH", "TENSACH", "TACGIAO", "THELOAI","SOLUONG"];
+                const csvParser = new CsvParser({ csvFields , withBOM: true});
+                let csvData=[];
+                if (printTable){
+                    csvData = csvParser.parse(printTable);
+                }
+                const file_name = MAPN+"-"+ct_pn.NGAYNHAP+"-"+ct_pn.MANV;
+                res.setHeader("Content-Type", "text/csv; charset=utf-8;");
+                res.setHeader("Content-Disposition", "attachment; filename="+file_name+".csv");
+                res.status(200).end(csvData);
             }
-            const file_name = MAPN+"-"+ct_pn.NGAYNHAP+"-"+ct_pn.MANV;
-            res.setHeader("Content-Type", "text/csv; charset=utf-8;");
-            res.setHeader("Content-Disposition", "attachment; filename="+file_name+".csv");
-            res.status(200).end(csvData);
          } else{
              res.redirect('/');
          }
