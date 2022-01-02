@@ -48,6 +48,7 @@
                             </div>
                         </div>
 
+                        {{#if this}}
                         <table id="demo-foo-addrow"
                             class="table table-centered table-striped table-bordered mb-0 toggle-circle"
                             data-page-size="7">
@@ -96,6 +97,9 @@
                                 {{/each}}
                             </ul>
                         </div>
+                        {{else}}
+                            <h1>Không tồn tại</h1>
+                        {{/if}}
 
                     </div> <!-- end card-box -->
                 </div> <!-- end col -->

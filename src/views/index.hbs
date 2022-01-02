@@ -10,9 +10,10 @@
 				</form>
 				</nav>
 
-
+				{{#if products}}
 				<div class="mt-4">
 				<div class="row">
+					
 					{{#each products}}
 
 					<div class="col-sm-6 col-lg-4" style = "margin-bottom: 20px;">
@@ -55,6 +56,10 @@
 									{{/each}}
 								</ul>
                         	</div>
+				{{else}}
+					<h1>Không tồn tại</h1>
+				{{/if}}
+				
 
 	</div> <!-- content -->
 </div>
