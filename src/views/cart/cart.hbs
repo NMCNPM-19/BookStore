@@ -1,7 +1,6 @@
 <div class="content-page" id="cart-temp">
     <div class="container-fluid">
-        <div id="title">
-        </div>
+        
         <form id="cart-form" autocomplete="off" {{#if user.emp}} action="bill/add" {{else}}action="importOrder/add" {{/if}} method="POST">
             <div class="row">
                 <aside class="col-lg-9">
@@ -93,7 +92,7 @@
     var LOAINV = '{{user.emp}}'
     function loadfunctions() {
         $.getJSON('/cart/resfesh', function (data) {
-            $('div#title').append("<h3> " + data.title + " </h3>")
+            
             if (data.products) {
                 for (const i of data.products) {
                     $('tbody.pro').append(`<tr>
