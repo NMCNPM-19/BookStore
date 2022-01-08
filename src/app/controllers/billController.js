@@ -40,7 +40,8 @@ class sellingController{
     //[POST]: /bill/add
     async add(req, res, next){
         try {
-            req.body.MAPM = await billService.genKeyPM();
+            if(req.user){
+                req.body.MAPM = await billService.genKeyPM();
             req.body.MinBook = await rulesService.getSoldMin();
             const created = await billService.add(req);
             if(created){
@@ -49,6 +50,9 @@ class sellingController{
             }
             else {
                 res.status(401).json("Lỗi! Kiểm tra thông tin nợ");
+            }
+            }else {
+                res.redirect('/');
             }
         }
         catch(err){
