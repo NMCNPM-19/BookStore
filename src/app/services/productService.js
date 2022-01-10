@@ -70,12 +70,12 @@ exports.store = async(req) => {
         }
     });
     if (req.body.category) {
-      req.body.category.forEach(async (element) => {
-        await models.theloaiofsach.create({
-          masach: req.body.masach,
-          maTL: element,
-        });
-      });
+      for (const i of req.body.category) {
+          await models.theloaiofsach.create({
+            masach: req.body.masach,
+            maTL: i,
+      })
+      };
     }
     
     return h;
