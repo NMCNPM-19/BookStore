@@ -27,13 +27,13 @@ class storageController{
                 month=month.split("-");
                 month=month.join('');
             }
-            console.log(month);
+  
            
             const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
             const storageBook = await storageService.list(title,month,page,itemPerPage)
             const TotalPage = Math.ceil(storageBook.count/itemPerPage) > page + 1 ? Math.ceil(storageBook.count/itemPerPage) : page + 1
             const pagItems = pagination.paginationFunc(page+1, TotalPage);
-            console.log(storageBook)
+
             res.render('storage',{
                 Items: pagItems,
                 storageBook: storageBook.rows,
