@@ -198,6 +198,7 @@ exports.debtCust = async (req) => {
     month =date.getFullYear().toString() + "-" + (date.getMonth() + 1).toString();
     month = month.split("-");
     month = month.join("");
+    console.log()
     var timeHere = month;
     return await models.tonno.findOne({ where: { MAKH: req.params.id  , NGAYTHANG : timeHere} });
 }
