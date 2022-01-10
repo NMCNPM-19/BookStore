@@ -12,8 +12,13 @@ class passwdController{
     //[PUT]: /user/changePasswd/:id
     async change(req, res ,next){
         try {
-            const message = await userService.changePasswd(req);
-            res.render('user/changePasswd',{user :req.user ,message});
+            if(req.user){
+                const message = await userService.changePasswd(req);
+                res.render('user/changePasswd',{user :req.user ,message});
+            }else{
+                res.redirect('/');
+            }
+            
         }
         catch(err){
             res.redirect('user/changePasswd',{message: 'Something went wrong !!! Try again!'});

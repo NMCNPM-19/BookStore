@@ -53,7 +53,7 @@ class orderController {
     //[POST]:importOrder/add
     async add(req, res, next) {
         try {
-            if (req.user) {
+            if (req.user && req.user.LOAINV != 'emp') {
                 req.body.MAPN = await importService.genKeyPN();
                 const created = await importService.add(req);
                 if (created) {
