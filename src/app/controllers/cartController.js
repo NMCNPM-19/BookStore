@@ -9,13 +9,6 @@ class cartController {
             try {
                 var emp = req.user.LOAINV === "emp";
                 const min = await rulesService.getMinQuantity(emp);
-                // if (!req.session.cart) {
-                //     return res.render('cart/cart', {
-                //       products: null
-                //     });
-                //   }
-                //   var cart = new Cart(req.session.cart);
-
                 res.render("cart/cart", { min });
             } catch (error) {
                 next(error);

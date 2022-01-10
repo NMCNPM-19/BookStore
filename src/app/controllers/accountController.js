@@ -5,7 +5,7 @@ class AccountController {
     //[GET]:accounts/
     async list(req, res, next) {
         if (req.user) {
-            if ((req.user.LOAINV = "adm")) {
+            if (req.user.LOAINV = "adm") {
                 const itemPerPage = 10;
                 const title = req.query.title;
                 const page =
