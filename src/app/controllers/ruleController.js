@@ -22,7 +22,7 @@ const e = require('express');
 
     async update(req, res, next){
         if(req.user){
-            if(req.user.LOAINV != 'adm') {
+            if(req.user.LOAINV == 'adm') {
                 try {
                     await rulesService.updateSave(req);
                     res.redirect('back');
