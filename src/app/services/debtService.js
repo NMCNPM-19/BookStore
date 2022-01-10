@@ -122,7 +122,7 @@ exports.getCustomer = async (req) => {
 };
 
 genKeyAdd = async (role) => {
-    var debt = await models.nophaitra.findAll({});
+    var debt = await models.nophaitra.findAll({paranoid: false,});
     var i = 1;
     var check = true;
     var str;

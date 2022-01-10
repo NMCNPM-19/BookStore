@@ -125,7 +125,7 @@ exports.getEmp = async (nvID) =>{
 }
 
 exports.genKeyPN = async () => {
-    var order = await models.phieunhap.findAll({});
+    var order = await models.phieunhap.findAll({paranoid: false,});
     var i = 1;
     var check = true;
     var str;

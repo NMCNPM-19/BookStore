@@ -28,7 +28,7 @@ exports.getNXB = () =>{
     return models.nxb.findAll({})
 }
 exports.genKeybook = async () => {
-    var books = await models.sach.findAll({});
+    var books = await models.sach.findAll({paranoid: false,});
     var i = 1;
     var check = true;
     var str;

@@ -19,7 +19,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     DIACHI: {
-      type: DataTypes.STRING(30),
+      type: DataTypes.STRING(200),
       allowNull: true
     },
     SDT: {

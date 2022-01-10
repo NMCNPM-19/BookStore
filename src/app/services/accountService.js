@@ -73,7 +73,7 @@ exports.saveUpdate = async(req) => {
     await nhanvien.save()
 }
 genKeyAccount = async (role) => {
-    var accounts = await models.nhanvien.findAll({});
+    var accounts = await models.nhanvien.findAll({paranoid: false,});
     var i = 1;
     var check = true;
     var str;
