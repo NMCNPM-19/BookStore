@@ -63,7 +63,7 @@ exports.listMonth = (Month) => {
 
 exports.updateDebtNew = async(MAKH) => {
     let date = new Date();
-    month =date.getFullYear().toString() + "-" + (date.getMonth() + 1).toString();
+    month =date.getFullYear().toString() + "-" + ('0' + (date.getMonth()+1).toString()).slice(-2);
     month = month.split("-");
     month = month.join("");
     var timeHere = month;
@@ -184,7 +184,7 @@ exports.addDebt = async (req) => {
 
 exports.payDebt = async (req) => {
     var key = await genKeyPay('DT')
-    await updateDebtNew()
+    await this.updateDebtNew(req.params.id)
     var debt = await models.nodatra.create({
         MaNoDT : key,
         MAKH :req.params.id,
@@ -195,10 +195,10 @@ exports.payDebt = async (req) => {
 
 exports.debtCust = async (req) => {
     let date = new Date();
-    month =date.getFullYear().toString() + "-" + (date.getMonth() + 1).toString();
+    month =date.getFullYear().toString() + "-" + ('0' + (date.getMonth()+1).toString()).slice(-2);
     month = month.split("-");
     month = month.join("");
-    console.log()
+    console.log(month);
     var timeHere = month;
     return await models.tonno.findOne({ where: { MAKH: req.params.id  , NGAYTHANG : timeHere} });
 }
