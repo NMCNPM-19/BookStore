@@ -74,7 +74,6 @@ class sellingController {
     //[GET] bill/view/:id
     async view(req, res, next) {
         if (req.user) {
-           // if (req.user.LOAINV == "emp") {
                 try {
                     const itemPerPage = 10;
                     const title = req.query.title;
@@ -111,9 +110,8 @@ class sellingController {
                 } catch (error) {
                     next(error);
                 }
-          //  }
-      //  } else {
-         //   res.redirect("/");
+        }else{
+            res.redirect("/");
         }
     }
     //[GET]: /bill/print/:id
